@@ -3,77 +3,128 @@ import Layout from '~/layouts/PageLayout.astro';
 import HeroText from '~/components/widgets/HeroText.astro';
 import ContactUs from '~/components/widgets/Contact.astro';
 import Features2 from '~/components/widgets/Features2.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
 
 const metadata = {
-  title: 'Contact',
+  title: 'Contact - Laure Cohen Coaching',
+  description: 'Contactez Laure Cohen pour transformer votre prise de parole. Séance découverte gratuite pour particuliers et entreprises.',
 };
 ---
 
 <Layout metadata={metadata}>
   <!-- HeroText Widget ******************* -->
 
-  <HeroText tagline="Contact" title="Let's Connect!" />
+  <HeroText 
+    tagline="Prêt(e) à transformer votre prise de parole ?" 
+    title="Parlons de votre défi ensemble"
+    subtitle="Chaque transformation commence par une conversation. Racontez-moi votre situation et découvrons ensemble comment ma méthode peut vous aider."
+  />
 
   <ContactUs
     id="form"
-    title="Drop us a message today!"
-    subtitle="For quicker answers, explore our FAQs section. You may find the solution you're looking  for right there! If not, our support team is delighted to help you."
+    title="Réservez votre séance découverte gratuite"
+    subtitle="Décrivez-moi votre défi en quelques mots. Je vous recontacte sous 24h pour programmer notre premier échange (30 min, sans engagement)."
     inputs={[
       {
         type: 'text',
-        name: 'name',
-        label: 'Name',
+        name: 'prenom',
+        label: 'Prénom',
+        autocomplete: 'given-name',
       },
       {
         type: 'email',
         name: 'email',
         label: 'Email',
+        autocomplete: 'email',
+      },
+      {
+        type: 'text',
+        name: 'profil',
+        label: 'Votre profil (étudiant, professionnel, entrepreneur, dirigeant, entreprise)',
+        placeholder: 'Ex: Étudiant en master, Entrepreneur, Dirigeant...',
       },
     ]}
     textarea={{
-      label: 'Message',
+      label: 'Décrivez votre défi en prise de parole',
+      placeholder: 'Ex: "J\'ai un oral important dans 2 mois et je stresse énormément..." ou "Mon équipe manque de confiance lors des présentations client..."',
+      rows: 4,
     }}
+    button="Réserver ma séance gratuite"
     disclaimer={{
-      label:
-        'By submitting this contact form, you acknowledge and agree to the collection of your personal information.',
+      label: 'En soumettant ce formulaire, vous acceptez d\'être recontacté(e) par Laure Cohen Coaching pour votre séance découverte.',
     }}
-    description="Our support team typically responds within 24 business hours."
+    description="🎯 Réponse garantie sous 24h • 📞 Séance découverte de 30 min offerte • ✨ Sans engagement"
   />
 
   <!-- Features2 Widget ************** -->
 
   <Features2
-    title="We are here to help!"
+    title="Comment puis-je vous aider ?"
+    subtitle="Chaque situation est unique. Voici comment nous pouvons travailler ensemble selon votre profil."
     items={[
       {
-        title: 'General support',
-        description: `Chat with us for inquiries related to account management, website navigation, payment issues, accessing purchased templates or general questions about the website's functionality.`,
+        title: '🎓 Étudiants & Concours',
+        description: 'Soutenance de mémoire, oral de concours, entretien d\'école... Transformez votre stress en atout pour réussir avec brio.',
+        icon: 'tabler:school',
       },
       {
-        title: 'Contact sales',
-        description:
-          'Chat with us for questions about purchases, customization options, licensing for commercial use, inquiries about specific template, etc.',
+        title: '💼 Professionnels',
+        description: 'Entretien d\'embauche, présentation client, réunion importante... Gagnez en impact et en sérénité dans vos prises de parole.',
+        icon: 'tabler:briefcase',
       },
       {
-        title: 'Technical support',
-        description:
-          'Chat with us when facing issues like template installation, problems editing difficulties, compatibility issues with software or download errors, or other technical challenges related to using the templates.',
+        title: '🚀 Entrepreneurs',
+        description: 'Pitch investisseurs, présentation produit, interview média... Captivez votre audience et atteignez vos objectifs business.',
+        icon: 'tabler:rocket',
       },
       {
-        title: 'Phone',
-        description: '+1 (234) 567-890',
-        icon: 'tabler:headset',
+        title: '🏢 Formations Entreprise',
+        description: 'Programme sur-mesure pour vos équipes. Management, communication client, prise de parole en public.',
+        icon: 'tabler:building',
       },
       {
-        title: 'Email',
-        description: 'contact@support.com',
+        title: '📞 Appelez-moi',
+        description: '+33 6 XX XX XX XX',
+        icon: 'tabler:phone',
+      },
+      {
+        title: '📧 Écrivez-moi',
+        description: 'laure@laurecohencoaching.com',
         icon: 'tabler:mail',
       },
       {
-        title: 'Location',
-        description: '1234 Lorem Ipsum St, 12345, Miami, EEUU',
+        title: '📍 Où me trouver',
+        description: 'Paris & Visioconférence • Déplacements possibles en entreprise',
         icon: 'tabler:map-pin',
+      },
+      {
+        title: '⏰ Disponibilités',
+        description: 'Lundi au vendredi 9h-19h • Urgences : réponse sous 2h',
+        icon: 'tabler:clock',
       },
     ]}
   />
+
+  <!-- CallToAction Widget *********** -->
+
+  <CallToAction
+    title="Vous hésitez encore ?"
+    subtitle="Découvrez ce que disent mes clients après leur transformation"
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Voir les témoignages',
+        href: '/temoignages',
+        icon: 'tabler:heart',
+      },
+      {
+        text: 'En savoir plus sur ma méthode',
+        href: '/a-propos',
+      },
+    ]}
+  >
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-primary-50 dark:bg-slate-800"></div>
+    </Fragment>
+  </CallToAction>
 </Layout>
