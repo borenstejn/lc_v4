@@ -640,8 +640,10 @@ const testimonialsByCategory = {
 </Layout>
 
 <script>
-  // Gestion des tabs
+  // Gestion des tabs et modal
   document.addEventListener('DOMContentLoaded', () => {
+    console.log('📄 Page témoignages: DOM loaded');
+    
     // === GESTION DES TABS ===
     const tabButtons = document.querySelectorAll('.tab-button');
     const tabContents = document.querySelectorAll('.tab-content');
@@ -671,50 +673,106 @@ const testimonialsByCategory = {
           targetContent.classList.remove('hidden');
           targetContent.classList.add('active');
         }
+        
+        // Reconfigurer les handlers après changement de tab
+        setTimeout(() => setupModalTriggers(), 100);
       });
     });
     
-    // === GESTION DES CLICS SUR CARTES ET BOUTONS ===
-    function setupModalTriggers() {
-      // Fonction pour ouvrir la modal avec des données
-      function openModalWithData(data: any) {
-        // Mettre à jour le contenu de la modal
-        const modalTitle = document.getElementById('testimonial-title');
-        const modalImage = document.getElementById('testimonial-modal-image') as HTMLImageElement;
-        const modalName = document.getElementById('testimonial-modal-name');
-        const modalRole = document.getElementById('testimonial-modal-role');
-        const modalResult = document.getElementById('testimonial-modal-result');
-        const modalTestimonial = document.getElementById('testimonial-modal-testimonial');
-
-        if (modalTitle) modalTitle.textContent = `Témoignage de ${data.name}`;
-        if (modalImage && data.image) {
-          modalImage.src = `/images/temoignages/${data.image}`;
-          modalImage.alt = `Photo de ${data.name}`;
-        }
-        if (modalName) modalName.textContent = data.name || '';
-        if (modalRole) modalRole.textContent = data.role || '';
-        if (modalResult) {
-          if (data.result) {
-            modalResult.textContent = data.result;
-            modalResult.style.display = 'block';
-          } else {
-            modalResult.style.display = 'none';
-          }
-        }
-        if (modalTestimonial) modalTestimonial.textContent = `"${data.testimonial}"`;
-
-        // Ouvrir la modal
-        if ((window as any).openTestimonialModal) {
+    // === GESTION DE LA MODAL ===
+    function openTestimonialModal(data) {
+      console.log('🔄 Opening modal with data:', data);
+      
+      // Attendre que la modal soit initialisée
+      const maxAttempts = 10;
+      let attempts = 0;
+      
+      function tryOpenModal() {
+        attempts++;
+        
+        // Méthode 1: Utiliser la fonction globale si disponible
+        if ((window as any).openTestimonialModal && typeof (window as any).openTestimonialModal === 'function') {
+          console.log('✅ Using global function');
+          
+          // Mettre à jour le contenu
+          updateModalContent(data);
+          
+          // Ouvrir la modal
           (window as any).openTestimonialModal();
+          return;
+        }
+        
+        // Méthode 2: Manipulation directe du DOM
+        const backdrop = document.getElementById('testimonial-backdrop');
+        const content = document.getElementById('testimonial-content');
+        
+        if (backdrop && content) {
+          console.log('✅ Using direct DOM manipulation');
+          
+          // Mettre à jour le contenu
+          updateModalContent(data);
+          
+          // Ouvrir la modal
+          backdrop.classList.remove('hidden');
+          backdrop.offsetHeight; // Force reflow
+          backdrop.classList.remove('opacity-0');
+          content.classList.remove('scale-95');
+          content.classList.add('scale-100');
+          document.body.style.overflow = 'hidden';
+          return;
+        }
+        
+        // Réessayer si pas encore prêt
+        if (attempts < maxAttempts) {
+          console.log(`⏳ Attempt ${attempts}/${maxAttempts} - Retrying...`);
+          setTimeout(tryOpenModal, 100);
+        } else {
+          console.error('❌ Failed to open modal after', maxAttempts, 'attempts');
         }
       }
       
+      tryOpenModal();
+    }
+    
+    function updateModalContent(data) {
+      // Mettre à jour le contenu de la modal
+      const modalTitle = document.getElementById('testimonial-title');
+      const modalImage = document.getElementById('testimonial-modal-image') as HTMLImageElement;
+      const modalName = document.getElementById('testimonial-modal-name');
+      const modalRole = document.getElementById('testimonial-modal-role');
+      const modalResult = document.getElementById('testimonial-modal-result');
+      const modalTestimonial = document.getElementById('testimonial-modal-testimonial');
+
+      if (modalTitle) modalTitle.textContent = `Témoignage de ${data.name}`;
+      if (modalImage && data.image) {
+        modalImage.src = `/images/temoignages/${data.image}`;
+        modalImage.alt = `Photo de ${data.name}`;
+      }
+      if (modalName) modalName.textContent = data.name || '';
+      if (modalRole) modalRole.textContent = data.role || '';
+      if (modalResult) {
+        if (data.result) {
+          modalResult.textContent = data.result;
+          modalResult.style.display = 'block';
+        } else {
+          modalResult.style.display = 'none';
+        }
+      }
+      if (modalTestimonial) modalTestimonial.textContent = `"${data.testimonial}"`;
+    }
+    
+    // === GESTION DES CLICS SUR CARTES ET BOUTONS ===
+    function setupModalTriggers() {
+      console.log('🔧 Setting up modal triggers...');
+      
       // 1. Gérer les cartes testimonial-card (widgets du haut)
       const testimonialCards = document.querySelectorAll('.testimonial-card');
+      console.log('📋 Found testimonial cards:', testimonialCards.length);
       
       testimonialCards.forEach((card, index) => {
         const clickHandler = (e: Event) => {
           e.preventDefault();
+          console.log(`🖱️ Card ${index + 1} clicked`);
           
           const data = {
             id: card.getAttribute('data-testimonial-id'),
@@ -725,7 +783,8 @@ const testimonialsByCategory = {
             testimonial: card.getAttribute('data-testimonial-text')
           };
           
-          openModalWithData(data);
+          console.log('📊 Card data:', data);
+          openTestimonialModal(data);
         };
         
         // Supprimer l'ancien handler s'il existe
@@ -740,10 +799,12 @@ const testimonialsByCategory = {
       
       // 2. Gérer les boutons testimonial-btn (TestimonialCard du bas)
       const testimonialButtons = document.querySelectorAll('.testimonial-btn');
+      console.log('🔘 Found testimonial buttons:', testimonialButtons.length);
       
       testimonialButtons.forEach((button, index) => {
         const clickHandler = (e: Event) => {
           e.preventDefault();
+          console.log(`🖱️ Button ${index + 1} clicked`);
           
           const data = {
             id: button.getAttribute('data-testimonial-id'),
@@ -754,7 +815,8 @@ const testimonialsByCategory = {
             testimonial: button.getAttribute('data-testimonial-text')
           };
           
-          openModalWithData(data);
+          console.log('📊 Button data:', data);
+          openTestimonialModal(data);
         };
         
         // Supprimer l'ancien handler s'il existe
@@ -766,12 +828,14 @@ const testimonialsByCategory = {
         (button as any)._clickHandler = clickHandler;
         button.addEventListener('click', clickHandler);
       });
+      
+      console.log('✅ Modal triggers setup complete');
     }
     
     // Configuration initiale
     setupModalTriggers();
     
-    // Reconfigurer après changement de tab (pour les nouveaux éléments)
+    // Reconfigurer après changement de contenu dynamique
     const observer = new MutationObserver(() => {
       setupModalTriggers();
     });
@@ -780,6 +844,11 @@ const testimonialsByCategory = {
       childList: true,
       subtree: true
     });
+    
+    // Exposer la fonction globalement pour compatibilité
+    (window as any).openTestimonialModalWithData = openTestimonialModal;
+    
+    console.log('🎉 Page témoignages: Initialization complete');
   });
 </script>
 

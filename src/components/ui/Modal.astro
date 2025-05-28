@@ -47,7 +47,7 @@ const { id, class: className = '' } = Astro.props;
 </div>
 
 <script>
-  // Modal functionality
+  // Modal functionality - Production ready
   function initModal(modalId: string) {
     console.log(`Modal: Initializing modal ${modalId}`);
     
@@ -114,30 +114,66 @@ const { id, class: className = '' } = Astro.props;
     const openFunctionName = `open${modalId.charAt(0).toUpperCase() + modalId.slice(1)}Modal`;
     const closeFunctionName = `close${modalId.charAt(0).toUpperCase() + modalId.slice(1)}Modal`;
     
-    (window as any)[openFunctionName] = openModal;
-    (window as any)[closeFunctionName] = closeModal;
+    // Ensure window object exists
+    if (typeof window !== 'undefined') {
+      (window as any)[openFunctionName] = openModal;
+      (window as any)[closeFunctionName] = closeModal;
+      
+      // Also expose with direct modal ID for easier access
+      (window as any)[`openModal_${modalId}`] = openModal;
+      (window as any)[`closeModal_${modalId}`] = closeModal;
+    }
     
     console.log(`Modal: Functions exposed globally: ${openFunctionName}, ${closeFunctionName}`);
+    
+    // Return functions for direct use
+    return { openModal, closeModal };
   }
 
   // Initialize modal when DOM is loaded
-  document.addEventListener('DOMContentLoaded', () => {
+  function initializeModals() {
     console.log('Modal: DOM loaded, initializing all modals...');
     
     // Initialiser toutes les modals sur la page
     const modalBackdrops = document.querySelectorAll('[data-modal-backdrop]');
     console.log('Modal: Found modal backdrops:', modalBackdrops.length);
     
+    const modalInstances = {};
+    
     modalBackdrops.forEach(backdrop => {
       const modalId = backdrop.getAttribute('data-modal-backdrop');
       if (modalId) {
         console.log(`Modal: Initializing modal with ID: ${modalId}`);
-        initModal(modalId);
+        const instance = initModal(modalId);
+        if (instance) {
+          modalInstances[modalId] = instance;
+        }
       }
     });
     
-    console.log('Modal: All modals initialized');
-  });
+    // Expose modal instances globally for direct access
+    if (typeof window !== 'undefined') {
+      (window as any).modalInstances = modalInstances;
+    }
+    
+    console.log('Modal: All modals initialized', modalInstances);
+  }
+
+  // Multiple initialization strategies for production compatibility
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeModals);
+  } else {
+    // DOM already loaded
+    initializeModals();
+  }
+  
+  // Fallback initialization after a delay
+  setTimeout(() => {
+    if (typeof window !== 'undefined' && !(window as any).modalInstances) {
+      console.log('Modal: Fallback initialization...');
+      initializeModals();
+    }
+  }, 1000);
 </script>
 
 <style>
