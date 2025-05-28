@@ -123,75 +123,36 @@ const truncatedText = truncateText(testimonial.testimonial, maxLength);
 
       // Ouvrir la modal en appelant la fonction globale du composant Modal
       console.log('TestimonialCard: Trying to open modal...');
-      console.log('TestimonialCard: Available window functions:', Object.keys(window).filter(key => key.includes('Modal')));
       
-      // Essayer plusieurs fois si la fonction n'est pas encore disponible
-      let attempts = 0;
-      const maxAttempts = 10;
-      
-      function tryOpenModal() {
-        if ((window as any).openTestimonialModal) {
-          console.log('TestimonialCard: Opening modal');
-          (window as any).openTestimonialModal();
-        } else if (attempts < maxAttempts) {
-          attempts++;
-          console.log(`TestimonialCard: Modal function not ready, attempt ${attempts}/${maxAttempts}`);
-          setTimeout(tryOpenModal, 50);
-        } else {
-          console.error('TestimonialCard: openTestimonialModal function not found after all attempts');
-        }
+      if ((window as any).openTestimonialModal) {
+        console.log('TestimonialCard: Opening modal');
+        (window as any).openTestimonialModal();
+      } else {
+        console.error('TestimonialCard: openTestimonialModal function not found');
       }
-      
-      tryOpenModal();
     }
 
-    // Fonction pour attacher les événements
-    function attachEvents() {
-      const testimonialButtons = document.querySelectorAll('.testimonial-btn');
-      console.log('TestimonialCard: Found buttons', testimonialButtons.length);
+    // Attacher les événements UNE SEULE FOIS
+    const testimonialButtons = document.querySelectorAll('.testimonial-btn');
+    console.log('TestimonialCard: Found buttons', testimonialButtons.length);
+    
+    testimonialButtons.forEach((button, index) => {
+      console.log(`TestimonialCard: Attaching event to button ${index}`, button);
       
-      testimonialButtons.forEach((button, index) => {
-        console.log(`TestimonialCard: Attaching event to button ${index}`, button);
-        
-        // Créer une fonction de gestion spécifique pour ce bouton
+      // Vérifier si l'événement n'est pas déjà attaché
+      if (!(button as any)._eventAttached) {
         const clickHandler = (e: Event) => {
           e.preventDefault();
           console.log('TestimonialCard: Button click event triggered');
           handleTestimonialClick(button as HTMLElement);
         };
         
-        // Stocker la référence de la fonction sur l'élément pour pouvoir la supprimer plus tard
-        (button as any)._clickHandler = clickHandler;
-        
-        // Supprimer l'ancien événement s'il existe
-        if ((button as any)._clickHandler) {
-          button.removeEventListener('click', (button as any)._clickHandler);
-        }
-        
-        // Attacher le nouvel événement
         button.addEventListener('click', clickHandler);
-      });
-    }
-
-    // Attacher les événements immédiatement
-    attachEvents();
-    
-    // Observer les changements dans le DOM pour les nouveaux boutons (tabs)
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.type === 'childList' || mutation.type === 'attributes') {
-          // Réattacher les événements si de nouveaux boutons apparaissent
-          attachEvents();
-        }
-      });
-    });
-    
-    // Observer les changements dans le body
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true,
-      attributes: true,
-      attributeFilter: ['class', 'style']
+        (button as any)._eventAttached = true;
+        console.log(`TestimonialCard: Event attached to button ${index}`);
+      } else {
+        console.log(`TestimonialCard: Event already attached to button ${index}`);
+      }
     });
   });
 </script> 

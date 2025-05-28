@@ -908,10 +908,6 @@ const testimonialsByCategory = {
           targetContent.classList.add('active');
           console.log(`✅ Tab content ${targetTab} activated`);
         }
-        
-        // Reconfigurer les handlers après changement de tab
-        console.log('🔄 Reconfiguring triggers after tab change...');
-        setTimeout(() => setupTestimonialTriggers(), 100);
       });
     });
     
@@ -1023,58 +1019,47 @@ const testimonialsByCategory = {
     initializePage();
   }
   
-  // Réinitialiser après navigation Astro
+  // Réinitialiser après navigation Astro - AVEC PROTECTION CONTRE LES BOUCLES
+  let isInitializing = false;
+  
   document.addEventListener('astro:page-load', () => {
     console.log('🔄 Astro page-load event fired');
     console.log('🔍 New URL after navigation:', window.location.href);
-    setTimeout(() => {
-      console.log('🔄 Reinitializing after Astro navigation...');
-      initializePage();
-    }, 100);
-  });
-  
-  // Fallback pour autres types de navigation
-  window.addEventListener('popstate', () => {
-    console.log('🔄 Popstate event fired');
-    console.log('🔍 URL after popstate:', window.location.href);
+    
+    if (isInitializing) {
+      console.log('⚠️ Already initializing, skipping...');
+      return;
+    }
     
     if (window.location.pathname.includes('/temoignages')) {
-      console.log('🔄 Popstate to testimonials - reinitializing...');
+      isInitializing = true;
       setTimeout(() => {
-        console.log('🔄 Reinitializing after popstate...');
+        console.log('🔄 Reinitializing after Astro navigation...');
         initializePage();
+        isInitializing = false;
       }, 100);
     }
   });
   
-  // Observer pour détecter les changements dans le DOM
-  const observer = new MutationObserver((mutations) => {
-    let shouldReinit = false;
+  // Fallback pour autres types de navigation - AVEC PROTECTION
+  window.addEventListener('popstate', () => {
+    console.log('🔄 Popstate event fired');
+    console.log('🔍 URL after popstate:', window.location.href);
     
-    mutations.forEach((mutation) => {
-      if (mutation.type === 'childList') {
-        mutation.addedNodes.forEach((node) => {
-          if (node.nodeType === Node.ELEMENT_NODE) {
-            const element = node as Element;
-            if (element.id === 'test-modal-btn' || 
-                element.classList.contains('testimonial-card') || 
-                element.classList.contains('testimonial-btn')) {
-              shouldReinit = true;
-            }
-          }
-        });
-      }
-    });
-    
-    if (shouldReinit) {
-      console.log('🔄 DOM changes detected, reinitializing...');
-      setTimeout(initializePage, 50);
+    if (isInitializing) {
+      console.log('⚠️ Already initializing, skipping popstate...');
+      return;
     }
-  });
-  
-  observer.observe(document.body, {
-    childList: true,
-    subtree: true
+    
+    if (window.location.pathname.includes('/temoignages')) {
+      console.log('🔄 Popstate to testimonials - reinitializing...');
+      isInitializing = true;
+      setTimeout(() => {
+        console.log('🔄 Reinitializing after popstate...');
+        initializePage();
+        isInitializing = false;
+      }, 100);
+    }
   });
   
   console.log('✅ Script initialization complete');
