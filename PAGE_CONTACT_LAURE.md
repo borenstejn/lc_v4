@@ -18,15 +18,17 @@ Ajout: Sous-titre explicatif sur la démarche de Laure
 ### 2. **Formulaire de Contact Optimisé**
 ```yaml
 Titre: "Réservez votre séance découverte gratuite"
-Sous-titre: "Décrivez-moi votre défi en quelques mots. Je vous recontacte sous 24h pour programmer notre premier échange (30 min, sans engagement)."
+Sous-titre: "Laissez-moi vos coordonnées et décrivez votre défi. Je vous rappelle sous 24h pour programmer notre premier échange (30 min, sans engagement)."
 
 Champs:
   - Prénom (au lieu de "Name")
   - Email 
+  - Téléphone (pour rappel direct)
   - Profil: "Votre profil (étudiant, professionnel, entrepreneur, dirigeant, entreprise)"
   - Message: "Décrivez votre défi en prise de parole"
 
 Bouton: "Réserver ma séance gratuite" (au lieu de "Submit")
+Description: "📞 Laure vous rappelle sous 24h • ✨ Séance découverte de 30 min offerte • 🎯 Sans engagement"
 ```
 
 ### 3. **Sections d'Aide par Profil**
@@ -117,11 +119,20 @@ PAGE_CONTACT_LAURE.md - Cette documentation
 ## ✅ Validation
 - [x] Contenu 100% français
 - [x] Message aligné avec l'identité Laure
-- [x] Formulaire optimisé pour le coaching
+- [x] Formulaire optimisé pour le coaching (avec téléphone pour rappel direct)
 - [x] Sections par profil cible
 - [x] Informations de contact professionnelles
 - [x] Call-to-action vers preuves sociales
 - [x] Design cohérent avec les couleurs personnalisées
 - [x] Responsive et accessible
+
+## 🔄 Changements Apportés
+- **Titre :** "Parlons de votre défi ensemble" (au lieu de "Let's Connect!")
+- **Formulaire :** Champs adaptés au coaching (prénom, email, téléphone, profil, défi)
+- **Approche :** Laure rappelle directement (plus personnel et efficace)
+- **Sections :** Aide par profil (étudiants, professionnels, entrepreneurs)
+- **Contact :** Informations françaises et professionnelles
+- **CTA :** Liens vers témoignages et méthode
+- **Ton :** Chaleureux et professionnel, en français
 
 **🎯 Résultat : Page contact parfaitement intégrée au message global du site de Laure Cohen Coaching** 
