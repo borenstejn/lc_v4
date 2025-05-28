@@ -22,11 +22,6 @@ export const headerData = {
       text: 'À Propos',
       href: getPermalink('/a-propos'),
     },
-    {
-      text: 'DÉMO STYLE',
-      href: getPermalink('/demo'),
-      class: 'text-accent font-semibold',
-    },
   ],
   actions: [{ 
     text: 'Contact', 
