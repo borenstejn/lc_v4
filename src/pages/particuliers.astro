@@ -1,0 +1,389 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+
+import Hero from '~/components/widgets/Hero.astro';
+import Features from '~/components/widgets/Features.astro';
+import Steps from '~/components/widgets/Steps.astro';
+import Content from '~/components/widgets/Content.astro';
+import Pricing from '~/components/widgets/Pricing.astro';
+import Testimonials from '~/components/widgets/Testimonials.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import Stats from '~/components/widgets/Stats.astro';
+
+const metadata = {
+  title: 'Coaching Prise de Parole Particuliers - Étudiants & Professionnels | Laure Cohen',
+  description: 'Coaching individuel prise de parole pour étudiants, professionnels et entrepreneurs. Méthode Cercle Vertueux. Soutenances, entretiens, pitchs.',
+};
+---
+
+<Layout metadata={metadata}>
+  <!-- Hero Widget ******************* -->
+
+  <Hero
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Réserver ma séance gratuite',
+        href: '/contact',
+        icon: 'tabler:calendar',
+      },
+      { 
+        text: 'Voir les témoignages', 
+        href: '/temoignages',
+        icon: 'tabler:heart',
+      },
+    ]}
+    image={{ 
+      src: '~/assets/images/laure/a4a9fb_68af1a40f8504205a359c199268f45b9~mv2.jpeg', 
+      alt: 'Coaching particuliers - Laure Cohen' 
+    }}
+  >
+    <Fragment slot="title">
+      Transformez votre <span class="text-accent">peur de parler</span> en <span class="text-primary">force de conviction</span>
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      <span class="font-semibold text-lg">Pour étudiants, professionnels et entrepreneurs</span>
+      <br class="hidden sm:block" />
+      <span class="block mt-2 text-muted">
+        Accompagnement individuel sur-mesure • Méthode éprouvée • Résultats garantis
+      </span>
+    </Fragment>
+  </Hero>
+
+  <!-- Features Widget - Défis Particuliers *************** -->
+
+  <Features
+    id="defis"
+    tagline="Vos Défis"
+    title="Que vous soyez..."
+    subtitle="Des accompagnements sur-mesure pour chaque profil et chaque situation"
+    items={[
+      {
+        title: '🎓 ÉTUDIANT(E)',
+        description: 'Soutenance de mémoire, oral de concours, présentation de stage, entretien d\'école... Décrochez la mention que vous méritez.',
+        icon: 'tabler:school',
+      },
+      {
+        title: '💼 PROFESSIONNEL(LE)',
+        description: 'Entretien d\'embauche, présentation client, réunion d\'équipe, prise de parole en public... Boostez votre carrière.',
+        icon: 'tabler:briefcase',
+      },
+      {
+        title: '🚀 ENTREPRENEUR(SE)',
+        description: 'Pitch investisseurs, présentation produit, interview média, levée de fonds... Développez votre business avec impact.',
+        icon: 'tabler:rocket',
+      },
+      {
+        title: '🎭 ARTISTE/CRÉATEUR',
+        description: 'Auditions, présentation de projets, interviews, défense artistique... Révélez votre talent au monde.',
+        icon: 'tabler:mask',
+      },
+      {
+        title: '👔 CADRE/MANAGER',
+        description: 'Management d\'équipe, présentation stratégique, conférences... Incarnez le leadership avec authenticité.',
+        icon: 'tabler:crown',
+      },
+      {
+        title: '🌟 RECONVERSION',
+        description: 'Nouveau métier, nouvelle vie... Prenez la parole avec confiance dans votre nouvelle voie.',
+        icon: 'tabler:refresh',
+      },
+    ]}
+  />
+
+  <!-- Content Widget - Pourquoi choisir l'individuel **************** -->
+
+  <Content
+    tagline="Accompagnement Individuel"
+    title="Pourquoi choisir un coaching personnalisé ?"
+    subtitle="Un accompagnement 100% adapté à votre personnalité et vos objectifs"
+    items={[
+      {
+        title: 'ANALYSE PERSONNALISÉE',
+        description: 'Grâce à l\'Ennéagramme, nous identifions votre profil unique et adaptons la méthode à votre personnalité.',
+      },
+      {
+        title: 'OBJECTIFS SUR-MESURE',
+        description: 'Chaque séance est construite autour de VOS défis spécifiques et de VOS échéances importantes.',
+      },
+      {
+        title: 'PROGRESSION À VOTRE RYTHME',
+        description: 'Pas de groupe, pas de jugement. Vous progressez dans un cadre sécurisé et bienveillant.',
+      },
+    ]}
+    image={{
+      src: '~/assets/images/laure/a4a9fb_a571b80999174366b41388b9b1816ae4~mv2.jpg',
+      alt: 'Coaching individuel personnalisé',
+    }}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">
+        "Chaque personne est unique"
+      </h3>
+      <p class="text-muted">
+        C'est pourquoi je ne propose pas de méthode toute faite, mais un accompagnement 
+        entièrement personnalisé selon votre profil et vos besoins.
+      </p>
+    </Fragment>
+
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20"></div>
+    </Fragment>
+  </Content>
+
+  <!-- Steps Widget - Méthode pour Particuliers ****************** -->
+
+  <Steps
+    title="Ma Méthode 'Cercle Vertueux' adaptée à vous"
+    subtitle="Un processus en 3 étapes pour une transformation durable"
+    items={[
+      {
+        title: 'Étape 1: <span class="font-medium text-primary">DIAGNOSTIC PERSONNALISÉ</span>',
+        description: 'Test Ennéagramme + analyse de votre situation. Nous identifions vos forces naturelles et vos zones de vigilance pour construire VOTRE stratégie.',
+        icon: 'tabler:user-search',
+      },
+      {
+        title: 'Étape 2: <span class="font-medium text-accent">TECHNIQUES ADAPTÉES</span>',
+        description: 'Communication Non Violente, gestion du stress, structuration du discours... Nous sélectionnons les outils qui VOUS correspondent.',
+        icon: 'tabler:tools',
+      },
+      {
+        title: 'Étape 3: <span class="font-medium text-secondary">ENTRAÎNEMENT CIBLÉ</span>',
+        description: 'Mise en situation sur VOS sujets réels. Répétition, ajustements, perfectionnement jusqu\'à la maîtrise totale.',
+        icon: 'tabler:target',
+      },
+      {
+        title: '<span class="text-accent font-bold">Résultat : Vous brillez le jour J !</span>',
+        description: 'Confiance, impact, authenticité... Vous prenez la parole avec plaisir et obtenez les résultats que vous visez.',
+        icon: 'tabler:trophy',
+      },
+    ]}
+    image={{
+      src: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      alt: 'Méthode Cercle Vertueux pour particuliers',
+    }}
+  />
+
+  <!-- Pricing Widget ****************** -->
+
+  <Pricing
+    title="Formules d'accompagnement"
+    subtitle="Choisissez la formule qui correspond à vos besoins et votre budget"
+    prices={[
+      {
+        title: 'DÉCOUVERTE',
+        subtitle: 'Pour tester la méthode',
+        price: 300,
+        period: '€',
+        items: [
+          {
+            description: '1 séance théorie (1h30)',
+          },
+          {
+            description: '1 séance pratique (1h30)',
+          },
+          {
+            description: 'Support Zoom ou présentiel',
+          },
+          {
+            description: 'Valable 3 mois',
+          },
+          {
+            description: 'Idéal pour un oral ponctuel',
+          },
+        ],
+        callToAction: {
+          target: '_blank',
+          text: 'Réserver',
+          href: '/contact',
+        },
+      },
+      {
+        title: 'TRANSFORMATION',
+        subtitle: 'Le plus populaire',
+        price: 400,
+        period: '€',
+        items: [
+          {
+            description: '1 séance théorie (1h30)',
+          },
+          {
+            description: '2 séances pratiques (1h30 chacune)',
+          },
+          {
+            description: 'Support multi-plateforme',
+          },
+          {
+            description: 'Suivi personnalisé entre séances',
+          },
+          {
+            description: 'Workbook personnalisé',
+          },
+          {
+            description: 'Parfait pour une transformation durable',
+          },
+        ],
+        callToAction: {
+          target: '_blank',
+          text: 'Réserver',
+          href: '/contact',
+        },
+        hasRibbon: true,
+        ribbonTitle: 'populaire',
+      },
+      {
+        title: 'EXCELLENCE',
+        subtitle: 'Accompagnement premium',
+        price: 700,
+        period: '€',
+        items: [
+          {
+            description: '1 séance théorie (1h30)',
+          },
+          {
+            description: '5 séances pratiques (1h30 chacune)',
+          },
+          {
+            description: 'Accompagnement premium',
+          },
+          {
+            description: 'Workbook personnalisé avancé',
+          },
+          {
+            description: 'Suivi illimité pendant 6 mois',
+          },
+          {
+            description: 'Enregistrements pour révision',
+          },
+          {
+            description: 'Pour les enjeux majeurs',
+          },
+        ],
+        callToAction: {
+          target: '_blank',
+          text: 'Réserver',
+          href: '/contact',
+        },
+      },
+    ]}
+  />
+
+  <!-- Testimonials Widget - Particuliers ******************* -->
+
+  <Testimonials
+    title="Ils ont transformé leur peur en force"
+    subtitle="Découvrez les réussites de mes clients particuliers"
+    testimonials={[
+      {
+        testimonial: `Grâce à Laure, j'ai obtenu ma mention très bien ! En seulement 2 séances, elle m'a donné les clés pour réussir ma soutenance. Sa méthode fonctionne vraiment, je recommande à 100%.`,
+        name: 'Tabatha Deray',
+        job: 'Étudiante audio-prothèse',
+        image: {
+          src: '~/assets/images/temoignages/tabatha_deray.jpg',
+          alt: 'Tabatha Deray'
+        },
+      },
+      {
+        testimonial: `J'avais une peur panique des entretiens d'embauche. Après 3 séances avec Laure, j'ai décroché le poste de mes rêves ! Elle m'a appris à transformer mon stress en énergie positive.`,
+        name: 'Clara Touboul',
+        job: 'Consultante en stratégie',
+        image: {
+          src: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80',
+          alt: 'Clara Touboul'
+        },
+      },
+      {
+        testimonial: `Le coaching avec Laure a été un tournant dans ma carrière. J'ai appris à prendre la parole avec confiance en réunion et j'ai été promue 6 mois après !`,
+        name: 'Justine Fraïoli',
+        job: 'Chef de projet digital',
+        image: {
+          src: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80',
+          alt: 'Justine Fraïoli'
+        },
+      },
+    ]}
+  />
+
+  <!-- Stats Widget ****************** -->
+
+  <Stats
+    title="Résultats particuliers"
+    subtitle="Des chiffres qui témoignent de l'efficacité pour les clients individuels"
+    stats={[
+      { title: 'Particuliers accompagnés', amount: '150+' },
+      { title: 'Réussite aux oraux/entretiens', amount: '100%' },
+      { title: 'Satisfaction client', amount: '98%' },
+      { title: 'Séances moyennes pour réussir', amount: '3' },
+    ]}
+  />
+
+  <!-- Features Widget - Situations spécifiques *************** -->
+
+  <Features
+    id="situations"
+    tagline="Situations Spécifiques"
+    title="Mes spécialités d'accompagnement"
+    subtitle="Des expertises développées au fil de 8 ans de coaching individuel"
+    items={[
+      {
+        title: 'SOUTENANCES & ORAUX',
+        description: 'Mémoire, thèse, concours... Structure, gestion du stress, interaction avec le jury. 100% de réussite depuis 8 ans.',
+        icon: 'tabler:school',
+      },
+      {
+        title: 'ENTRETIENS D\'EMBAUCHE',
+        description: 'Se présenter, convaincre, gérer les questions pièges. Techniques pour révéler votre potentiel unique.',
+        icon: 'tabler:user-check',
+      },
+      {
+        title: 'PITCHS ENTREPRENEURS',
+        description: 'Convaincre des investisseurs, présenter son projet, lever des fonds. L\'art de captiver en quelques minutes.',
+        icon: 'tabler:presentation',
+      },
+      {
+        title: 'PRISE DE PAROLE PROFESSIONNELLE',
+        description: 'Réunions, présentations clients, management d\'équipe. Développer son leadership par la communication.',
+        icon: 'tabler:microphone',
+      },
+      {
+        title: 'RECONVERSION PROFESSIONNELLE',
+        description: 'Nouveau métier, nouvelle identité professionnelle. Apprendre à parler de soi avec confiance.',
+        icon: 'tabler:refresh',
+      },
+      {
+        title: 'PROJETS ARTISTIQUES',
+        description: 'Auditions, défense de projets créatifs, interviews. Révéler son talent et sa singularité.',
+        icon: 'tabler:palette',
+      },
+    ]}
+  />
+
+  <!-- CallToAction Widget *********** -->
+
+  <CallToAction
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Réserver ma séance découverte gratuite',
+        href: '/contact',
+        icon: 'tabler:calendar',
+      },
+      {
+        text: 'Télécharger mon guide gratuit',
+        href: '/guide-gratuit',
+        icon: 'tabler:download',
+      },
+    ]}
+  >
+    <Fragment slot="title">
+      Prêt(e) à transformer votre <span class="text-accent">appréhension</span> en <span class="text-primary">atout</span> ?
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      Réservez votre séance découverte gratuite de 30 minutes. 
+      <br class="hidden md:inline" />
+      Ensemble, nous définirons la stratégie parfaite pour atteindre VOS objectifs.
+    </Fragment>
+  </CallToAction>
+</Layout> 

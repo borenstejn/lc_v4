@@ -1,0 +1,296 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+
+import Hero from '~/components/widgets/Hero.astro';
+import Note from '~/components/widgets/Note.astro';
+import Features from '~/components/widgets/Features.astro';
+import Steps from '~/components/widgets/Steps.astro';
+import Content from '~/components/widgets/Content.astro';
+import Stats from '~/components/widgets/Stats.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import Testimonials from '~/components/widgets/Testimonials.astro';
+
+const metadata = {
+  title: 'Laure Cohen Coaching - Prenez la parole avec impact et sérénité',
+  description: 'Coach prise de parole - Méthode Cercle Vertueux - +200 clients transformés - Particuliers & Entreprises - Paris',
+  ignoreTitleTemplate: true,
+};
+---
+
+<Layout metadata={metadata}>
+  <!-- Hero Widget ******************* -->
+
+  <Hero
+    actions={[
+      {
+        variant: 'primary',
+        text: 'PARTICULIERS',
+        href: '/particuliers',
+        icon: 'tabler:user',
+      },
+      { 
+        text: 'ENTREPRISES', 
+        href: '/entreprises',
+        icon: 'tabler:building',
+      },
+    ]}
+    image={{ 
+      src: '~/assets/images/laure/hero_accueil.jpg', 
+      alt: 'Laure Cohen - Coach en prise de parole' 
+    }}
+  >
+    <Fragment slot="title">
+      Prenez la parole avec <span class="text-accent">impact</span> et <span class="text-primary">sérénité</span>
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      <span class="font-semibold text-lg">Méthode éprouvée</span> • 
+      <span class="font-semibold text-accent">+200 clients transformés</span> • 
+      <span class="font-semibold text-primary">100% réussite aux oraux</span>
+      <br class="hidden sm:block" />
+      <span class="block mt-2 text-muted">
+        Coach experte en prise de parole - Méthode "Cercle Vertueux" - Paris
+      </span>
+    </Fragment>
+  </Hero>
+
+  <!-- Note Widget ******************* -->
+
+  <Note 
+    title="🎯 Vous reconnaissez-vous dans ces situations ?" 
+    description="Cette boule au ventre avant de parler, l'impression d'être 'nul à l'oral', ne pas arriver à convaincre... Vous n'êtes pas seul(e) !" 
+  />
+
+  <!-- Features Widget - Section Problème *************** -->
+
+  <Features
+    id="problemes"
+    tagline="Vous reconnaissez-vous ?"
+    title="Ces situations qui vous paralysent"
+    subtitle="La peur de parler en public touche 75% de la population. Vous n'êtes pas seul(e), et surtout, ce n'est pas une fatalité."
+    items={[
+      {
+        title: 'Cette boule au ventre avant de parler',
+        description: 'Stress intense, palpitations, peur du jugement... Votre corps vous trahit avant même d\'ouvrir la bouche.',
+        icon: 'tabler:mood-nervous',
+      },
+      {
+        title: 'L\'impression d\'être "nul à l\'oral"',
+        description: 'Voix qui tremble, idées qui se mélangent, blancs terrifiants... Vous perdez tous vos moyens.',
+        icon: 'tabler:mood-sad',
+      },
+      {
+        title: 'Ne pas arriver à convaincre',
+        description: 'Votre message ne passe pas, l\'audience décroche, vous n\'obtenez pas ce que vous voulez.',
+        icon: 'tabler:mood-empty',
+      },
+      {
+        title: 'Éviter les prises de parole',
+        description: 'Vous refusez les opportunités, vous vous effacez, votre carrière en pâtit.',
+        icon: 'tabler:eye-off',
+      },
+      {
+        title: 'Le syndrome de l\'imposteur',
+        description: 'Vous pensez ne pas être légitime, que les autres vont découvrir que vous "bluffez".',
+        icon: 'tabler:mask-off',
+      },
+      {
+        title: 'La frustration de ne pas être entendu(e)',
+        description: 'Vos idées sont bonnes mais vous n\'arrivez pas à les faire passer avec impact.',
+        icon: 'tabler:volume-off',
+      },
+    ]}
+  />
+
+  <!-- Steps Widget - Méthode Cercle Vertueux ****************** -->
+
+  <Steps
+    title="Ma Méthode 'Le Cercle Vertueux'"
+    subtitle="3 étapes pour transformer votre peur en force"
+    items={[
+      {
+        title: 'Étape 1: <span class="font-medium text-primary">CONNAISSANCE DE SOI</span>',
+        description: 'Grâce à l\'Ennéagramme, nous découvrons votre personnalité unique, vos forces naturelles et vos zones de vigilance. Vous comprenez POURQUOI vous réagissez ainsi.',
+        icon: 'tabler:user-search',
+      },
+      {
+        title: 'Étape 2: <span class="font-medium text-accent">COMMUNICATION NON VIOLENTE</span>',
+        description: 'Les techniques de Marshall Rosenberg pour créer une connexion authentique avec votre audience. Vous apprenez à toucher les cœurs avant de convaincre les esprits.',
+        icon: 'tabler:heart-handshake',
+      },
+      {
+        title: 'Étape 3: <span class="font-medium text-secondary">PRISE DE PAROLE INCARNÉE</span>',
+        description: 'Structurer et incarner votre message avec impact. Votre corps, votre voix et vos mots s\'alignent pour créer une présence magnétique.',
+        icon: 'tabler:microphone',
+      },
+      {
+        title: '<span class="text-accent font-bold">Résultat : Vous brillez !</span>',
+        description: 'Vous prenez la parole avec plaisir, vous captivez votre audience et vous obtenez ce que vous voulez.',
+        icon: 'tabler:star-filled',
+      },
+    ]}
+    image={{
+      src: 'https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      alt: 'Méthode Cercle Vertueux',
+    }}
+  />
+
+  <!-- Content Widget - Pourquoi Laure **************** -->
+
+  <Content
+    isReversed
+    tagline="Votre Guide"
+    title="Pourquoi me faire confiance ?"
+    subtitle="Une coach qui est passée par tous les stades : de la peur paralysante au succès sur scène"
+    items={[
+      {
+        title: 'EXPÉRIENCE SCÈNE',
+        description: 'Artiste (Koxie) avec +5M de vues et un disque de platine. Je CONNAIS la peur ET le plaisir de captiver une audience.',
+      },
+      {
+        title: 'EXPÉRIENCE MÉDIA',
+        description: '6 ans d\'antenne sur Virgin Radio et NRJ avec Arthur et Camille Combal. J\'ai appris l\'art de la connexion instantanée.',
+      },
+      {
+        title: 'EXPERTISE COACHING',
+        description: '8 ans de coaching, +200 clients accompagnés, certifiée CNV et Ennéagramme. Une méthode éprouvée qui fonctionne.',
+      },
+    ]}
+    image={{
+      src: '~/assets/images/laure/a4a9fb_c505a7a1a03a467cb620803d20df656c~mv2.jpg',
+      alt: 'Laure Cohen Coach experte',
+    }}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">
+        De la paralysie au disque de platine
+      </h3>
+      <p class="text-muted">
+        J'ai vécu cette transformation de l'intérieur. Aujourd'hui, je vous transmets les clés qui m'ont permis 
+        de passer de la peur panique à la maîtrise totale de la scène.
+      </p>
+    </Fragment>
+
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-gradient-to-r from-blue-50 to-amber-50 dark:from-blue-900/20 dark:to-amber-900/20"></div>
+    </Fragment>
+  </Content>
+
+  <!-- Testimonials Widget ******************* -->
+
+  <Testimonials
+    title="Témoignages vedettes"
+    subtitle="Découvrez les transformations réelles de mes clients"
+    testimonials={[
+      {
+        testimonial: `Grâce à Laure, j'ai obtenu ma mention très bien ! En seulement 2 séances, elle m'a donné les clés pour réussir ma soutenance. Sa méthode fonctionne vraiment.`,
+        name: 'Tabatha Deray',
+        job: 'Étudiante audio-prothèse',
+        image: {
+          src: '~/assets/images/temoignages/tabatha_deray.jpg',
+          alt: 'Tabatha Deray'
+        },
+      },
+      {
+        testimonial: `Le coaching avec Laure a été déterminant pour ma levée de fonds KIDIWE. Elle m'a aidé à structurer mon pitch et à le présenter avec conviction. Résultat : financement obtenu !`,
+        name: 'Mickaël Kissous',
+        job: 'Fondateur KIDIWE',
+        image: {
+          src: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80',
+          alt: 'Mickaël Kissous'
+        },
+      },
+      {
+        testimonial: `Après le coaching, j'ai signé un beau contrat ! Laure m'a appris à incarner mon message et à créer une vraie connexion avec mon audience. Merci Laure !`,
+        name: 'Jesse Levy',
+        job: 'Comédienne',
+        image: {
+          src: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80',
+          alt: 'Jesse Levy'
+        },
+      },
+    ]}
+  />
+
+  <!-- Stats Widget ****************** -->
+
+  <Stats
+    title="Résultats qui parlent"
+    subtitle="Des chiffres qui témoignent de l'efficacité de la méthode"
+    stats={[
+      { title: 'Clients accompagnés', amount: '200+' },
+      { title: 'Taux de réussite aux oraux', amount: '100%' },
+      { title: 'Années d\'expérience', amount: '8' },
+      { title: 'Satisfaction client', amount: '98%' },
+    ]}
+  />
+
+  <!-- Features Widget - Solutions *************** -->
+
+  <Features
+    id="solutions"
+    tagline="Solutions"
+    title="Que vous soyez..."
+    subtitle="Des accompagnements sur-mesure pour chaque profil et chaque défi"
+    items={[
+      {
+        title: '🎓 ÉTUDIANT(E)',
+        description: 'Soutenance, oral de concours, présentation de stage... Décrochez la mention que vous méritez.',
+        icon: 'tabler:school',
+      },
+      {
+        title: '💼 PROFESSIONNEL(LE)',
+        description: 'Entretien d\'embauche, présentation client, réunion d\'équipe... Boostez votre carrière.',
+        icon: 'tabler:briefcase',
+      },
+      {
+        title: '🚀 ENTREPRENEUR(SE)',
+        description: 'Pitch investisseurs, présentation produit, interview média... Levez des fonds et développez votre business.',
+        icon: 'tabler:rocket',
+      },
+      {
+        title: '👔 DIRIGEANT(E)',
+        description: 'Management d\'équipe, conférences, assemblées générales... Incarnez le leadership.',
+        icon: 'tabler:crown',
+      },
+      {
+        title: '🎭 ARTISTE',
+        description: 'Auditions, interviews, présentation de projets... Révélez votre talent au monde.',
+        icon: 'tabler:mask',
+      },
+      {
+        title: '🏢 ENTREPRISE',
+        description: 'Formation d\'équipes, séminaires, développement des soft skills... Transformez votre culture d\'entreprise.',
+        icon: 'tabler:building-skyscraper',
+      },
+    ]}
+  />
+
+  <!-- CallToAction Widget *********** -->
+
+  <CallToAction
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Réserver ma séance gratuite',
+        href: '/contact',
+        icon: 'tabler:calendar',
+      },
+      {
+        text: 'Découvrir les témoignages',
+        href: '/temoignages',
+        icon: 'tabler:heart',
+      },
+    ]}
+  >
+    <Fragment slot="title">
+      Prêt(e) à transformer votre <span class="text-accent">peur</span> en <span class="text-primary">force</span> ?
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      Réservez votre séance découverte gratuite de 30 minutes. 
+      <br class="hidden md:inline" />
+      Ensemble, nous définirons la stratégie parfaite pour atteindre vos objectifs.
+    </Fragment>
+  </CallToAction>
+</Layout>

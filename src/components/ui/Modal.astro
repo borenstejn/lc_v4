@@ -1,0 +1,166 @@
+---
+export interface Props {
+  id: string;
+  class?: string;
+}
+
+const { id, class: className = '' } = Astro.props;
+---
+
+<!-- Modal Backdrop -->
+<div 
+  id={`${id}-backdrop`}
+  class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden opacity-0 transition-opacity duration-300"
+  data-modal-backdrop={id}
+>
+  <!-- Modal Container -->
+  <div class="fixed inset-0 flex items-center justify-center p-4">
+    <!-- Modal Content -->
+    <div 
+      id={`${id}-content`}
+      class={`bg-white dark:bg-slate-800 rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-hidden transform scale-95 transition-transform duration-300 ${className}`}
+      data-modal-content={id}
+    >
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
+        <h3 id={`${id}-title`} class="text-xl font-semibold text-gray-900 dark:text-white">
+          <!-- Title will be set dynamically -->
+        </h3>
+        <button 
+          type="button" 
+          class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+          data-modal-close={id}
+          aria-label="Fermer"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+      
+      <!-- Modal Body -->
+      <div class="p-6 overflow-y-auto max-h-[calc(90vh-140px)]">
+        <slot />
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Modal functionality
+  function initModal(modalId: string) {
+    console.log(`Modal: Initializing modal ${modalId}`);
+    
+    const backdrop = document.getElementById(`${modalId}-backdrop`);
+    const content = document.getElementById(`${modalId}-content`);
+    const closeButtons = document.querySelectorAll(`[data-modal-close="${modalId}"]`);
+    
+    if (!backdrop || !content) {
+      console.error(`Modal: Elements not found for modal ${modalId}`, { backdrop, content });
+      return;
+    }
+
+    console.log(`Modal: Elements found for modal ${modalId}`, { backdrop, content, closeButtons: closeButtons.length });
+
+    // Open modal function
+    function openModal() {
+      console.log(`Modal: Opening modal ${modalId}`);
+      if (!backdrop || !content) return;
+      backdrop.classList.remove('hidden');
+      // Force reflow
+      backdrop.offsetHeight;
+      backdrop.classList.remove('opacity-0');
+      content.classList.remove('scale-95');
+      content.classList.add('scale-100');
+      document.body.style.overflow = 'hidden';
+    }
+
+    // Close modal function
+    function closeModal() {
+      console.log(`Modal: Closing modal ${modalId}`);
+      if (!backdrop || !content) return;
+      backdrop.classList.add('opacity-0');
+      content.classList.remove('scale-100');
+      content.classList.add('scale-95');
+      
+      setTimeout(() => {
+        if (backdrop) {
+          backdrop.classList.add('hidden');
+        }
+        document.body.style.overflow = '';
+      }, 300);
+    }
+
+    // Close on backdrop click
+    backdrop.addEventListener('click', (e) => {
+      if (e.target === backdrop) {
+        closeModal();
+      }
+    });
+
+    // Close on close button click
+    closeButtons.forEach(button => {
+      button.addEventListener('click', closeModal);
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && backdrop && !backdrop.classList.contains('hidden')) {
+        closeModal();
+      }
+    });
+
+    // Expose functions globally for external triggers
+    const openFunctionName = `open${modalId.charAt(0).toUpperCase() + modalId.slice(1)}Modal`;
+    const closeFunctionName = `close${modalId.charAt(0).toUpperCase() + modalId.slice(1)}Modal`;
+    
+    (window as any)[openFunctionName] = openModal;
+    (window as any)[closeFunctionName] = closeModal;
+    
+    console.log(`Modal: Functions exposed globally: ${openFunctionName}, ${closeFunctionName}`);
+  }
+
+  // Initialize modal when DOM is loaded
+  document.addEventListener('DOMContentLoaded', () => {
+    console.log('Modal: DOM loaded, initializing all modals...');
+    
+    // Initialiser toutes les modals sur la page
+    const modalBackdrops = document.querySelectorAll('[data-modal-backdrop]');
+    console.log('Modal: Found modal backdrops:', modalBackdrops.length);
+    
+    modalBackdrops.forEach(backdrop => {
+      const modalId = backdrop.getAttribute('data-modal-backdrop');
+      if (modalId) {
+        console.log(`Modal: Initializing modal with ID: ${modalId}`);
+        initModal(modalId);
+      }
+    });
+    
+    console.log('Modal: All modals initialized');
+  });
+</script>
+
+<style>
+  /* Smooth transitions */
+  [data-modal-backdrop] {
+    backdrop-filter: blur(4px);
+  }
+  
+  /* Scrollbar styling for modal content */
+  .overflow-y-auto::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .overflow-y-auto::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .overflow-y-auto::-webkit-scrollbar-thumb {
+    background: rgba(156, 163, 175, 0.5);
+    border-radius: 3px;
+  }
+  
+  .overflow-y-auto::-webkit-scrollbar-thumb:hover {
+    background: rgba(156, 163, 175, 0.7);
+  }
+</style> 

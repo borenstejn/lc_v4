@@ -1,0 +1,273 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+
+import Hero from '~/components/widgets/Hero.astro';
+import Content from '~/components/widgets/Content.astro';
+import Features from '~/components/widgets/Features.astro';
+import Steps from '~/components/widgets/Steps.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+
+const metadata = {
+  title: 'À Propos - Laure Cohen | Mon histoire : de la paralysie au disque de platine',
+  description: 'Découvrez le parcours de Laure Cohen : de la peur panique à la maîtrise totale de la scène. Artiste, animatrice radio, coach experte.',
+};
+---
+
+<Layout metadata={metadata}>
+  <!-- Hero Widget - Storytelling ******************* -->
+
+  <Hero
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Découvrir ma méthode',
+        href: '/ma-methode',
+        icon: 'tabler:compass',
+      },
+      { 
+        text: 'Réserver une séance', 
+        href: '/contact',
+        icon: 'tabler:calendar',
+      },
+    ]}
+    image={{ 
+      src: '~/assets/images/laure/a4a9fb_c505a7a1a03a467cb620803d20df656c~mv2.jpg', 
+      alt: 'Laure Cohen - Coach en prise de parole' 
+    }}
+  >
+    <Fragment slot="title">
+      Mon histoire : de la <span class="text-accent">paralysie</span> au <span class="text-primary">disque de platine</span>
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      <span class="font-semibold text-lg">Comment j'ai transformé ma peur en force</span>
+      <br class="hidden sm:block" />
+      <span class="block mt-2 text-muted">
+        Pour aider +200 personnes à révéler leur potentiel et prendre la parole avec impact
+      </span>
+    </Fragment>
+  </Hero>
+
+  <!-- Content Widget - Début de l'histoire **************** -->
+
+  <Content
+    tagline="Chapitre 1"
+    title="Tout a commencé par la peur..."
+    subtitle="Comme vous peut-être, j'ai longtemps été paralysée par la peur de parler en public"
+    items={[
+      {
+        title: 'La petite fille timide',
+        description: 'Enfant, j\'étais cette petite fille qui se cachait derrière sa mère, incapable de dire bonjour aux invités.',
+      },
+      {
+        title: 'L\'adolescente complexée',
+        description: 'À l\'école, lever la main était un supplice. Mon cœur battait si fort que j\'avais peur qu\'on l\'entende.',
+      },
+      {
+        title: 'La jeune adulte qui évitait',
+        description: 'J\'ai longtemps refusé les opportunités professionnelles qui impliquaient de parler en public.',
+      },
+    ]}
+    image={{
+      src: '~/assets/images/parcours/koxie_artiste.jpg',
+      alt: 'Laure jeune - Les débuts',
+    }}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">
+        "Je me reconnaissais dans vos peurs"
+      </h3>
+      <p class="text-muted">
+        Cette boule au ventre, cette voix qui tremble, ces idées qui se mélangent... 
+        J'ai vécu tout cela. Et c'est exactement pour ça que je peux vous aider aujourd'hui.
+      </p>
+    </Fragment>
+
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20"></div>
+    </Fragment>
+  </Content>
+
+  <!-- Steps Widget - Timeline du parcours ****************** -->
+
+  <Steps
+    title="Mon parcours de transformation"
+    subtitle="Les étapes clés qui m'ont menée de la peur à la maîtrise"
+    items={[
+      {
+        title: '🎭 <span class="font-medium text-accent">LA RÉVÉLATION ARTISTIQUE</span>',
+        description: 'Un jour, j\'ai découvert la magie de la connexion sur scène. Malgré ma peur, j\'ai ressenti cette émotion unique : toucher les cœurs. C\'était plus fort que tout.',
+        icon: 'tabler:mask',
+      },
+      {
+        title: '🎤 <span class="font-medium text-primary">L\'AVENTURE KOXIE</span>',
+        description: 'Devenue artiste sous le nom de Koxie, j\'ai appris à dompter ma peur. +5M de vues, un disque de platine... La scène est devenue mon terrain de jeu.',
+        icon: 'tabler:microphone-2',
+      },
+      {
+        title: '📻 <span class="font-medium text-secondary">L\'ÉCOLE DE LA RADIO</span>',
+        description: '6 ans sur Virgin Radio et NRJ avec Arthur et Camille Combal. J\'ai appris l\'art de la connexion instantanée et de l\'authenticité.',
+        icon: 'tabler:radio',
+      },
+      {
+        title: '🎯 <span class="font-medium text-accent">LA MISSION COACHING</span>',
+        description: 'Aujourd\'hui, je transmets cette transformation. 8 ans de coaching, +200 clients accompagnés, une méthode éprouvée qui fonctionne.',
+        icon: 'tabler:target-arrow',
+      },
+    ]}
+    image={{
+      src: '~/assets/images/parcours/radio_media.jpg',
+      alt: 'Laure à la radio',
+    }}
+  />
+
+  <!-- Content Widget - Méthode née de l'expérience **************** -->
+
+  <Content
+    isReversed
+    tagline="Ma Méthode"
+    title="Le Cercle Vertueux : né de mon expérience"
+    subtitle="Une approche unique qui combine mes apprentissages d'artiste, d'animatrice et de coach"
+    items={[
+      {
+        title: 'CONNAISSANCE DE SOI (Ennéagramme)',
+        description: 'Comprendre sa personnalité unique pour transformer ses "défauts" en forces. J\'ai découvert que ma sensibilité était un atout, pas un handicap.',
+      },
+      {
+        title: 'COMMUNICATION NON VIOLENTE',
+        description: 'Les techniques de Marshall Rosenberg pour créer une connexion authentique. Sur scène comme à la radio, j\'ai appris que l\'émotion prime sur la technique.',
+      },
+      {
+        title: 'PRISE DE PAROLE INCARNÉE',
+        description: 'Aligner son corps, sa voix et son message. Mon expérience d\'artiste m\'a enseigné que la présence se travaille et se maîtrise.',
+      },
+    ]}
+    image={{
+      src: '~/assets/images/laure/a4a9fb_fad873a819e7420fa905a2d58b755e45~mv2.jpeg',
+      alt: 'Laure Cohen Coach aujourd\'hui',
+    }}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">
+        "Ma peur est devenue ma force"
+      </h3>
+      <p class="text-muted">
+        Parce que j'ai vécu cette transformation de l'intérieur, je sais exactement ce que vous ressentez. 
+        Et surtout, je connais le chemin pour en sortir.
+      </p>
+    </Fragment>
+
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20"></div>
+    </Fragment>
+  </Content>
+
+  <!-- Features Widget - Mes valeurs *************** -->
+
+  <Features
+    id="valeurs"
+    tagline="Mes Valeurs"
+    title="Ce qui guide mon accompagnement"
+    subtitle="Des valeurs forgées par mon parcours et qui nourrissent chaque séance de coaching"
+    items={[
+      {
+        title: 'AUTHENTICITÉ',
+        description: 'Être soi-même, sans masque. C\'est la clé de la connexion véritable avec son audience.',
+        icon: 'tabler:heart',
+      },
+      {
+        title: 'BIENVEILLANCE',
+        description: 'Un espace sécurisé où l\'erreur est permise et où chaque progrès est célébré.',
+        icon: 'tabler:shield-heart',
+      },
+      {
+        title: 'TRANSFORMATION',
+        description: 'Croire en votre potentiel et vous accompagner vers la version la plus épanouie de vous-même.',
+        icon: 'tabler:butterfly',
+      },
+      {
+        title: 'EXCELLENCE',
+        description: 'Viser l\'excellence sans perfectionnisme. Progresser à votre rythme vers vos objectifs.',
+        icon: 'tabler:star',
+      },
+      {
+        title: 'CONNEXION',
+        description: 'Créer du lien, toucher les cœurs, faire passer l\'émotion avant la technique.',
+        icon: 'tabler:heart-handshake',
+      },
+      {
+        title: 'COURAGE',
+        description: 'Oser sortir de sa zone de confort pour révéler sa vraie personnalité.',
+        icon: 'tabler:flame',
+      },
+    ]}
+  />
+
+  <!-- Content Widget - Aujourd'hui **************** -->
+
+  <Content
+    tagline="Aujourd'hui"
+    title="Ma mission : vous révéler"
+    subtitle="Chaque client que j'accompagne me rappelle pourquoi j'ai choisi cette voie"
+    items={[
+      {
+        title: '+200 transformations',
+        description: 'Chaque client a sa propre histoire, ses propres défis. Mais tous repartent avec les clés de leur réussite.',
+      },
+      {
+        title: '100% de réussite aux oraux',
+        description: 'Soutenances, concours, entretiens... Mes clients obtiennent les résultats qu\'ils visent.',
+      },
+      {
+        title: 'Une approche sur-mesure',
+        description: 'Pas de méthode toute faite. Chaque accompagnement est adapté à votre personnalité et vos objectifs.',
+      },
+    ]}
+    image={{
+      src: '~/assets/images/laure/a4a9fb_0458240fbcbd41fda1614034ebfede82~mv2.jpeg',
+      alt: 'Laure Cohen en séance de coaching',
+    }}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">
+        "Votre transformation, ma récompense"
+      </h3>
+      <p class="text-muted">
+        Voir mes clients passer de la peur à la confiance, de l'évitement à l'épanouissement... 
+        C'est ce qui donne du sens à mon travail chaque jour.
+      </p>
+    </Fragment>
+
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20"></div>
+    </Fragment>
+  </Content>
+
+  <!-- CallToAction Widget *********** -->
+
+  <CallToAction
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Commencer ma transformation',
+        href: '/contact',
+        icon: 'tabler:rocket',
+      },
+      {
+        text: 'Découvrir les témoignages',
+        href: '/temoignages',
+        icon: 'tabler:heart',
+      },
+    ]}
+  >
+    <Fragment slot="title">
+      Prêt(e) à écrire <span class="text-accent">votre</span> histoire de <span class="text-primary">transformation</span> ?
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      Comme moi, comme mes 200+ clients, vous avez en vous tout ce qu'il faut pour briller. 
+      <br class="hidden md:inline" />
+      Il suffit parfois d'un déclic pour tout changer.
+    </Fragment>
+  </CallToAction>
+</Layout> 

@@ -1,0 +1,391 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+
+import Hero from '~/components/widgets/Hero.astro';
+import Features from '~/components/widgets/Features.astro';
+import Content from '~/components/widgets/Content.astro';
+import Brands from '~/components/widgets/Brands.astro';
+import Pricing from '~/components/widgets/Pricing.astro';
+import Testimonials from '~/components/widgets/Testimonials.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import Stats from '~/components/widgets/Stats.astro';
+
+const metadata = {
+  title: 'Formation Communication Entreprise - Management & Leadership | Laure Cohen',
+  description: 'Formations sur-mesure en communication et prise de parole pour entreprises. Références prestigieuses : BPI France, Sciences Po, BNP, Accenture.',
+};
+---
+
+<Layout metadata={metadata}>
+  <!-- Hero Widget ******************* -->
+
+  <Hero
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Demander un devis',
+        href: '/contact',
+        icon: 'tabler:file-text',
+      },
+      { 
+        text: 'Voir nos références', 
+        href: '#references',
+        icon: 'tabler:building-bank',
+      },
+    ]}
+    image={{ 
+      src: '~/assets/images/laure/a4a9fb_fad873a819e7420fa905a2d58b755e45~mv2.jpeg', 
+      alt: 'Formation entreprise - Laure Cohen' 
+    }}
+  >
+    <Fragment slot="title">
+      Boostez la <span class="text-accent">performance</span> de vos équipes par la <span class="text-primary">communication</span>
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      <span class="font-semibold text-lg">Formations sur-mesure • Références prestigieuses</span>
+      <br class="hidden sm:block" />
+      <span class="block mt-2 text-muted">
+        Développez le leadership et l'impact de vos collaborateurs avec la méthode Cercle Vertueux
+      </span>
+    </Fragment>
+  </Hero>
+
+  <!-- Features Widget - Défis Entreprises *************** -->
+
+  <Features
+    id="defis-entreprises"
+    tagline="Défis Entreprises"
+    title="Les enjeux de communication en entreprise"
+    subtitle="Des problématiques que nous résolvons au quotidien avec nos clients"
+    items={[
+      {
+        title: 'MANAGEMENT D\'ÉQUIPE',
+        description: 'Managers qui peinent à fédérer, à motiver, à faire passer leurs messages avec impact auprès de leurs équipes.',
+        icon: 'tabler:users',
+      },
+      {
+        title: 'PRÉSENTATIONS STRATÉGIQUES',
+        description: 'Dirigeants qui doivent convaincre en comité de direction, présenter des résultats, défendre des projets.',
+        icon: 'tabler:presentation',
+      },
+      {
+        title: 'COMMUNICATION INTERNE',
+        description: 'Collaborateurs qui évitent les prises de parole, qui manquent de confiance en réunion, qui n\'osent pas s\'exprimer.',
+        icon: 'tabler:speakerphone',
+      },
+      {
+        title: 'RELATIONS CLIENT',
+        description: 'Équipes commerciales qui doivent convaincre, négocier, présenter des solutions avec plus d\'impact.',
+        icon: 'tabler:users-group',
+      },
+      {
+        title: 'CONDUITE DU CHANGEMENT',
+        description: 'Accompagner les transformations, faire adhérer les équipes, communiquer sur les évolutions.',
+        icon: 'tabler:refresh',
+      },
+      {
+        title: 'LEADERSHIP AUTHENTIQUE',
+        description: 'Développer un leadership basé sur l\'authenticité, la connexion humaine et l\'intelligence émotionnelle.',
+        icon: 'tabler:crown',
+      },
+    ]}
+  />
+
+  <!-- Content Widget - Méthode B2B **************** -->
+
+  <Content
+    tagline="Notre Approche"
+    title="La méthode 'Cercle Vertueux' adaptée à l'entreprise"
+    subtitle="Une approche éprouvée qui transforme durablement la culture de communication"
+    items={[
+      {
+        title: 'DIAGNOSTIC ORGANISATIONNEL',
+        description: 'Analyse des enjeux spécifiques de votre entreprise, identification des besoins par métier et niveau hiérarchique.',
+      },
+      {
+        title: 'FORMATION SUR-MESURE',
+        description: 'Programmes adaptés à votre culture d\'entreprise, vos objectifs business et vos contraintes opérationnelles.',
+      },
+      {
+        title: 'ACCOMPAGNEMENT TERRAIN',
+        description: 'Mise en pratique immédiate sur vos situations réelles, coaching individuel des managers clés.',
+      },
+    ]}
+    image={{
+      src: 'https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      alt: 'Formation équipe entreprise',
+    }}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">
+        "Transformer la communication, c'est transformer la performance"
+      </h3>
+      <p class="text-muted">
+        Nos formations ne se contentent pas de transmettre des techniques. Elles créent un véritable 
+        changement culturel qui impacte durablement la performance de vos équipes.
+      </p>
+    </Fragment>
+
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20"></div>
+    </Fragment>
+  </Content>
+
+  <!-- Features Widget - Solutions B2B *************** -->
+
+  <Features
+    id="solutions-b2b"
+    tagline="Nos Solutions"
+    title="Programmes de formation"
+    subtitle="Des formats adaptés à vos besoins et contraintes"
+    items={[
+      {
+        title: 'FORMATION "CERCLE VERTUEUX"',
+        description: 'Programme complet sur 2 jours : Connaissance de soi (Ennéagramme), Communication Non Violente, Prise de parole incarnée. Jusqu\'à 12 participants.',
+        icon: 'tabler:circle',
+      },
+      {
+        title: 'COACHING DIRIGEANTS',
+        description: 'Accompagnement individuel des dirigeants et managers clés. Sessions de 2h, programme sur-mesure selon les enjeux.',
+        icon: 'tabler:crown',
+      },
+      {
+        title: 'ATELIERS THÉMATIQUES',
+        description: 'Modules courts (demi-journée) sur des sujets spécifiques : gestion du stress, structuration du discours, impact vocal.',
+        icon: 'tabler:tools',
+      },
+      {
+        title: 'ACCOMPAGNEMENT ÉVÉNEMENTS',
+        description: 'Préparation spécifique pour conventions, assemblées générales, présentations stratégiques importantes.',
+        icon: 'tabler:calendar-event',
+      },
+      {
+        title: 'PROGRAMME LONG TERME',
+        description: 'Transformation culturelle sur 6-12 mois avec suivi régulier, mesure d\'impact, ajustements continus.',
+        icon: 'tabler:timeline',
+      },
+      {
+        title: 'FORMATION DE FORMATEURS',
+        description: 'Développer vos formateurs internes pour démultiplier l\'impact et créer une culture de communication durable.',
+        icon: 'tabler:school',
+      },
+    ]}
+  />
+
+  <!-- Pricing Widget B2B ****************** -->
+
+  <Pricing
+    title="Tarifs entreprises"
+    subtitle="Des formules adaptées à la taille et aux besoins de votre organisation"
+    prices={[
+      {
+        title: 'FORMATION ÉQUIPE',
+        subtitle: 'Le plus demandé',
+        price: 1800,
+        period: '€ HT',
+        items: [
+          {
+            description: 'Formation "Cercle Vertueux" 2 jours',
+          },
+          {
+            description: 'Jusqu\'à 12 participants',
+          },
+          {
+            description: 'Support pédagogique inclus',
+          },
+          {
+            description: 'Suivi post-formation 1 mois',
+          },
+          {
+            description: 'Intra-entreprise ou inter',
+          },
+        ],
+        callToAction: {
+          target: '_blank',
+          text: 'Demander un devis',
+          href: '/contact',
+        },
+        hasRibbon: true,
+        ribbonTitle: 'populaire',
+      },
+      {
+        title: 'COACHING DIRIGEANT',
+        subtitle: 'Accompagnement premium',
+        price: 2500,
+        period: '€ HT',
+        items: [
+          {
+            description: '5 séances de coaching (2h chacune)',
+          },
+          {
+            description: 'Diagnostic Ennéagramme approfondi',
+          },
+          {
+            description: 'Préparation événements spécifiques',
+          },
+          {
+            description: 'Support entre séances',
+          },
+          {
+            description: 'Bilan et plan d\'action',
+          },
+        ],
+        callToAction: {
+          target: '_blank',
+          text: 'Demander un devis',
+          href: '/contact',
+        },
+      },
+      {
+        title: 'PROGRAMME SUR-MESURE',
+        subtitle: 'Transformation culturelle',
+        price: 'Sur devis',
+        period: '',
+        items: [
+          {
+            description: 'Diagnostic organisationnel complet',
+          },
+          {
+            description: 'Programme multi-modules personnalisé',
+          },
+          {
+            description: 'Accompagnement 6-12 mois',
+          },
+          {
+            description: 'Formation de formateurs internes',
+          },
+          {
+            description: 'Mesure d\'impact et ROI',
+          },
+          {
+            description: 'Support illimité pendant le programme',
+          },
+        ],
+        callToAction: {
+          target: '_blank',
+          text: 'Nous contacter',
+          href: '/contact',
+        },
+      },
+    ]}
+  />
+
+  <!-- Testimonials Widget - Entreprises ******************* -->
+
+  <Testimonials
+    title="Témoignages entreprises"
+    subtitle="Ce que disent nos clients corporate de nos interventions"
+    testimonials={[
+      {
+        testimonial: `La formation de Laure a transformé notre équipe de direction. Nos réunions sont plus efficaces, nos présentations plus impactantes. Un investissement qui se ressent immédiatement sur nos résultats.`,
+        name: 'Philippe Jeanneau',
+        job: 'Directeur Général, Tech Startup',
+        image: {
+          src: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80',
+          alt: 'Philippe Jeanneau'
+        },
+      },
+      {
+        testimonial: `Laure a accompagné notre transformation digitale en travaillant sur la communication du changement. Ses méthodes sont subtiles et d'une efficacité redoutable.`,
+        name: 'Sarah Ohayon',
+        job: 'DRH, Groupe International',
+        image: {
+          src: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80',
+          alt: 'Sarah Ohayon'
+        },
+      },
+      {
+        testimonial: `Le coaching dirigeant avec Laure m'a permis de développer un leadership plus authentique. Mes équipes sont plus engagées et nos objectifs mieux atteints.`,
+        name: 'Eric Salomon',
+        job: 'CEO, Scale-up FinTech',
+        image: {
+          src: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80',
+          alt: 'Eric Salomon'
+        },
+      },
+    ]}
+  />
+
+  <!-- Stats Widget B2B ****************** -->
+
+  <Stats
+    title="Impact entreprises"
+    subtitle="Des résultats mesurables sur la performance de vos équipes"
+    stats={[
+      { title: 'Entreprises accompagnées', amount: '50+' },
+      { title: 'Collaborateurs formés', amount: '800+' },
+      { title: 'Satisfaction client', amount: '96%' },
+      { title: 'Amélioration performance équipe', amount: '+35%' },
+    ]}
+  />
+
+  <!-- Content Widget - Pourquoi nous choisir **************** -->
+
+  <Content
+    isReversed
+    tagline="Notre Différence"
+    title="Pourquoi les entreprises nous choisissent"
+    subtitle="Une expertise unique qui combine expérience terrain et méthodes éprouvées"
+    items={[
+      {
+        title: 'EXPÉRIENCE MÉDIAS & SCÈNE',
+        description: 'Laure a vécu la pression des médias (Virgin Radio, NRJ) et de la scène (disque de platine). Elle comprend les enjeux de performance.',
+      },
+      {
+        title: 'MÉTHODES SCIENTIFIQUES',
+        description: 'Ennéagramme et Communication Non Violente : des outils reconnus et mesurables pour transformer durablement les comportements.',
+      },
+      {
+        title: 'APPROCHE BUSINESS',
+        description: 'Nous parlons votre langage : ROI, KPIs, performance. Nos formations s\'intègrent dans vos objectifs business.',
+      },
+    ]}
+    image={{
+      src: '~/assets/images/laure/a4a9fb_0458240fbcbd41fda1614034ebfede82~mv2.jpeg',
+      alt: 'Laure Cohen formation entreprise',
+    }}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">
+        "Une coach qui comprend l'entreprise"
+      </h3>
+      <p class="text-muted">
+        Parce que j'ai évolué dans des environnements exigeants, je comprends vos contraintes 
+        et je sais adapter mes méthodes à la réalité de l'entreprise.
+      </p>
+    </Fragment>
+
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20"></div>
+    </Fragment>
+  </Content>
+
+  <!-- CallToAction Widget *********** -->
+
+  <CallToAction
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Demander un diagnostic gratuit',
+        href: '/contact',
+        icon: 'tabler:search',
+      },
+      {
+        text: 'Télécharger notre brochure',
+        href: '/brochure-entreprise',
+        icon: 'tabler:download',
+      },
+    ]}
+  >
+    <Fragment slot="title">
+      Prêt à <span class="text-accent">transformer</span> la communication de vos <span class="text-primary">équipes</span> ?
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      Demandez votre diagnostic gratuit de 30 minutes. 
+      <br class="hidden md:inline" />
+      Nous analyserons vos enjeux et vous proposerons une solution sur-mesure.
+    </Fragment>
+  </CallToAction>
+</Layout> 

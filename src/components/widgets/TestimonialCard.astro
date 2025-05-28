@@ -1,0 +1,197 @@
+---
+export interface Props {
+  testimonial: {
+    id: string;
+    name: string;
+    role: string;
+    category: string;
+    image: string;
+    testimonial: string;
+    result?: string;
+  };
+  maxLength?: number;
+}
+
+const { testimonial, maxLength = 150 } = Astro.props;
+
+// Fonction pour tronquer le texte
+function truncateText(text: string, maxLength: number): string {
+  if (text.length <= maxLength) return text;
+  return text.substring(0, maxLength).trim() + '...';
+}
+
+const truncatedText = truncateText(testimonial.testimonial, maxLength);
+---
+
+<div class="bg-white dark:bg-slate-800 rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow duration-300">
+  <!-- Photo et infos client -->
+  <div class="flex items-center mb-4">
+    <div class="relative w-16 h-16 rounded-full overflow-hidden mr-4 flex-shrink-0">
+      <img
+        src={`/images/temoignages/${testimonial.image}`}
+        alt={`Photo de ${testimonial.name}`}
+        width="64"
+        height="64"
+        class="w-full h-full object-cover"
+        loading="lazy"
+      />
+    </div>
+    <div class="flex-1">
+      <h3 class="font-semibold text-lg text-gray-900 dark:text-white">
+        {testimonial.name}
+      </h3>
+      <p class="text-sm text-gray-600 dark:text-gray-400">
+        {testimonial.role}
+      </p>
+      {testimonial.result && (
+        <p class="text-sm font-medium text-blue-600 dark:text-blue-400">
+          {testimonial.result}
+        </p>
+      )}
+    </div>
+  </div>
+
+  <!-- Témoignage tronqué -->
+  <blockquote class="text-gray-700 dark:text-gray-300 mb-4 italic">
+    "{truncatedText}"
+  </blockquote>
+
+  <!-- Bouton pour ouvrir la modal -->
+  <button
+    type="button"
+    class="inline-flex items-center text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium text-sm transition-colors testimonial-btn"
+    data-testimonial-id={testimonial.id}
+    data-testimonial-name={testimonial.name}
+    data-testimonial-role={testimonial.role}
+    data-testimonial-result={testimonial.result || ''}
+    data-testimonial-image={testimonial.image}
+    data-testimonial-text={testimonial.testimonial}
+  >
+    Lire le témoignage complet
+    <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+    </svg>
+  </button>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    console.log('TestimonialCard: DOM loaded, initializing...');
+    
+    // Fonction pour ouvrir la modal avec les données du témoignage
+    function handleTestimonialClick(button: HTMLElement) {
+      console.log('TestimonialCard: Button clicked', button);
+      
+      // Récupérer les données depuis les attributs data
+      const testimonialData = {
+        id: button.getAttribute('data-testimonial-id'),
+        name: button.getAttribute('data-testimonial-name'),
+        role: button.getAttribute('data-testimonial-role'),
+        result: button.getAttribute('data-testimonial-result'),
+        image: button.getAttribute('data-testimonial-image'),
+        testimonial: button.getAttribute('data-testimonial-text')
+      };
+
+      console.log('TestimonialCard: Testimonial data', testimonialData);
+
+      // Mettre à jour le contenu de la modal
+      const modalTitle = document.getElementById('testimonial-title');
+      const modalImage = document.getElementById('testimonial-modal-image') as HTMLImageElement;
+      const modalName = document.getElementById('testimonial-modal-name');
+      const modalRole = document.getElementById('testimonial-modal-role');
+      const modalResult = document.getElementById('testimonial-modal-result');
+      const modalTestimonial = document.getElementById('testimonial-modal-testimonial');
+
+      console.log('TestimonialCard: Modal elements', { modalTitle, modalImage, modalName, modalRole, modalResult, modalTestimonial });
+
+      if (modalTitle) modalTitle.textContent = `Témoignage de ${testimonialData.name}`;
+      if (modalImage) {
+        modalImage.src = `/images/temoignages/${testimonialData.image}`;
+        modalImage.alt = `Photo de ${testimonialData.name}`;
+      }
+      if (modalName) modalName.textContent = testimonialData.name || '';
+      if (modalRole) modalRole.textContent = testimonialData.role || '';
+      if (modalResult) {
+        if (testimonialData.result) {
+          modalResult.textContent = testimonialData.result;
+          modalResult.style.display = 'block';
+        } else {
+          modalResult.style.display = 'none';
+        }
+      }
+      if (modalTestimonial) modalTestimonial.textContent = `"${testimonialData.testimonial}"`;
+
+      // Ouvrir la modal en appelant la fonction globale du composant Modal
+      console.log('TestimonialCard: Trying to open modal...');
+      console.log('TestimonialCard: Available window functions:', Object.keys(window).filter(key => key.includes('Modal')));
+      
+      // Essayer plusieurs fois si la fonction n'est pas encore disponible
+      let attempts = 0;
+      const maxAttempts = 10;
+      
+      function tryOpenModal() {
+        if ((window as any).openTestimonialModal) {
+          console.log('TestimonialCard: Opening modal');
+          (window as any).openTestimonialModal();
+        } else if (attempts < maxAttempts) {
+          attempts++;
+          console.log(`TestimonialCard: Modal function not ready, attempt ${attempts}/${maxAttempts}`);
+          setTimeout(tryOpenModal, 50);
+        } else {
+          console.error('TestimonialCard: openTestimonialModal function not found after all attempts');
+        }
+      }
+      
+      tryOpenModal();
+    }
+
+    // Fonction pour attacher les événements
+    function attachEvents() {
+      const testimonialButtons = document.querySelectorAll('.testimonial-btn');
+      console.log('TestimonialCard: Found buttons', testimonialButtons.length);
+      
+      testimonialButtons.forEach((button, index) => {
+        console.log(`TestimonialCard: Attaching event to button ${index}`, button);
+        
+        // Créer une fonction de gestion spécifique pour ce bouton
+        const clickHandler = (e: Event) => {
+          e.preventDefault();
+          console.log('TestimonialCard: Button click event triggered');
+          handleTestimonialClick(button as HTMLElement);
+        };
+        
+        // Stocker la référence de la fonction sur l'élément pour pouvoir la supprimer plus tard
+        (button as any)._clickHandler = clickHandler;
+        
+        // Supprimer l'ancien événement s'il existe
+        if ((button as any)._clickHandler) {
+          button.removeEventListener('click', (button as any)._clickHandler);
+        }
+        
+        // Attacher le nouvel événement
+        button.addEventListener('click', clickHandler);
+      });
+    }
+
+    // Attacher les événements immédiatement
+    attachEvents();
+    
+    // Observer les changements dans le DOM pour les nouveaux boutons (tabs)
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'childList' || mutation.type === 'attributes') {
+          // Réattacher les événements si de nouveaux boutons apparaissent
+          attachEvents();
+        }
+      });
+    });
+    
+    // Observer les changements dans le body
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['class', 'style']
+    });
+  });
+</script> 

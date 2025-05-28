@@ -1,0 +1,186 @@
+---
+import Headline from '~/components/ui/Headline.astro';
+import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+import Button from '~/components/ui/Button.astro';
+import Image from '~/components/common/Image.astro';
+import type { Testimonials as Props } from '~/types';
+
+const {
+  title = '',
+  subtitle = '',
+  tagline = '',
+  testimonials = [],
+  callToAction,
+
+  id,
+  isDark = false,
+  classes = {},
+  bg = await Astro.slots.render('bg'),
+} = Astro.props;
+---
+
+<WidgetWrapper id={id} isDark={isDark} containerClass={`max-w-6xl mx-auto ${classes?.container ?? ''}`} bg={bg}>
+  <Headline title={title} subtitle={subtitle} tagline={tagline} />
+
+  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    {
+      testimonials &&
+        testimonials.map(({ title, testimonial, name, job, image, fullTestimonial }) => (
+          <div class="flex h-auto intersect-once motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 intersect-quarter">
+            <div 
+              class="flex flex-col p-4 md:p-6 rounded-md shadow-xl dark:shadow-none dark:border dark:border-slate-600 cursor-pointer hover:shadow-2xl hover:scale-105 transition-all duration-300 testimonial-card"
+              data-testimonial-id={name?.toLowerCase().replace(/\s+/g, '_')}
+              data-testimonial-name={name}
+              data-testimonial-role={job}
+              data-testimonial-result=""
+              data-testimonial-image={typeof image === 'object' && image && 'src' in image ? String(image.src).split('/').pop() : ''}
+              data-testimonial-text={fullTestimonial || testimonial}
+            >
+              {title && <h2 class="text-lg font-medium leading-6 pb-4">{title}</h2>}
+              {testimonial && (
+                <blockquote class="flex-auto">
+                  <p class="text-muted">" {testimonial} "</p>
+                </blockquote>
+              )}
+
+              <hr class="border-slate-200 dark:border-slate-600 my-4" />
+
+              <div class="flex items-center">
+                {image && (
+                  <div class="h-10 w-10 rounded-full border border-slate-200 dark:border-slate-600">
+                    {typeof image === 'string' ? (
+                      <Fragment set:html={image} />
+                    ) : (
+                      <Image
+                        class="h-10 w-10 rounded-full border border-slate-200 dark:border-slate-600 min-w-full min-h-full"
+                        width={40}
+                        height={40}
+                        widths={[400, 768]}
+                        layout="fixed"
+                        {...image}
+                      />
+                    )}
+                  </div>
+                )}
+
+                <div class="grow ml-3 rtl:ml-0 rtl:mr-3">
+                  {name && <p class="text-base font-semibold">{name}</p>}
+                  {job && <p class="text-xs text-muted">{job}</p>}
+                </div>
+                
+                <!-- Indicateur visuel que la carte est cliquable -->
+                <div class="ml-2 text-blue-600 dark:text-blue-400 opacity-70">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))
+    }
+  </div>
+  {
+    callToAction && (
+      <div class="flex justify-center mx-auto w-fit mt-8 md:mt-12 font-medium">
+        <Button {...callToAction} />
+      </div>
+    )
+  }
+</WidgetWrapper>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    console.log('Testimonials: Initializing card click handlers...');
+    
+    // Fonction pour gérer le clic sur une carte testimonial
+    function handleTestimonialCardClick(card: HTMLElement) {
+      console.log('Testimonials: Card clicked', card);
+      
+      // Récupérer les données depuis les attributs data
+      const testimonialData = {
+        id: card.getAttribute('data-testimonial-id'),
+        name: card.getAttribute('data-testimonial-name'),
+        role: card.getAttribute('data-testimonial-role'),
+        result: card.getAttribute('data-testimonial-result'),
+        image: card.getAttribute('data-testimonial-image'),
+        testimonial: card.getAttribute('data-testimonial-text')
+      };
+
+      console.log('Testimonials: Testimonial data', testimonialData);
+
+      // Mettre à jour le contenu de la modal
+      const modalTitle = document.getElementById('testimonial-title');
+      const modalImage = document.getElementById('testimonial-modal-image') as HTMLImageElement;
+      const modalName = document.getElementById('testimonial-modal-name');
+      const modalRole = document.getElementById('testimonial-modal-role');
+      const modalResult = document.getElementById('testimonial-modal-result');
+      const modalTestimonial = document.getElementById('testimonial-modal-testimonial');
+
+      if (modalTitle) modalTitle.textContent = `Témoignage de ${testimonialData.name}`;
+      if (modalImage && testimonialData.image) {
+        modalImage.src = `/images/temoignages/${testimonialData.image}`;
+        modalImage.alt = `Photo de ${testimonialData.name}`;
+      }
+      if (modalName) modalName.textContent = testimonialData.name || '';
+      if (modalRole) modalRole.textContent = testimonialData.role || '';
+      if (modalResult) {
+        if (testimonialData.result) {
+          modalResult.textContent = testimonialData.result;
+          modalResult.style.display = 'block';
+        } else {
+          modalResult.style.display = 'none';
+        }
+      }
+      if (modalTestimonial) modalTestimonial.textContent = `"${testimonialData.testimonial}"`;
+
+      // Ouvrir la modal
+      console.log('Testimonials: Trying to open modal...');
+      if ((window as any).openTestimonialModal) {
+        console.log('Testimonials: Opening modal');
+        (window as any).openTestimonialModal();
+      } else {
+        console.error('Testimonials: openTestimonialModal function not found');
+      }
+    }
+
+    // Attacher les événements aux cartes
+    function attachCardEvents() {
+      const testimonialCards = document.querySelectorAll('.testimonial-card');
+      console.log('Testimonials: Found cards', testimonialCards.length);
+      
+      testimonialCards.forEach((card, index) => {
+        console.log(`Testimonials: Attaching event to card ${index}`, card);
+        
+        // Supprimer l'ancien événement s'il existe
+        if ((card as any)._cardClickHandler) {
+          card.removeEventListener('click', (card as any)._cardClickHandler);
+        }
+        
+        // Créer le gestionnaire d'événement
+        const clickHandler = (e: Event) => {
+          e.preventDefault();
+          console.log('Testimonials: Card click event triggered');
+          handleTestimonialCardClick(card as HTMLElement);
+        };
+        
+        // Stocker la référence et attacher l'événement
+        (card as any)._cardClickHandler = clickHandler;
+        card.addEventListener('click', clickHandler);
+      });
+    }
+
+    // Attacher les événements immédiatement
+    attachCardEvents();
+    
+    // Observer les changements dans le DOM pour les nouvelles cartes
+    const observer = new MutationObserver(() => {
+      attachCardEvents();
+    });
+    
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+  });
+</script>

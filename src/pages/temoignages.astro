@@ -1,0 +1,799 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+
+import Hero from '~/components/widgets/Hero.astro';
+import Testimonials from '~/components/widgets/Testimonials.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import Stats from '~/components/widgets/Stats.astro';
+import Modal from '~/components/ui/Modal.astro';
+import TestimonialCard from '~/components/widgets/TestimonialCard.astro';
+
+const metadata = {
+  title: 'Témoignages Clients - Transformations Réelles | Laure Cohen Coaching',
+  description: 'Découvrez les témoignages authentiques de nos clients : étudiants, professionnels, entrepreneurs. +200 transformations réussies avec photos réelles.',
+};
+
+// Fonction pour tronquer le texte pour l'affichage dans les cards
+function truncateText(text: string, maxLength: number = 150): string {
+  if (text.length <= maxLength) return text;
+  return text.substring(0, maxLength).trim() + '...';
+}
+
+// Fonction pour déterminer la catégorie d'un témoignage
+function getTestimonialCategory(job: string, name: string): string {
+  const jobLower = job.toLowerCase();
+  const nameLower = name.toLowerCase();
+  
+  // Catégorie Académique
+  if (jobLower.includes('étudiant') || jobLower.includes('master') || jobLower.includes('hec') || 
+      jobLower.includes('soutenance') || jobLower.includes('mémoire') || jobLower.includes('audio-prothèse')) {
+    return 'academique';
+  }
+  
+  // Catégorie Entrepreneur
+  if (jobLower.includes('fondateur') || jobLower.includes('ceo') || jobLower.includes('entrepreneur') ||
+      jobLower.includes('start-up') || jobLower.includes('kidiwe') || jobLower.includes('harmony') ||
+      jobLower.includes('jared') || jobLower.includes('windoo') || jobLower.includes('coalitions')) {
+    return 'entrepreneur';
+  }
+  
+  // Catégorie Éloquence
+  if (jobLower.includes('éloquence') || jobLower.includes('concours') || nameLower.includes('diariata') ||
+      jobLower.includes('résonantes') || jobLower.includes('fondation des femmes')) {
+    return 'eloquence';
+  }
+  
+  // Catégorie Professionnelle (par défaut)
+  return 'professionnel';
+}
+
+// Témoignages complets (textes entiers du site original)
+const testimonialData = {
+  tabatha: {
+    full: `Un immense merci à Laure qui grâce à 2 séances de coaching a réussi à donner une valeur inestimable à ma soutenance de mémoire. Je lui dois une grande partie de ma mention très bien.
+
+L'avis de sa maman : "Chère Laure, vous êtes tout simplement formidable ! En 2 séances d'accompagnement vous avez transformé Tabatha en vraie « pitcheuse ». Et ça a été un incroyable succès… Mention très bien à son oral ! Nous vous remercions sincèrement pour votre aide, votre implication et un grand bravo pour votre capacité à transmettre votre art car c'est un art… je parle beaucoup de vous autour de moi… au plaisir de vous recroiser."`,
+    name: 'Tabatha Deray',
+    job: 'Étudiante Audio-Prothèse - Mention Très Bien',
+    image: 'tabatha_deray.jpg'
+  },
+  clara: {
+    full: `Préparation des entretiens d'admissions à H.E.C. L'expérience m'a non seulement permis d'atteindre mon objectif, mais m'a aussi apporté des clefs essentielles pour l'avenir. J'ai appris à accepter mon stress, à m'exprimer de manière claire, concise et convaincante en utilisant mes propres mots et mes propres gestes. J'ai pris confiance en moi, en mes propos et en ma capacité à les communiquer. Mon retour sur cette expérience est excellent !`,
+    name: 'Clara Touboul',
+    job: 'Étudiante - Admise HEC',
+    image: 'clara_touboul.jpg'
+  },
+  emilie: {
+    full: `J'ai fait appel à Laure pour refaire mon pitch et avoir un pitch impactant, pour présenter mon centre à mes futurs clients. Laure a été très à l'écoute lorsque je lui ai présenté mon activité et ma problématique, elle m'a posé les bonnes questions, ce qui lui a permis, en quelques minutes seulement de comprendre parfaitement ce que je proposais et le résultat que je souhaitais obtenir. Force de proposition, créative, dynamique et surtout très douée en art oratoire, Laure m'a permis d'avoir LE pitch parfait !`,
+    name: 'Émilie Fajnman',
+    job: 'Directrice Centre Beauté "Metamorph\'ose"',
+    image: 'emilie_fajnman.jpg'
+  },
+  jesse: {
+    full: `À la veille d'un rendez-vous très important et hyper anxiogène, j'ai eu le besoin de me faire coacher. Laure a rebooté mon cerveau en une séance ! Elle a su me donner les clés pour reprendre le contrôle, me recentrer sur mes objectifs et mes atouts quelque peu oubliés. Cela m'a surtout permis d'aborder les choses plus sereinement, avec objectivité et confiance. Merci Laure, j'ai d'ailleurs signé un beau contrat !`,
+    name: 'Jesse Levy',
+    job: 'Comédienne - Contrat Signé',
+    image: 'jesse_levy.jpg'
+  },
+  philippe: {
+    full: `Dans le cadre d'une mission avec Time to pitch, j'ai rencontré Laure. Le coaching de dirigeants est un exercice subtil qui demande de nombreuses qualités : l'écoute, la capacité de comprendre la personnalité de chacun, de son environnement, et bien sûr de la technique ! Laure, tout en décontraction, avec bonne humeur et dynamisme a compris tout cela. Elle sait vous faire sortir de votre zone de confort, vous provoquer parfois mais surtout vous permettre de donner le meilleur, d'être vous-même et par là, d'être le plus convaincant ! Merci sincèrement Laure pour la richesse de tes conseils et l'état d'esprit positif que tu sais propager autour de toi.`,
+    name: 'Philippe Jeanneau',
+    job: 'Directeur Général Informatique CDC',
+    image: 'philippe_jeanneau.png'
+  },
+  justine: {
+    full: `Quand tout paraît compliqué et insurmontable, quelque soit le domaine, pro ou perso, une seule personne parvient à me faire avancer, Laure. Tout devient simple et tout se fait simplement, une discussion, de l'écoute, des échanges, une liste et une progression réaliste, aucune pression, des objectifs simples pour y voir plus clair. Être coachée par elle, c'est se révéler à soi, s'estimer, se faire confiance et enfin, avancer. Laure c'est la lumière, qui donne espoir.`,
+    name: 'Justine Fraïoli',
+    job: 'Productrice - Confiance Retrouvée',
+    image: 'justine_fraoli.jpg'
+  },
+  mickael: {
+    full: `Le travail avec Laure a été un vrai tournant dans l'aventure KIDIWE, il nous a permis de convaincre des investisseurs et de lever des fonds. J'ai eu la chance de travailler avec elle pour un problème de pitch. Je me souviens très bien de notre première rencontre. Elle m'a demandé ce que je faisais dans la vie. Ma réponse a duré environ... 2 ans et demi... juste pour lui expliquer mon activité. Et Laure m'a dit : "en fait, tu mets en relation 2 mondes : le Tourisme & le Scolaire à travers une plateforme web, c'est ça ? La mission de ta boîte : rendre accessible à tous les élèves, le monde qui les entoure ?" Dossier réglé en moins d'une minute ! Son travail ne s'est pas arrêté là, elle m'a montré comment réussir à dire ce qu'on veut dire et à convaincre, grâce à ses techniques bien à elle et simples à reproduire. Elle m'a donné toutes les clés d'une bonne communication orale.`,
+    name: 'Mickaël Kissous',
+    job: 'Fondateur KIDIWE - Levée de Fonds Réussie',
+    image: 'mickael_kissous.jpg'
+  },
+  clement: {
+    full: `Laure a une grande expérience dans la prise de parole et dans l'écriture, elle avait le profil que je recherchais pour travailler sur mon discours. L'objectif était de trouver les mots et la façon de parler de mon activité pour un public non initié. Nous avons eu deux sessions de travail. D'abord nous avons revu les bases d'un bon pitch, ce fut essentiel pour pouvoir ensuite construire le mien pour Harmony. Laure a de grandes qualités d'écoute et de synthèse, grâce à elles, nous avons rapidement trouvé la construction du discours et les formulations de phrase qui permettaient de transmettre des messages forts. Je recommande vivement son coaching.`,
+    name: 'Clément Sornin',
+    job: 'Entrepreneur - Fondateur CEO "Harmony"',
+    image: 'clement_sornin.jpg'
+  },
+  alexi: {
+    full: `J'ai fait appel à Laure dans le but d'améliorer mes prises de paroles et de parfaire l'exercice difficile du "pitch" de start-up. L'objectif principal était de construire le pitch de ma start-up, permettant une présentation claire de notre problématique, notre produit, notre marché, notre équipe... Mais l'accompagnement de Laure est allé bien au delà de cet exercice. Nous avons à la fois travaillé sur la structure de la prise de parole, adaptée à différents formats (interview, présentation, pitch), mais aussi la gestion du stress, le vocabulaire, la posture, les gestes. Laure propose une approche holistique qui ne laisse rien au hasard, et utilise ses compétences acquises au travers de ses différentes expériences pour faire ressortir le meilleur de nous même. Sans aucun doute, la meilleure coach que j'ai rencontré.`,
+    name: 'Alexi Perrino',
+    job: 'Entrepreneur - Fondateur CEO "Jared"',
+    image: 'alexi_perrino.jpg'
+  },
+  diariata: {
+    full: `Laure Cohen est la seule Coach en qui a su et qui sait m'accompagner dans mes prises de paroles importantes. Son écoute et sa capacité à mettre en confiance permet de travailler rapidement et de façon efficace. Elle a su me convaincre et me pousser dans mes retranchements en douceur pour un résultat extraordinaire en peu de temps. Depuis notre première collaboration, je ne fais appel qu'à elle et je la remercie de mettre à mon service son expertise pour me rendre convaincante et opérationnelle. Son accompagnement lors du concours d'éloquence de la Fondation des Femmes en est la preuve. Vous pouvez compter sur elle en toute confiance !`,
+    name: 'Diariata N\'Diaye',
+    job: 'Présidente "Résonantes" - Concours Éloquence Remporté',
+    image: 'diariata_ndiaye.jpg'
+  },
+  sarah: {
+    full: `J'ai travaillé avec Laure sur "comment bien délivrer mon message" dans le cadre d'une interview télé. Le défi était d'avoir le plus d'impact possible en trois minutes, un temps réduit pour tout ce que j'avais à dire. Elle m'a challengée, aussi bien sur le fond que sur la forme, avec beaucoup de créativité et de professionnalisme. Le résultat a été un grand succès et j'ai hâte de retravailler avec elle.`,
+    name: 'Sarah Ohayon',
+    job: 'Partner JAB - Interview Télé Réussie',
+    image: 'sarah_ohayon.jpg'
+  },
+  eric: {
+    full: `Riche de ses multiples vies, Laure apporte toujours beaucoup plus que ce qui était prévu, à ceux et celles qu'elle accompagne. Cette expérience/expertise, boostée par un engagement et une bienveillance absolue, font d'elle une coach formidable.`,
+    name: 'Eric Salomon',
+    job: 'Fondateur et Président Time to Pitch',
+    image: 'eric_salomon.png'
+  },
+  laetitia: {
+    full: `Mon expérience avec Laure a été excellente ! Je l'ai contactée pour préparer mon passage devant un jury (soutenance pour l'obtention d'un Master 2). Dans un temps limité, mon objectif était de mettre en avant mon travail et surtout mon identité professionnelle et de valider mes acquis. Je ne parvenais pas à rendre fluide ma présentation d'un dossier que je maîtrisais pourtant parfaitement. Le stress et l'anxiété à l'idée de prendre la parole devant un jury m'empêchaient de me préparer correctement. Avec méthodologie, sincérité, beaucoup d'humour et une grande générosité, Laure m'a donné les outils qui m'ont permis de me recentrer sur l'essentiel, structurer ma prise de parole et lui donner un rythme. J'ai su embarquer mon auditoire jusqu'au bout sans les perdre et sans me perdre ! Est ce que je vous recommande cette coach ? Oui, c'est sûr !`,
+    name: 'Laetitia Mabed',
+    job: 'Directrice Comptable - Master 2 Validé',
+    image: 'laetitia_mabed.png'
+  },
+  sylvie: {
+    full: `Je suis créatrice de bijoux, j'ai contacté Laure après une conférence qu'elle donnait pour « Potentiel de Femmes ». Je voulais clarifier mon storytelling et refaire mon site internet. Nous avons largement atteint cet objectif. Une séance riche d'enseignements : Une vision sur ce que je veux faire, des objectifs clairs. Je recommande c'est sûr !`,
+    name: 'Sylvie Uzan',
+    job: 'Créatrice Bijoux "Atelier JAGG"',
+    image: 'sylvie_uzan.png'
+  },
+  arnaud: {
+    full: `Laure excelle dans le coaching grâce à un dynamisme incroyable et une capacité d'adaptation hors-pair. Nous travaillons avec elle depuis plusieurs années et elle continue de nous surprendre par son style unique, associé à un professionnalisme à toute épreuve!`,
+    name: 'Arnaud Varnier',
+    job: 'Fondateur et Président WINDOO',
+    image: 'arnaud_varnier.png'
+  },
+  flora: {
+    full: `Laure a compris une clé essentielle en coaching : comprendre son interlocuteur et l'aider à faire ressortir le meilleur de sa personnalité. Sans jamais travestir, elle permet de s'émanciper et d'adopter une liberté de parole impactante et percutante. Elle donne du sens et de l'impact au discours. Elle m'a accompagné à toutes les étapes importantes : lancement de mon entreprise, sortie de mon livre, pour me permettre de prendre du recul sur mes projets, pour mieux les présenter et convaincre !`,
+    name: 'Flora Ghebali',
+    job: 'Fondatrice Coalitions',
+    image: 'flora_ghebali.jpg'
+  },
+  hela: {
+    full: `Il y a un avant et un après ma rencontre et mon travail avec Laure. Précise, sensible et hyper pro, Laure m'a partagé des outils et une méthode, en lien avec mes besoins, qui ont radicalement et structurellement modifié ma manière d'appréhender la prise de parole en public, mais pas que !! Laure est une femme fabuleuse.`,
+    name: 'Hela Daboussi',
+    job: 'Cadre du Secteur Public',
+    image: 'hela_daboussi.jpg'
+  },
+  mickael_z: {
+    full: `Je suis quelqu'un d'assez angoissé, souvent paralysé, ce qui m'a beaucoup empêché de m'engager dans des directions ou même de simplement lâcher prise. J'ai réalisé avec Laure un travail en profondeur où elle a su identifier avec justesse les verrous qui me bloquaient. Elle m'a activement soutenu dans les moments difficiles et m'a aidé, petit à petit, à dépasser certaines peurs et à les comprendre. Aujourd'hui la vie me semble largement plus simple. Un travail bien fait, à deux !`,
+    name: 'Mickaël Zaluski',
+    job: 'Réalisateur - Producteur - Dentiste',
+    image: 'mickael_zaluski.jpg'
+  },
+  diane: {
+    full: `Laure a été véritablement mon écoute et surtout sincèrement investie dans mon développement personnel, prenant des nouvelles de mon évolution régulièrement. Elle sait avoir les mots justes pour nous encourager et nous faire avancer sur tous les tableaux. Nos quelques séances m'ont fait beaucoup évoluer. Elle est d'une grande intelligence et très expérimentée, elle cerne le cœur du problème très vite et on fait des pas de géants. Elle a participé à me redonner confiance en ma singularité, à impulser le courage nécessaire pour m'investir dans un travail « hors des sentiers battus » dans lequel je m'épanouis totalement aujourd'hui. Merci à elle ! C'est une vraie chance de l'avoir croisée...`,
+    name: 'Diane Bismuth',
+    job: 'Journaliste Gastronomique',
+    image: 'diane_bismuth.jpg'
+  },
+  helene: {
+    full: `J'ai le plaisir de travailler avec Laure depuis plus d'un an dans le cadre des formations qu'elle anime pour TIME TO PITCH au sein de Sciences Po Executive Education : Pitch et éloquence. Laure est une professionnelle rigoureuse, enthousiaste, engagée et très à l'écoute des apprenants. Que ce soit en présentiel ou à distance, la satisfaction est toujours au top ! Merci Laure.`,
+    name: 'Hélène Tinlot-Benichou',
+    job: 'Responsable Communication Sciences Po Executive Education',
+    image: 'helene_tinlot_benichou.jpg'
+  },
+  clemence: {
+    full: `J'ai eu la chance de découvrir qu'il existait une solution à mes angoisses… il n'a fallu que quelques séances avec Laure pour qu'elle m'offre l'espace de m'exprimer et de lui expliquer mes failles d'élocution. Je parle vite, je suis timide, j'ai peur de ne pas être pertinente… Elle a su me mettre en confiance et m'aider à assumer mes points de vue, pour la présentation d'une fondation que je devais exposer à une assemblée de plus de 150 personnes. Nous avons analysé ensemble mon projet, mon audience et le ton à prendre pour capter leur attention face au sujet qui me tient le plus à cœur, celui du réchauffement climatique ! J'étais tout de même stressée le jour de ma présentation, mais j'ai appris que le stress peut être géré et devenir un atout dans une préparation à un tel événement personnel :) Projet réussi ! Grâce au discours minutieusement préparé j'ai pu faire passer mon message et l'assemblée a adhéré au projet. Merci encore à Laure pour ses conseils.`,
+    name: 'Clémence M.',
+    job: 'Fondatrice Association Environnementale',
+    image: 'clemence_m.jpg'
+  }
+};
+
+// Convertir testimonialData en array avec catégories et structure pour TestimonialCard
+const testimonialArray = Object.entries(testimonialData).map(([id, data]) => ({
+  id,
+  name: data.name,
+  role: data.job,
+  category: getTestimonialCategory(data.job, data.name),
+  image: data.image,
+  testimonial: data.full,
+  result: data.job.includes(' - ') ? data.job.split(' - ')[1] : undefined,
+}));
+
+const testimonialsByCategory = {
+  academique: testimonialArray.filter(t => t.category === 'academique'),
+  professionnel: testimonialArray.filter(t => t.category === 'professionnel'),
+  entrepreneur: testimonialArray.filter(t => t.category === 'entrepreneur'),
+  eloquence: testimonialArray.filter(t => t.category === 'eloquence'),
+};
+---
+
+<Layout metadata={metadata}>
+  <!-- Hero Widget ******************* -->
+
+  <Hero
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Réserver ma séance gratuite',
+        href: '/contact',
+        icon: 'tabler:calendar',
+      },
+      { 
+        text: 'Voir toutes les réussites', 
+        href: '#temoignages-complets',
+        icon: 'tabler:arrow-down',
+      },
+    ]}
+    image={{ 
+      src: '/images/temoignages/jesse_levy.jpg', 
+      alt: 'Jesse Levy - Témoignage client Laure Cohen' 
+    }}
+  >
+    <Fragment slot="title">
+      <span class="text-accent">+200 transformations</span> authentiques avec <span class="text-primary">photos réelles</span>
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      <span class="font-semibold text-lg">Découvrez les vraies histoires de nos clients</span>
+      <br class="hidden sm:block" />
+      <span class="block mt-2 text-muted">
+        Étudiants, professionnels, entrepreneurs : ils ont tous transformé leur peur en force
+      </span>
+    </Fragment>
+  </Hero>
+
+  <!-- Stats Widget ****************** -->
+
+  <Stats
+    title="Impact réel, résultats mesurables"
+    subtitle="Des chiffres qui parlent d'eux-mêmes"
+    stats={[
+      { title: 'Clients transformés', amount: '200+' },
+      { title: 'Réussite aux oraux', amount: '100%' },
+      { title: 'Satisfaction client', amount: '98%' },
+      { title: 'Années d\'expérience', amount: '8' },
+    ]}
+  />
+
+  <!-- Testimonials Widget - Réussites Académiques *************** -->
+
+  <Testimonials
+    id="temoignages-academiques"
+    title="🎓 Réussites Académiques"
+    subtitle="Étudiants : de la peur à l'excellence - Soutenances, concours, oraux réussis avec brio"
+    testimonials={[
+      {
+        testimonial: truncateText(testimonialData.tabatha.full),
+        fullTestimonial: testimonialData.tabatha.full,
+        name: testimonialData.tabatha.name,
+        job: testimonialData.tabatha.job,
+        image: {
+          src: `/images/temoignages/${testimonialData.tabatha.image}`,
+          alt: 'Tabatha Deray - Mention très bien'
+        },
+      },
+      {
+        testimonial: truncateText(testimonialData.clara.full),
+        fullTestimonial: testimonialData.clara.full,
+        name: testimonialData.clara.name,
+        job: testimonialData.clara.job,
+        image: {
+          src: `/images/temoignages/${testimonialData.clara.image}`,
+          alt: 'Clara Touboul - Admise HEC'
+        },
+      },
+      {
+        testimonial: truncateText(testimonialData.emilie.full),
+        fullTestimonial: testimonialData.emilie.full,
+        name: testimonialData.emilie.name,
+        job: testimonialData.emilie.job,
+        image: {
+          src: `/images/temoignages/${testimonialData.emilie.image}`,
+          alt: 'Émilie Fajnman - Coaching étudiant'
+        },
+      },
+      {
+        testimonial: truncateText(testimonialData.laetitia.full),
+        fullTestimonial: testimonialData.laetitia.full,
+        name: testimonialData.laetitia.name,
+        job: testimonialData.laetitia.job,
+        image: {
+          src: `/images/temoignages/${testimonialData.laetitia.image}`,
+          alt: 'Laetitia Mabed - Master 2'
+        },
+      },
+    ]}
+  />
+
+  <!-- Testimonials Widget - Succès Professionnels *************** -->
+
+  <Testimonials
+    id="temoignages-professionnels"
+    title="💼 Succès Professionnels"
+    subtitle="Managers, dirigeants, collaborateurs : ils ont développé leur leadership et impact"
+    testimonials={[
+      {
+        testimonial: truncateText(testimonialData.jesse.full),
+        fullTestimonial: testimonialData.jesse.full,
+        name: testimonialData.jesse.name,
+        job: testimonialData.jesse.job,
+        image: {
+          src: `/images/temoignages/${testimonialData.jesse.image}`,
+          alt: 'Jesse Levy - Comédienne'
+        },
+      },
+      {
+        testimonial: truncateText(testimonialData.philippe.full),
+        fullTestimonial: testimonialData.philippe.full,
+        name: testimonialData.philippe.name,
+        job: testimonialData.philippe.job,
+        image: {
+          src: `/images/temoignages/${testimonialData.philippe.image}`,
+          alt: 'Philippe Jeanneau - Dirigeant'
+        },
+      },
+      {
+        testimonial: truncateText(testimonialData.justine.full),
+        fullTestimonial: testimonialData.justine.full,
+        name: testimonialData.justine.name,
+        job: testimonialData.justine.job,
+        image: {
+          src: `/images/temoignages/${testimonialData.justine.image}`,
+          alt: 'Justine Fraïoli - Confiance retrouvée'
+        },
+      },
+      {
+        testimonial: truncateText(testimonialData.sarah.full),
+        fullTestimonial: testimonialData.sarah.full,
+        name: testimonialData.sarah.name,
+        job: testimonialData.sarah.job,
+        image: {
+          src: `/images/temoignages/${testimonialData.sarah.image}`,
+          alt: 'Sarah Ohayon - Interview télé'
+        },
+      },
+    ]}
+  />
+
+  <!-- Testimonials Widget - Entrepreneurs *************** -->
+
+  <Testimonials
+    id="temoignages-entrepreneurs"
+    title="🚀 Entrepreneurs : Pitch et Conviction"
+    subtitle="Startups, scale-ups : ils ont convaincu investisseurs et clients avec leurs levées de fonds"
+    testimonials={[
+      {
+        testimonial: truncateText(testimonialData.mickael.full),
+        fullTestimonial: testimonialData.mickael.full,
+        name: testimonialData.mickael.name,
+        job: testimonialData.mickael.job,
+        image: {
+          src: `/images/temoignages/${testimonialData.mickael.image}`,
+          alt: 'Mickaël Kissous - Levée de fonds KIDIWE'
+        },
+      },
+      {
+        testimonial: truncateText(testimonialData.clement.full),
+        fullTestimonial: testimonialData.clement.full,
+        name: testimonialData.clement.name,
+        job: testimonialData.clement.job,
+        image: {
+          src: `/images/temoignages/${testimonialData.clement.image}`,
+          alt: 'Clément Sornin - Pitch Harmony'
+        },
+      },
+      {
+        testimonial: truncateText(testimonialData.alexi.full),
+        fullTestimonial: testimonialData.alexi.full,
+        name: testimonialData.alexi.name,
+        job: testimonialData.alexi.job,
+        image: {
+          src: `/images/temoignages/${testimonialData.alexi.image}`,
+          alt: 'Alexi Perrino - Pitch entrepreneur'
+        },
+      },
+      {
+        testimonial: truncateText(testimonialData.flora.full),
+        fullTestimonial: testimonialData.flora.full,
+        name: testimonialData.flora.name,
+        job: testimonialData.flora.job,
+        image: {
+          src: `/images/temoignages/${testimonialData.flora.image}`,
+          alt: 'Flora Ghebali - Fondatrice'
+        },
+      },
+    ]}
+  />
+
+  <!-- Testimonials Widget - Concours et Éloquence *************** -->
+
+  <Testimonials
+    id="temoignages-eloquence"
+    title="🏆 Concours et Éloquence"
+    subtitle="Ils ont remporté des concours et développé leur éloquence avec brio"
+    testimonials={[
+      {
+        testimonial: truncateText(testimonialData.diariata.full),
+        fullTestimonial: testimonialData.diariata.full,
+        name: testimonialData.diariata.name,
+        job: testimonialData.diariata.job,
+        image: {
+          src: `/images/temoignages/${testimonialData.diariata.image}`,
+          alt: 'Diariata N\'Diaye - Concours éloquence'
+        },
+      },
+      {
+        testimonial: truncateText(testimonialData.eric.full),
+        fullTestimonial: testimonialData.eric.full,
+        name: testimonialData.eric.name,
+        job: testimonialData.eric.job,
+        image: {
+          src: `/images/temoignages/${testimonialData.eric.image}`,
+          alt: 'Eric Salomon - CEO'
+        },
+      },
+      {
+        testimonial: truncateText(testimonialData.helene.full),
+        fullTestimonial: testimonialData.helene.full,
+        name: testimonialData.helene.name,
+        job: testimonialData.helene.job,
+        image: {
+          src: `/images/temoignages/${testimonialData.helene.image}`,
+          alt: 'Hélène Tinlot-Benichou - Sciences Po'
+        },
+      },
+      {
+        testimonial: truncateText(testimonialData.clemence.full),
+        fullTestimonial: testimonialData.clemence.full,
+        name: testimonialData.clemence.name,
+        job: testimonialData.clemence.job,
+        image: {
+          src: `/images/temoignages/${testimonialData.clemence.image}`,
+          alt: 'Clémence M. - Fondatrice'
+        },
+      },
+    ]}
+  />
+
+  <!-- Testimonials Widget - Parcours Inspirants *************** -->
+
+  <Testimonials
+    id="autres-temoignages"
+    title="🌟 Parcours Inspirants"
+    subtitle="Artistes, managers, reconversions : chaque histoire est unique et transformatrice"
+    testimonials={[
+      {
+        testimonial: truncateText(testimonialData.sylvie.full),
+        fullTestimonial: testimonialData.sylvie.full,
+        name: testimonialData.sylvie.name,
+        job: testimonialData.sylvie.job,
+        image: {
+          src: `/images/temoignages/${testimonialData.sylvie.image}`,
+          alt: 'Sylvie Uzan - Reconversion'
+        },
+      },
+      {
+        testimonial: truncateText(testimonialData.arnaud.full),
+        fullTestimonial: testimonialData.arnaud.full,
+        name: testimonialData.arnaud.name,
+        job: testimonialData.arnaud.job,
+        image: {
+          src: `/images/temoignages/${testimonialData.arnaud.image}`,
+          alt: 'Arnaud Varnier - Fondateur'
+        },
+      },
+      {
+        testimonial: truncateText(testimonialData.diane.full),
+        fullTestimonial: testimonialData.diane.full,
+        name: testimonialData.diane.name,
+        job: testimonialData.diane.job,
+        image: {
+          src: `/images/temoignages/${testimonialData.diane.image}`,
+          alt: 'Diane Bismuth - Journaliste'
+        },
+      },
+      {
+        testimonial: truncateText(testimonialData.mickael_z.full),
+        fullTestimonial: testimonialData.mickael_z.full,
+        name: testimonialData.mickael_z.name,
+        job: testimonialData.mickael_z.job,
+        image: {
+          src: `/images/temoignages/${testimonialData.mickael_z.image}`,
+          alt: 'Mickaël Zaluski - Réalisateur'
+        },
+      },
+    ]}
+  />
+
+  <!-- Testimonials Widget - Développement Personnel *************** -->
+
+  <Testimonials
+    id="temoignages-personnel"
+    title="💫 Développement Personnel"
+    subtitle="Ils ont surmonté leurs blocages et retrouvé confiance en eux"
+    testimonials={[
+      {
+        testimonial: truncateText(testimonialData.hela.full),
+        fullTestimonial: testimonialData.hela.full,
+        name: testimonialData.hela.name,
+        job: testimonialData.hela.job,
+        image: {
+          src: `/images/temoignages/${testimonialData.hela.image}`,
+          alt: 'Hela Daboussi - Transformation'
+        },
+      },
+    ]}
+  />
+
+  <!-- CallToAction Widget *********** -->
+
+  <CallToAction
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Rejoindre ces success stories',
+        href: '/contact',
+        icon: 'tabler:star',
+      },
+      {
+        text: 'Découvrir la méthode',
+        href: '/demo',
+        icon: 'tabler:circle',
+      },
+    ]}
+  >
+    <Fragment slot="title">
+      Prêt à <span class="text-accent">transformer</span> votre peur en <span class="text-primary">force</span> ?
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      Rejoignez les +200 clients qui ont déjà transformé leur prise de parole.
+      <br class="hidden md:inline" />
+      Votre séance découverte gratuite vous attend.
+    </Fragment>
+  </CallToAction>
+
+  <!-- Témoignages par Catégorie avec Tabs -->
+  <section class="py-16 md:py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+          Témoignages par Domaine
+        </h2>
+        <p class="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+          Cliquez sur chaque témoignage pour découvrir l'histoire complète de transformation
+        </p>
+      </div>
+
+      <!-- Tabs Navigation -->
+      <div class="flex flex-wrap justify-center mb-8 border-b border-gray-200 dark:border-gray-700">
+        <button class="tab-button active px-6 py-3 font-medium text-blue-600 border-b-2 border-blue-600" data-tab="academique">
+          🎓 Réussites Académiques
+        </button>
+        <button class="tab-button px-6 py-3 font-medium text-gray-500 hover:text-blue-600 border-b-2 border-transparent" data-tab="professionnel">
+          💼 Succès Professionnels
+        </button>
+        <button class="tab-button px-6 py-3 font-medium text-gray-500 hover:text-blue-600 border-b-2 border-transparent" data-tab="entrepreneur">
+          🚀 Entrepreneurs
+        </button>
+        <button class="tab-button px-6 py-3 font-medium text-gray-500 hover:text-blue-600 border-b-2 border-transparent" data-tab="eloquence">
+          🎤 Éloquence
+        </button>
+      </div>
+
+      <!-- Tab Content -->
+      <div id="academique" class="tab-content active">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {testimonialsByCategory.academique.map((testimonial) => (
+            <TestimonialCard testimonial={testimonial} />
+          ))}
+        </div>
+      </div>
+
+      <div id="professionnel" class="tab-content hidden">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {testimonialsByCategory.professionnel.map((testimonial) => (
+            <TestimonialCard testimonial={testimonial} />
+          ))}
+        </div>
+      </div>
+
+      <div id="entrepreneur" class="tab-content hidden">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {testimonialsByCategory.entrepreneur.map((testimonial) => (
+            <TestimonialCard testimonial={testimonial} />
+          ))}
+        </div>
+      </div>
+
+      <div id="eloquence" class="tab-content hidden">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {testimonialsByCategory.eloquence.map((testimonial) => (
+            <TestimonialCard testimonial={testimonial} />
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal pour afficher le témoignage complet -->
+  <Modal id="testimonial">
+    <div class="flex flex-col md:flex-row gap-6">
+      <!-- Photo du client en grand -->
+      <div class="md:w-1/3">
+        <div class="relative w-full aspect-square rounded-lg overflow-hidden">
+          <img
+            id="testimonial-modal-image"
+            src=""
+            alt=""
+            class="w-full h-full object-cover"
+          />
+        </div>
+        <div class="mt-4 text-center">
+          <h4 id="testimonial-modal-name" class="text-xl font-semibold text-gray-900 dark:text-white"></h4>
+          <p id="testimonial-modal-role" class="text-gray-600 dark:text-gray-400"></p>
+          <p id="testimonial-modal-result" class="text-blue-600 dark:text-blue-400 font-medium mt-1"></p>
+          <p id="testimonial-modal-location" class="text-sm text-gray-500 dark:text-gray-500 mt-1"></p>
+          <p id="testimonial-modal-date" class="text-sm text-gray-500 dark:text-gray-500"></p>
+        </div>
+      </div>
+      
+      <!-- Témoignage complet -->
+      <div class="md:w-2/3">
+        <blockquote id="testimonial-modal-testimonial" class="text-lg text-gray-700 dark:text-gray-300 italic leading-relaxed">
+          <!-- Le témoignage complet sera inséré ici -->
+        </blockquote>
+      </div>
+    </div>
+  </Modal>
+</Layout>
+
+<script>
+  // Gestion des tabs
+  document.addEventListener('DOMContentLoaded', () => {
+    // === GESTION DES TABS ===
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const targetTab = button.getAttribute('data-tab');
+        if (!targetTab) return;
+        
+        // Désactiver tous les tabs
+        tabButtons.forEach(btn => {
+          btn.classList.remove('active', 'text-blue-600', 'border-blue-600');
+          btn.classList.add('text-gray-500', 'border-transparent');
+        });
+        
+        tabContents.forEach(content => {
+          content.classList.add('hidden');
+          content.classList.remove('active');
+        });
+        
+        // Activer le tab sélectionné
+        button.classList.add('active', 'text-blue-600', 'border-blue-600');
+        button.classList.remove('text-gray-500', 'border-transparent');
+        
+        const targetContent = document.getElementById(targetTab);
+        if (targetContent) {
+          targetContent.classList.remove('hidden');
+          targetContent.classList.add('active');
+        }
+      });
+    });
+    
+    // === GESTION DES CLICS SUR CARTES ET BOUTONS ===
+    function setupModalTriggers() {
+      // Fonction pour ouvrir la modal avec des données
+      function openModalWithData(data: any) {
+        // Mettre à jour le contenu de la modal
+        const modalTitle = document.getElementById('testimonial-title');
+        const modalImage = document.getElementById('testimonial-modal-image') as HTMLImageElement;
+        const modalName = document.getElementById('testimonial-modal-name');
+        const modalRole = document.getElementById('testimonial-modal-role');
+        const modalResult = document.getElementById('testimonial-modal-result');
+        const modalTestimonial = document.getElementById('testimonial-modal-testimonial');
+
+        if (modalTitle) modalTitle.textContent = `Témoignage de ${data.name}`;
+        if (modalImage && data.image) {
+          modalImage.src = `/images/temoignages/${data.image}`;
+          modalImage.alt = `Photo de ${data.name}`;
+        }
+        if (modalName) modalName.textContent = data.name || '';
+        if (modalRole) modalRole.textContent = data.role || '';
+        if (modalResult) {
+          if (data.result) {
+            modalResult.textContent = data.result;
+            modalResult.style.display = 'block';
+          } else {
+            modalResult.style.display = 'none';
+          }
+        }
+        if (modalTestimonial) modalTestimonial.textContent = `"${data.testimonial}"`;
+
+        // Ouvrir la modal
+        if ((window as any).openTestimonialModal) {
+          (window as any).openTestimonialModal();
+        }
+      }
+      
+      // 1. Gérer les cartes testimonial-card (widgets du haut)
+      const testimonialCards = document.querySelectorAll('.testimonial-card');
+      
+      testimonialCards.forEach((card, index) => {
+        const clickHandler = (e: Event) => {
+          e.preventDefault();
+          
+          const data = {
+            id: card.getAttribute('data-testimonial-id'),
+            name: card.getAttribute('data-testimonial-name'),
+            role: card.getAttribute('data-testimonial-role'),
+            result: card.getAttribute('data-testimonial-result'),
+            image: card.getAttribute('data-testimonial-image'),
+            testimonial: card.getAttribute('data-testimonial-text')
+          };
+          
+          openModalWithData(data);
+        };
+        
+        // Supprimer l'ancien handler s'il existe
+        if ((card as any)._clickHandler) {
+          card.removeEventListener('click', (card as any)._clickHandler);
+        }
+        
+        // Ajouter le nouveau handler
+        (card as any)._clickHandler = clickHandler;
+        card.addEventListener('click', clickHandler);
+      });
+      
+      // 2. Gérer les boutons testimonial-btn (TestimonialCard du bas)
+      const testimonialButtons = document.querySelectorAll('.testimonial-btn');
+      
+      testimonialButtons.forEach((button, index) => {
+        const clickHandler = (e: Event) => {
+          e.preventDefault();
+          
+          const data = {
+            id: button.getAttribute('data-testimonial-id'),
+            name: button.getAttribute('data-testimonial-name'),
+            role: button.getAttribute('data-testimonial-role'),
+            result: button.getAttribute('data-testimonial-result'),
+            image: button.getAttribute('data-testimonial-image'),
+            testimonial: button.getAttribute('data-testimonial-text')
+          };
+          
+          openModalWithData(data);
+        };
+        
+        // Supprimer l'ancien handler s'il existe
+        if ((button as any)._clickHandler) {
+          button.removeEventListener('click', (button as any)._clickHandler);
+        }
+        
+        // Ajouter le nouveau handler
+        (button as any)._clickHandler = clickHandler;
+        button.addEventListener('click', clickHandler);
+      });
+    }
+    
+    // Configuration initiale
+    setupModalTriggers();
+    
+    // Reconfigurer après changement de tab (pour les nouveaux éléments)
+    const observer = new MutationObserver(() => {
+      setupModalTriggers();
+    });
+    
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+  });
+</script>
+
+<style>
+  .tab-button {
+    transition: all 0.3s ease;
+  }
+  
+  .tab-content {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style> 
