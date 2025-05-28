@@ -772,6 +772,7 @@ const testimonialsByCategory = {
       testimonialCards.forEach((card, index) => {
         const clickHandler = (e: Event) => {
           e.preventDefault();
+          e.stopPropagation();
           console.log(`🖱️ Card ${index + 1} clicked`);
           
           const data = {
@@ -787,14 +788,20 @@ const testimonialsByCategory = {
           openTestimonialModal(data);
         };
         
-        // Supprimer l'ancien handler s'il existe
+        // Supprimer les anciens handlers s'ils existent
         if ((card as any)._clickHandler) {
           card.removeEventListener('click', (card as any)._clickHandler);
+          card.removeEventListener('touchend', (card as any)._clickHandler);
         }
         
-        // Ajouter le nouveau handler
+        // Ajouter les nouveaux handlers pour desktop et mobile
         (card as any)._clickHandler = clickHandler;
         card.addEventListener('click', clickHandler);
+        card.addEventListener('touchend', clickHandler); // Pour mobile
+        
+        // Améliorer l'accessibilité mobile
+        (card as HTMLElement).style.cursor = 'pointer';
+        (card as HTMLElement).style.setProperty('-webkit-tap-highlight-color', 'rgba(0,0,0,0.1)');
       });
       
       // 2. Gérer les boutons testimonial-btn (TestimonialCard du bas)
@@ -804,6 +811,7 @@ const testimonialsByCategory = {
       testimonialButtons.forEach((button, index) => {
         const clickHandler = (e: Event) => {
           e.preventDefault();
+          e.stopPropagation();
           console.log(`🖱️ Button ${index + 1} clicked`);
           
           const data = {
@@ -819,14 +827,20 @@ const testimonialsByCategory = {
           openTestimonialModal(data);
         };
         
-        // Supprimer l'ancien handler s'il existe
+        // Supprimer les anciens handlers s'ils existent
         if ((button as any)._clickHandler) {
           button.removeEventListener('click', (button as any)._clickHandler);
+          button.removeEventListener('touchend', (button as any)._clickHandler);
         }
         
-        // Ajouter le nouveau handler
+        // Ajouter les nouveaux handlers pour desktop et mobile
         (button as any)._clickHandler = clickHandler;
         button.addEventListener('click', clickHandler);
+        button.addEventListener('touchend', clickHandler); // Pour mobile
+        
+        // Améliorer l'accessibilité mobile
+        (button as HTMLElement).style.cursor = 'pointer';
+        (button as HTMLElement).style.setProperty('-webkit-tap-highlight-color', 'rgba(0,0,0,0.1)');
       });
       
       console.log('✅ Modal triggers setup complete');
@@ -864,5 +878,29 @@ const testimonialsByCategory = {
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
+  }
+  
+  /* Mobile touch optimizations */
+  .testimonial-card,
+  .testimonial-btn {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+    touch-action: manipulation;
+    cursor: pointer;
+  }
+  
+  @media (max-width: 768px) {
+    .testimonial-card {
+      min-height: 44px; /* Minimum touch target size */
+    }
+    
+    .testimonial-btn {
+      min-height: 44px;
+      padding: 0.75rem 1rem;
+    }
+    
+    .tab-button {
+      min-height: 44px;
+      padding: 0.75rem 1rem;
+    }
   }
 </style> 
