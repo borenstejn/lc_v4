@@ -664,6 +664,15 @@ const testimonialsByCategory = {
     const modalResult = document.getElementById('testimonial-modal-result');
     const modalTestimonial = document.getElementById('testimonial-modal-testimonial');
 
+    console.log('🔍 Modal elements found:', {
+      modalTitle: !!modalTitle,
+      modalImage: !!modalImage,
+      modalName: !!modalName,
+      modalRole: !!modalRole,
+      modalResult: !!modalResult,
+      modalTestimonial: !!modalTestimonial
+    });
+
     if (modalTitle) modalTitle.textContent = `Témoignage de ${data.name}`;
     if (modalImage && data.image) {
       modalImage.src = `/images/temoignages/${data.image}`;
@@ -682,20 +691,33 @@ const testimonialsByCategory = {
     if (modalTestimonial) modalTestimonial.textContent = `"${data.testimonial}"`;
     
     // Ouvrir la modal
+    console.log('🔍 Checking modal opening methods...');
+    console.log('Global openTestimonialModal function:', typeof (window as any).openTestimonialModal);
+    
     if ((window as any).openTestimonialModal && typeof (window as any).openTestimonialModal === 'function') {
+      console.log('✅ Using global openTestimonialModal function');
       (window as any).openTestimonialModal();
     } else {
+      console.log('⚠️ Global function not available, using DOM manipulation');
       // Fallback: manipulation directe du DOM
       const backdrop = document.getElementById('testimonial-backdrop');
       const content = document.getElementById('testimonial-content');
       
+      console.log('🔍 Modal DOM elements:', {
+        backdrop: !!backdrop,
+        content: !!content
+      });
+      
       if (backdrop && content) {
+        console.log('✅ Opening modal via DOM manipulation');
         backdrop.classList.remove('hidden');
         backdrop.offsetHeight; // Force reflow
         backdrop.classList.remove('opacity-0');
         content.classList.remove('scale-95');
         content.classList.add('scale-100');
         document.body.style.overflow = 'hidden';
+      } else {
+        console.error('❌ Modal DOM elements not found!');
       }
     }
   }
@@ -724,10 +746,13 @@ const testimonialsByCategory = {
         testimonial: card.getAttribute('data-testimonial-text')
       };
       
+      console.log(`🔍 Card ${index + 1} data:`, data);
+      
       // Supprimer les anciens handlers
       const newCard = card.cloneNode(true) as HTMLElement;
       if (card.parentNode) {
         card.parentNode.replaceChild(newCard, card);
+        console.log(`✅ Card ${index + 1} replaced with new instance`);
       }
       
       if (isMobile) {
@@ -739,6 +764,7 @@ const testimonialsByCategory = {
           touchStartTime = Date.now();
           const touch = e.touches[0];
           touchStartPos = { x: touch.clientX, y: touch.clientY };
+          console.log(`📱 Touch start on card ${index + 1}`);
         }, { passive: false });
         
         newCard.addEventListener('touchend', (e: TouchEvent) => {
@@ -746,6 +772,8 @@ const testimonialsByCategory = {
           e.stopPropagation();
           
           const touchDuration = Date.now() - touchStartTime;
+          console.log(`📱 Touch end on card ${index + 1}, duration: ${touchDuration}ms`);
+          
           if (touchDuration < 500) {
             const touch = e.changedTouches[0];
             const touchEndPos = { x: touch.clientX, y: touch.clientY };
@@ -754,8 +782,10 @@ const testimonialsByCategory = {
               Math.pow(touchEndPos.y - touchStartPos.y, 2)
             );
             
+            console.log(`📱 Touch distance: ${distance}px`);
+            
             if (distance < 10) {
-              console.log(`📱 Card ${index + 1} tapped`, data);
+              console.log(`📱 Card ${index + 1} tapped - opening modal`, data);
               openTestimonialModal(data);
             }
           }
@@ -766,7 +796,7 @@ const testimonialsByCategory = {
         newCard.addEventListener('click', (e: Event) => {
           e.preventDefault();
           e.stopPropagation();
-          console.log(`🖱️ Card ${index + 1} clicked`, data);
+          console.log(`🖱️ Card ${index + 1} clicked - opening modal`, data);
           openTestimonialModal(data);
         });
       }
@@ -788,10 +818,13 @@ const testimonialsByCategory = {
         testimonial: button.getAttribute('data-testimonial-text')
       };
       
+      console.log(`🔍 Button ${index + 1} data:`, data);
+      
       // Supprimer les anciens handlers
       const newButton = button.cloneNode(true) as HTMLElement;
       if (button.parentNode) {
         button.parentNode.replaceChild(newButton, button);
+        console.log(`✅ Button ${index + 1} replaced with new instance`);
       }
       
       if (isMobile) {
@@ -800,6 +833,7 @@ const testimonialsByCategory = {
         
         newButton.addEventListener('touchstart', (e: TouchEvent) => {
           touchStartTime = Date.now();
+          console.log(`📱 Touch start on button ${index + 1}`);
         }, { passive: false });
         
         newButton.addEventListener('touchend', (e: TouchEvent) => {
@@ -807,8 +841,10 @@ const testimonialsByCategory = {
           e.stopPropagation();
           
           const touchDuration = Date.now() - touchStartTime;
+          console.log(`📱 Touch end on button ${index + 1}, duration: ${touchDuration}ms`);
+          
           if (touchDuration < 500) {
-            console.log(`📱 Button ${index + 1} tapped`, data);
+            console.log(`📱 Button ${index + 1} tapped - opening modal`, data);
             openTestimonialModal(data);
           }
         }, { passive: false });
@@ -818,7 +854,7 @@ const testimonialsByCategory = {
         newButton.addEventListener('click', (e: Event) => {
           e.preventDefault();
           e.stopPropagation();
-          console.log(`🖱️ Button ${index + 1} clicked`, data);
+          console.log(`🖱️ Button ${index + 1} clicked - opening modal`, data);
           openTestimonialModal(data);
         });
       }
@@ -835,15 +871,20 @@ const testimonialsByCategory = {
     const tabButtons = document.querySelectorAll('.tab-button');
     const tabContents = document.querySelectorAll('.tab-content');
 
-    tabButtons.forEach(button => {
+    console.log('🔍 Found tabs:', { buttons: tabButtons.length, contents: tabContents.length });
+
+    tabButtons.forEach((button, index) => {
       // Supprimer les anciens handlers
       const newButton = button.cloneNode(true) as HTMLElement;
       if (button.parentNode) {
         button.parentNode.replaceChild(newButton, button);
+        console.log(`✅ Tab button ${index + 1} replaced with new instance`);
       }
       
       newButton.addEventListener('click', () => {
         const targetTab = newButton.getAttribute('data-tab');
+        console.log(`🔄 Tab clicked: ${targetTab}`);
+        
         if (!targetTab) return;
         
         // Désactiver tous les tabs
@@ -865,9 +906,11 @@ const testimonialsByCategory = {
         if (targetContent) {
           targetContent.classList.remove('hidden');
           targetContent.classList.add('active');
+          console.log(`✅ Tab content ${targetTab} activated`);
         }
         
         // Reconfigurer les handlers après changement de tab
+        console.log('🔄 Reconfiguring triggers after tab change...');
         setTimeout(() => setupTestimonialTriggers(), 100);
       });
     });
@@ -879,6 +922,8 @@ const testimonialsByCategory = {
     console.log('🔧 Setting up test button...');
     
     const testModalBtn = document.getElementById('test-modal-btn');
+    console.log('🔍 Test button found:', !!testModalBtn);
+    
     if (testModalBtn) {
       const testData = {
         id: 'test',
@@ -889,21 +934,27 @@ const testimonialsByCategory = {
         testimonial: 'Ceci est un test pour vérifier que la modal fonctionne correctement sur iPhone. Si vous voyez ce message, la modal s\'ouvre bien !'
       };
       
+      console.log('🔍 Test button data:', testData);
+      
       // Supprimer les anciens handlers
       const newTestBtn = testModalBtn.cloneNode(true) as HTMLElement;
       if (testModalBtn.parentNode) {
         testModalBtn.parentNode.replaceChild(newTestBtn, testModalBtn);
+        console.log('✅ Test button replaced with new instance');
       }
       
       const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || 
                       ('ontouchstart' in window) || 
                       (navigator.maxTouchPoints > 0);
       
+      console.log('📱 Mobile detected for test button:', isMobile);
+      
       if (isMobile) {
         let touchStartTime = 0;
         
         newTestBtn.addEventListener('touchstart', (e: TouchEvent) => {
           touchStartTime = Date.now();
+          console.log('📱 Test button touch start');
         }, { passive: false });
         
         newTestBtn.addEventListener('touchend', (e: TouchEvent) => {
@@ -911,6 +962,8 @@ const testimonialsByCategory = {
           e.stopPropagation();
           
           const touchDuration = Date.now() - touchStartTime;
+          console.log(`📱 Test button touch end, duration: ${touchDuration}ms`);
+          
           if (touchDuration < 500) {
             console.log('📱 Test button tapped - opening modal');
             openTestimonialModal(testData);
@@ -924,6 +977,10 @@ const testimonialsByCategory = {
           openTestimonialModal(testData);
         });
       }
+      
+      console.log('✅ Test button event listeners attached');
+    } else {
+      console.error('❌ Test button not found in DOM!');
     }
     
     console.log('✅ Test button setup complete');
@@ -932,6 +989,14 @@ const testimonialsByCategory = {
   // === INITIALISATION PRINCIPALE ===
   function initializePage() {
     console.log('🚀 Initializing testimonials page...');
+    console.log('🔍 Current URL:', window.location.href);
+    console.log('🔍 Document ready state:', document.readyState);
+    
+    // Vérifier que nous sommes bien sur la page témoignages
+    if (!window.location.pathname.includes('/temoignages')) {
+      console.log('⚠️ Not on testimonials page, skipping initialization');
+      return;
+    }
     
     setupTabs();
     setupTestimonialTriggers();
@@ -939,30 +1004,80 @@ const testimonialsByCategory = {
     
     // Exposer la fonction globalement
     (window as any).openTestimonialModalWithData = openTestimonialModal;
+    console.log('✅ Global function exposed: openTestimonialModalWithData');
     
     console.log('🎉 Testimonials page initialized successfully');
   }
   
   // === GESTION DES ÉVÉNEMENTS DE CHARGEMENT ===
+  console.log('🔍 Document ready state at script load:', document.readyState);
+  
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializePage);
+    console.log('📄 Document still loading, adding DOMContentLoaded listener');
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log('📄 DOMContentLoaded fired');
+      initializePage();
+    });
   } else {
+    console.log('📄 Document already loaded, initializing immediately');
     initializePage();
   }
   
   // Réinitialiser après navigation Astro
   document.addEventListener('astro:page-load', () => {
-    console.log('🔄 Astro page loaded - reinitializing...');
-    setTimeout(initializePage, 100);
+    console.log('🔄 Astro page-load event fired');
+    console.log('🔍 New URL after navigation:', window.location.href);
+    setTimeout(() => {
+      console.log('🔄 Reinitializing after Astro navigation...');
+      initializePage();
+    }, 100);
   });
   
   // Fallback pour autres types de navigation
   window.addEventListener('popstate', () => {
+    console.log('🔄 Popstate event fired');
+    console.log('🔍 URL after popstate:', window.location.href);
+    
     if (window.location.pathname.includes('/temoignages')) {
       console.log('🔄 Popstate to testimonials - reinitializing...');
-      setTimeout(initializePage, 100);
+      setTimeout(() => {
+        console.log('🔄 Reinitializing after popstate...');
+        initializePage();
+      }, 100);
     }
   });
+  
+  // Observer pour détecter les changements dans le DOM
+  const observer = new MutationObserver((mutations) => {
+    let shouldReinit = false;
+    
+    mutations.forEach((mutation) => {
+      if (mutation.type === 'childList') {
+        mutation.addedNodes.forEach((node) => {
+          if (node.nodeType === Node.ELEMENT_NODE) {
+            const element = node as Element;
+            if (element.id === 'test-modal-btn' || 
+                element.classList.contains('testimonial-card') || 
+                element.classList.contains('testimonial-btn')) {
+              shouldReinit = true;
+            }
+          }
+        });
+      }
+    });
+    
+    if (shouldReinit) {
+      console.log('🔄 DOM changes detected, reinitializing...');
+      setTimeout(initializePage, 50);
+    }
+  });
+  
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+  
+  console.log('✅ Script initialization complete');
 </script>
 
 <style>
