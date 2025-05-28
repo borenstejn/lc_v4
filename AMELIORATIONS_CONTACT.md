@@ -16,14 +16,14 @@ Autocomplete: tel
 
 ### 2. **Mise à Jour du Message**
 **Avant :**
-> "Décrivez-moi votre défi en quelques mots. Je vous recontacte sous 24h pour programmer notre premier échange (30 min, sans engagement)."
+> "Décrivez-moi votre défi en quelques mots. Je vous recontacte sous 24h pour programmer notre premier échange (20 min, sans engagement)."
 
 **Après :**
-> "Laissez-moi vos coordonnées et décrivez votre défi. Je vous rappelle sous 24h pour programmer notre premier échange (30 min, sans engagement)."
+> "Laissez-moi vos coordonnées et décrivez votre défi. Je vous rappelle sous 24h pour programmer notre premier échange (20 min, sans engagement)."
 
 ### 3. **Nouvelle Description du Formulaire**
 ```
-📞 Laure vous rappelle sous 24h • ✨ Séance découverte de 30 min offerte • 🎯 Sans engagement
+📞 Laure vous rappelle sous 24h • ✨ Séance découverte de 20 min offerte • 🎯 Sans engagement
 ```
 
 ## 📋 Ordre des Champs Optimisé

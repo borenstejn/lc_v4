@@ -18,7 +18,7 @@ Ajout: Sous-titre explicatif sur la démarche de Laure
 ### 2. **Formulaire de Contact Optimisé**
 ```yaml
 Titre: "Réservez votre séance découverte gratuite"
-Sous-titre: "Laissez-moi vos coordonnées et décrivez votre défi. Je vous rappelle sous 24h pour programmer notre premier échange (30 min, sans engagement)."
+Sous-titre: "Laissez-moi vos coordonnées et décrivez votre défi. Je vous rappelle sous 24h pour programmer notre premier échange (20 min, sans engagement)."
 
 Champs:
   - Prénom (au lieu de "Name")
@@ -28,7 +28,7 @@ Champs:
   - Message: "Décrivez votre défi en prise de parole"
 
 Bouton: "Réserver ma séance gratuite" (au lieu de "Submit")
-Description: "📞 Laure vous rappelle sous 24h • ✨ Séance découverte de 30 min offerte • 🎯 Sans engagement"
+Description: "📞 Laure vous rappelle sous 24h • ✨ Séance découverte de 20 min offerte • 🎯 Sans engagement"
 ```
 
 ### 3. **Sections d'Aide par Profil**
@@ -111,7 +111,7 @@ test-contact.html - Fichier de test pour validation
 PAGE_CONTACT_LAURE.md - Cette documentation
 ```
 
-## 🔗 Liens de Test
+## �� Liens de Test
 - **Page Contact** : http://localhost:4325/contact
 - **Test Visuel** : test-contact.html
 - **Site Complet** : http://localhost:4325/
