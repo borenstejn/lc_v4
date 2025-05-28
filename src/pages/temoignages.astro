@@ -649,434 +649,319 @@ const testimonialsByCategory = {
 </Layout>
 
 <script>
-  // Gestion des tabs et modal
-  document.addEventListener('DOMContentLoaded', () => {
-    console.log('📄 Page témoignages: DOM loaded');
+  // Script simplifié et robuste pour la gestion des témoignages
+  console.log('📄 Testimonials page script loading...');
+  
+  // === FONCTIONS UTILITAIRES ===
+  function openTestimonialModal(data: any) {
+    console.log('🔄 Opening testimonial modal with:', data);
     
-    // Fonction d'initialisation complète
-    function initializePage() {
-      console.log('🔄 Initializing testimonials page...');
-      
-      // === GESTION DES TABS ===
-      const tabButtons = document.querySelectorAll('.tab-button');
-      const tabContents = document.querySelectorAll('.tab-content');
+    // Mettre à jour le contenu de la modal
+    const modalTitle = document.getElementById('testimonial-title');
+    const modalImage = document.getElementById('testimonial-modal-image') as HTMLImageElement;
+    const modalName = document.getElementById('testimonial-modal-name');
+    const modalRole = document.getElementById('testimonial-modal-role');
+    const modalResult = document.getElementById('testimonial-modal-result');
+    const modalTestimonial = document.getElementById('testimonial-modal-testimonial');
 
-      tabButtons.forEach(button => {
-        // Supprimer les anciens listeners s'ils existent
-        if ((button as any)._tabClickHandler) {
-          button.removeEventListener('click', (button as any)._tabClickHandler);
-        }
-        
-        const tabClickHandler = () => {
-          const targetTab = button.getAttribute('data-tab');
-          if (!targetTab) return;
-          
-          // Désactiver tous les tabs
-          tabButtons.forEach(btn => {
-            btn.classList.remove('active', 'text-blue-600', 'border-blue-600');
-            btn.classList.add('text-gray-500', 'border-transparent');
-          });
-          
-          tabContents.forEach(content => {
-            content.classList.add('hidden');
-            content.classList.remove('active');
-          });
-          
-          // Activer le tab sélectionné
-          button.classList.add('active', 'text-blue-600', 'border-blue-600');
-          button.classList.remove('text-gray-500', 'border-transparent');
-          
-          const targetContent = document.getElementById(targetTab);
-          if (targetContent) {
-            targetContent.classList.remove('hidden');
-            targetContent.classList.add('active');
-          }
-          
-          // Reconfigurer les handlers après changement de tab
-          setTimeout(() => setupModalTriggers(), 100);
-        };
-        
-        (button as any)._tabClickHandler = tabClickHandler;
-        button.addEventListener('click', tabClickHandler);
-      });
+    if (modalTitle) modalTitle.textContent = `Témoignage de ${data.name}`;
+    if (modalImage && data.image) {
+      modalImage.src = `/images/temoignages/${data.image}`;
+      modalImage.alt = `Photo de ${data.name}`;
+    }
+    if (modalName) modalName.textContent = data.name || '';
+    if (modalRole) modalRole.textContent = data.role || '';
+    if (modalResult) {
+      if (data.result) {
+        modalResult.textContent = data.result;
+        modalResult.style.display = 'block';
+      } else {
+        modalResult.style.display = 'none';
+      }
+    }
+    if (modalTestimonial) modalTestimonial.textContent = `"${data.testimonial}"`;
+    
+    // Ouvrir la modal
+    if ((window as any).openTestimonialModal && typeof (window as any).openTestimonialModal === 'function') {
+      (window as any).openTestimonialModal();
+    } else {
+      // Fallback: manipulation directe du DOM
+      const backdrop = document.getElementById('testimonial-backdrop');
+      const content = document.getElementById('testimonial-content');
       
-      // === GESTION DE LA MODAL ===
-      function openTestimonialModal(data) {
-        console.log('🔄 Opening modal with data:', data);
-        
-        // Attendre que la modal soit initialisée
-        const maxAttempts = 10;
-        let attempts = 0;
-        
-        function tryOpenModal() {
-          attempts++;
-          
-          // Méthode 1: Utiliser la fonction globale si disponible
-          if ((window as any).openTestimonialModal && typeof (window as any).openTestimonialModal === 'function') {
-            console.log('✅ Using global function');
-            
-            // Mettre à jour le contenu
-            updateModalContent(data);
-            
-            // Ouvrir la modal
-            (window as any).openTestimonialModal();
-            return;
-          }
-          
-          // Méthode 2: Manipulation directe du DOM
-          const backdrop = document.getElementById('testimonial-backdrop');
-          const content = document.getElementById('testimonial-content');
-          
-          if (backdrop && content) {
-            console.log('✅ Using direct DOM manipulation');
-            
-            // Mettre à jour le contenu
-            updateModalContent(data);
-            
-            // Ouvrir la modal
-            backdrop.classList.remove('hidden');
-            backdrop.offsetHeight; // Force reflow
-            backdrop.classList.remove('opacity-0');
-            content.classList.remove('scale-95');
-            content.classList.add('scale-100');
-            document.body.style.overflow = 'hidden';
-            return;
-          }
-          
-          // Réessayer si pas encore prêt
-          if (attempts < maxAttempts) {
-            console.log(`⏳ Attempt ${attempts}/${maxAttempts} - Retrying...`);
-            setTimeout(tryOpenModal, 100);
-          } else {
-            console.error('❌ Failed to open modal after', maxAttempts, 'attempts');
-          }
-        }
-        
-        tryOpenModal();
+      if (backdrop && content) {
+        backdrop.classList.remove('hidden');
+        backdrop.offsetHeight; // Force reflow
+        backdrop.classList.remove('opacity-0');
+        content.classList.remove('scale-95');
+        content.classList.add('scale-100');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+  }
+  
+  function setupTestimonialTriggers() {
+    console.log('🔧 Setting up testimonial triggers...');
+    
+    // Détecter si on est sur mobile
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || 
+                    ('ontouchstart' in window) || 
+                    (navigator.maxTouchPoints > 0);
+    
+    console.log('📱 Mobile detected:', isMobile);
+    
+    // 1. Gérer les cartes testimonial-card (widgets du haut)
+    const testimonialCards = document.querySelectorAll('.testimonial-card');
+    console.log('📋 Found testimonial cards:', testimonialCards.length);
+    
+    testimonialCards.forEach((card, index) => {
+      const data = {
+        id: card.getAttribute('data-testimonial-id'),
+        name: card.getAttribute('data-testimonial-name'),
+        role: card.getAttribute('data-testimonial-role'),
+        result: card.getAttribute('data-testimonial-result'),
+        image: card.getAttribute('data-testimonial-image'),
+        testimonial: card.getAttribute('data-testimonial-text')
+      };
+      
+      // Supprimer les anciens handlers
+      const newCard = card.cloneNode(true) as HTMLElement;
+      if (card.parentNode) {
+        card.parentNode.replaceChild(newCard, card);
       }
       
-      function updateModalContent(data) {
-        // Mettre à jour le contenu de la modal
-        const modalTitle = document.getElementById('testimonial-title');
-        const modalImage = document.getElementById('testimonial-modal-image') as HTMLImageElement;
-        const modalName = document.getElementById('testimonial-modal-name');
-        const modalRole = document.getElementById('testimonial-modal-role');
-        const modalResult = document.getElementById('testimonial-modal-result');
-        const modalTestimonial = document.getElementById('testimonial-modal-testimonial');
-
-        if (modalTitle) modalTitle.textContent = `Témoignage de ${data.name}`;
-        if (modalImage && data.image) {
-          modalImage.src = `/images/temoignages/${data.image}`;
-          modalImage.alt = `Photo de ${data.name}`;
-        }
-        if (modalName) modalName.textContent = data.name || '';
-        if (modalRole) modalRole.textContent = data.role || '';
-        if (modalResult) {
-          if (data.result) {
-            modalResult.textContent = data.result;
-            modalResult.style.display = 'block';
-          } else {
-            modalResult.style.display = 'none';
-          }
-        }
-        if (modalTestimonial) modalTestimonial.textContent = `"${data.testimonial}"`;
-      }
-      
-      // === GESTION DES CLICS SUR CARTES ET BOUTONS ===
-      function setupModalTriggers() {
-        console.log('🔧 Setting up modal triggers...');
+      if (isMobile) {
+        // Gestion mobile avec touch events
+        let touchStartTime = 0;
+        let touchStartPos = { x: 0, y: 0 };
         
-        // Détecter si on est sur mobile
-        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || 
-                        ('ontouchstart' in window) || 
-                        (navigator.maxTouchPoints > 0);
+        newCard.addEventListener('touchstart', (e: TouchEvent) => {
+          touchStartTime = Date.now();
+          const touch = e.touches[0];
+          touchStartPos = { x: touch.clientX, y: touch.clientY };
+        }, { passive: false });
         
-        console.log('📱 Mobile detected:', isMobile);
-        
-        // 1. Gérer les cartes testimonial-card (widgets du haut)
-        const testimonialCards = document.querySelectorAll('.testimonial-card');
-        console.log('📋 Found testimonial cards:', testimonialCards.length);
-        
-        testimonialCards.forEach((card, index) => {
-          const data = {
-            id: card.getAttribute('data-testimonial-id'),
-            name: card.getAttribute('data-testimonial-name'),
-            role: card.getAttribute('data-testimonial-role'),
-            result: card.getAttribute('data-testimonial-result'),
-            image: card.getAttribute('data-testimonial-image'),
-            testimonial: card.getAttribute('data-testimonial-text')
-          };
+        newCard.addEventListener('touchend', (e: TouchEvent) => {
+          e.preventDefault();
+          e.stopPropagation();
           
-          // Supprimer les anciens handlers s'ils existent
-          if ((card as any)._clickHandler) {
-            card.removeEventListener('click', (card as any)._clickHandler);
-            card.removeEventListener('touchstart', (card as any)._touchStartHandler);
-            card.removeEventListener('touchend', (card as any)._touchEndHandler);
-          }
-          
-          if (isMobile) {
-            // Gestion spéciale pour mobile avec touch events
-            let touchStartTime = 0;
-            let touchStartPos = { x: 0, y: 0 };
+          const touchDuration = Date.now() - touchStartTime;
+          if (touchDuration < 500) {
+            const touch = e.changedTouches[0];
+            const touchEndPos = { x: touch.clientX, y: touch.clientY };
+            const distance = Math.sqrt(
+              Math.pow(touchEndPos.x - touchStartPos.x, 2) + 
+              Math.pow(touchEndPos.y - touchStartPos.y, 2)
+            );
             
-            const touchStartHandler = (e: TouchEvent) => {
-              touchStartTime = Date.now();
-              const touch = e.touches[0];
-              touchStartPos = { x: touch.clientX, y: touch.clientY };
-              console.log(`📱 Touch start on card ${index + 1}`);
-            };
-            
-            const touchEndHandler = (e: TouchEvent) => {
-              e.preventDefault();
-              e.stopPropagation();
-              
-              const touchEndTime = Date.now();
-              const touchDuration = touchEndTime - touchStartTime;
-              
-              // Vérifier que c'est un tap court (pas un scroll)
-              if (touchDuration < 500) {
-                const touch = e.changedTouches[0];
-                const touchEndPos = { x: touch.clientX, y: touch.clientY };
-                const distance = Math.sqrt(
-                  Math.pow(touchEndPos.x - touchStartPos.x, 2) + 
-                  Math.pow(touchEndPos.y - touchStartPos.y, 2)
-                );
-                
-                // Si le mouvement est minimal (< 10px), c'est un tap
-                if (distance < 10) {
-                  console.log(`📱 Valid tap on card ${index + 1}`, data);
-                  openTestimonialModal(data);
-                }
-              }
-            };
-            
-            (card as any)._touchStartHandler = touchStartHandler;
-            (card as any)._touchEndHandler = touchEndHandler;
-            
-            card.addEventListener('touchstart', touchStartHandler, { passive: false });
-            card.addEventListener('touchend', touchEndHandler, { passive: false });
-            
-            // Améliorer l'accessibilité mobile
-            (card as HTMLElement).style.cursor = 'pointer';
-            (card as HTMLElement).style.setProperty('-webkit-tap-highlight-color', 'rgba(59, 130, 246, 0.2)');
-            (card as HTMLElement).style.setProperty('touch-action', 'manipulation');
-            
-          } else {
-            // Gestion desktop classique
-            const clickHandler = (e: Event) => {
-              e.preventDefault();
-              e.stopPropagation();
-              console.log(`🖱️ Card ${index + 1} clicked`, data);
+            if (distance < 10) {
+              console.log(`📱 Card ${index + 1} tapped`, data);
               openTestimonialModal(data);
-            };
-            
-            (card as any)._clickHandler = clickHandler;
-            card.addEventListener('click', clickHandler);
-            (card as HTMLElement).style.cursor = 'pointer';
-          }
-        });
-        
-        // 2. Gérer les boutons testimonial-btn (TestimonialCard du bas)
-        const testimonialButtons = document.querySelectorAll('.testimonial-btn');
-        console.log('🔘 Found testimonial buttons:', testimonialButtons.length);
-        
-        testimonialButtons.forEach((button, index) => {
-          const data = {
-            id: button.getAttribute('data-testimonial-id'),
-            name: button.getAttribute('data-testimonial-name'),
-            role: button.getAttribute('data-testimonial-role'),
-            result: button.getAttribute('data-testimonial-result'),
-            image: button.getAttribute('data-testimonial-image'),
-            testimonial: button.getAttribute('data-testimonial-text')
-          };
-          
-          // Supprimer les anciens handlers s'ils existent
-          if ((button as any)._clickHandler) {
-            button.removeEventListener('click', (button as any)._clickHandler);
-            button.removeEventListener('touchstart', (button as any)._touchStartHandler);
-            button.removeEventListener('touchend', (button as any)._touchEndHandler);
-          }
-          
-          if (isMobile) {
-            // Gestion spéciale pour mobile avec touch events
-            let touchStartTime = 0;
-            let touchStartPos = { x: 0, y: 0 };
-            
-            const touchStartHandler = (e: TouchEvent) => {
-              touchStartTime = Date.now();
-              const touch = e.touches[0];
-              touchStartPos = { x: touch.clientX, y: touch.clientY };
-              console.log(`📱 Touch start on button ${index + 1}`);
-            };
-            
-            const touchEndHandler = (e: TouchEvent) => {
-              e.preventDefault();
-              e.stopPropagation();
-              
-              const touchEndTime = Date.now();
-              const touchDuration = touchEndTime - touchStartTime;
-              
-              // Vérifier que c'est un tap court (pas un scroll)
-              if (touchDuration < 500) {
-                const touch = e.changedTouches[0];
-                const touchEndPos = { x: touch.clientX, y: touch.clientY };
-                const distance = Math.sqrt(
-                  Math.pow(touchEndPos.x - touchStartPos.x, 2) + 
-                  Math.pow(touchEndPos.y - touchStartPos.y, 2)
-                );
-                
-                // Si le mouvement est minimal (< 10px), c'est un tap
-                if (distance < 10) {
-                  console.log(`📱 Valid tap on button ${index + 1}`, data);
-                  openTestimonialModal(data);
-                }
-              }
-            };
-            
-            (button as any)._touchStartHandler = touchStartHandler;
-            (button as any)._touchEndHandler = touchEndHandler;
-            
-            button.addEventListener('touchstart', touchStartHandler, { passive: false });
-            button.addEventListener('touchend', touchEndHandler, { passive: false });
-            
-            // Améliorer l'accessibilité mobile
-            (button as HTMLElement).style.cursor = 'pointer';
-            (button as HTMLElement).style.setProperty('-webkit-tap-highlight-color', 'rgba(59, 130, 246, 0.2)');
-            (button as HTMLElement).style.setProperty('touch-action', 'manipulation');
-            
-          } else {
-            // Gestion desktop classique
-            const clickHandler = (e: Event) => {
-              e.preventDefault();
-              e.stopPropagation();
-              console.log(`🖱️ Button ${index + 1} clicked`, data);
-              openTestimonialModal(data);
-            };
-            
-            (button as any)._clickHandler = clickHandler;
-            button.addEventListener('click', clickHandler);
-            (button as HTMLElement).style.cursor = 'pointer';
-          }
-        });
-        
-        console.log('✅ Modal triggers setup complete');
-      }
-      
-      // Configuration initiale
-      setupModalTriggers();
-      
-      // === BOUTON DE TEST POUR IPHONE ===
-      const testModalBtn = document.getElementById('test-modal-btn');
-      if (testModalBtn) {
-        const testData = {
-          id: 'test',
-          name: 'Test iPhone',
-          role: 'Diagnostic Modal',
-          result: 'Test réussi',
-          image: 'tabatha_deray.jpg',
-          testimonial: 'Ceci est un test pour vérifier que la modal fonctionne correctement sur iPhone. Si vous voyez ce message, la modal s\'ouvre bien !'
-        };
-        
-        // Supprimer les anciens handlers s'ils existent
-        if ((testModalBtn as any)._testClickHandler) {
-          testModalBtn.removeEventListener('click', (testModalBtn as any)._testClickHandler);
-          testModalBtn.removeEventListener('touchstart', (testModalBtn as any)._testTouchStartHandler);
-          testModalBtn.removeEventListener('touchend', (testModalBtn as any)._testTouchEndHandler);
-        }
-        
-        // Détecter si on est sur mobile
-        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || 
-                        ('ontouchstart' in window) || 
-                        (navigator.maxTouchPoints > 0);
-        
-        if (isMobile) {
-          console.log('📱 Setting up mobile test button');
-          
-          let touchStartTime = 0;
-          
-          const testTouchStartHandler = (e) => {
-            touchStartTime = Date.now();
-            console.log('📱 Test button touch start');
-          };
-          
-          const testTouchEndHandler = (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            
-            const touchDuration = Date.now() - touchStartTime;
-            if (touchDuration < 500) {
-              console.log('📱 Test button touched - opening modal');
-              openTestimonialModal(testData);
             }
-          };
-          
-          (testModalBtn as any)._testTouchStartHandler = testTouchStartHandler;
-          (testModalBtn as any)._testTouchEndHandler = testTouchEndHandler;
-          
-          testModalBtn.addEventListener('touchstart', testTouchStartHandler, { passive: false });
-          testModalBtn.addEventListener('touchend', testTouchEndHandler, { passive: false });
-          
-        } else {
-          console.log('🖥️ Setting up desktop test button');
-          const testClickHandler = (e) => {
-            e.preventDefault();
-            console.log('🖱️ Test button clicked - opening modal');
-            openTestimonialModal(testData);
-          };
-          
-          (testModalBtn as any)._testClickHandler = testClickHandler;
-          testModalBtn.addEventListener('click', testClickHandler);
-        }
+          }
+        }, { passive: false });
+        
+      } else {
+        // Gestion desktop
+        newCard.addEventListener('click', (e: Event) => {
+          e.preventDefault();
+          e.stopPropagation();
+          console.log(`🖱️ Card ${index + 1} clicked`, data);
+          openTestimonialModal(data);
+        });
       }
       
-      // Reconfigurer après changement de contenu dynamique
-      const observer = new MutationObserver(() => {
-        setupModalTriggers();
+      newCard.style.cursor = 'pointer';
+    });
+    
+    // 2. Gérer les boutons testimonial-btn (TestimonialCard du bas)
+    const testimonialButtons = document.querySelectorAll('.testimonial-btn');
+    console.log('🔘 Found testimonial buttons:', testimonialButtons.length);
+    
+    testimonialButtons.forEach((button, index) => {
+      const data = {
+        id: button.getAttribute('data-testimonial-id'),
+        name: button.getAttribute('data-testimonial-name'),
+        role: button.getAttribute('data-testimonial-role'),
+        result: button.getAttribute('data-testimonial-result'),
+        image: button.getAttribute('data-testimonial-image'),
+        testimonial: button.getAttribute('data-testimonial-text')
+      };
+      
+      // Supprimer les anciens handlers
+      const newButton = button.cloneNode(true) as HTMLElement;
+      if (button.parentNode) {
+        button.parentNode.replaceChild(newButton, button);
+      }
+      
+      if (isMobile) {
+        // Gestion mobile
+        let touchStartTime = 0;
+        
+        newButton.addEventListener('touchstart', (e: TouchEvent) => {
+          touchStartTime = Date.now();
+        }, { passive: false });
+        
+        newButton.addEventListener('touchend', (e: TouchEvent) => {
+          e.preventDefault();
+          e.stopPropagation();
+          
+          const touchDuration = Date.now() - touchStartTime;
+          if (touchDuration < 500) {
+            console.log(`📱 Button ${index + 1} tapped`, data);
+            openTestimonialModal(data);
+          }
+        }, { passive: false });
+        
+      } else {
+        // Gestion desktop
+        newButton.addEventListener('click', (e: Event) => {
+          e.preventDefault();
+          e.stopPropagation();
+          console.log(`🖱️ Button ${index + 1} clicked`, data);
+          openTestimonialModal(data);
+        });
+      }
+      
+      newButton.style.cursor = 'pointer';
+    });
+    
+    console.log('✅ Testimonial triggers setup complete');
+  }
+  
+  function setupTabs() {
+    console.log('🔧 Setting up tabs...');
+    
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabButtons.forEach(button => {
+      // Supprimer les anciens handlers
+      const newButton = button.cloneNode(true) as HTMLElement;
+      if (button.parentNode) {
+        button.parentNode.replaceChild(newButton, button);
+      }
+      
+      newButton.addEventListener('click', () => {
+        const targetTab = newButton.getAttribute('data-tab');
+        if (!targetTab) return;
+        
+        // Désactiver tous les tabs
+        tabButtons.forEach(btn => {
+          btn.classList.remove('active', 'text-blue-600', 'border-blue-600');
+          btn.classList.add('text-gray-500', 'border-transparent');
+        });
+        
+        tabContents.forEach(content => {
+          content.classList.add('hidden');
+          content.classList.remove('active');
+        });
+        
+        // Activer le tab sélectionné
+        newButton.classList.add('active', 'text-blue-600', 'border-blue-600');
+        newButton.classList.remove('text-gray-500', 'border-transparent');
+        
+        const targetContent = document.getElementById(targetTab);
+        if (targetContent) {
+          targetContent.classList.remove('hidden');
+          targetContent.classList.add('active');
+        }
+        
+        // Reconfigurer les handlers après changement de tab
+        setTimeout(() => setupTestimonialTriggers(), 100);
       });
+    });
+    
+    console.log('✅ Tabs setup complete');
+  }
+  
+  function setupTestButton() {
+    console.log('🔧 Setting up test button...');
+    
+    const testModalBtn = document.getElementById('test-modal-btn');
+    if (testModalBtn) {
+      const testData = {
+        id: 'test',
+        name: 'Test iPhone',
+        role: 'Diagnostic Modal',
+        result: 'Test réussi',
+        image: 'tabatha_deray.jpg',
+        testimonial: 'Ceci est un test pour vérifier que la modal fonctionne correctement sur iPhone. Si vous voyez ce message, la modal s\'ouvre bien !'
+      };
       
-      observer.observe(document.body, {
-        childList: true,
-        subtree: true
-      });
+      // Supprimer les anciens handlers
+      const newTestBtn = testModalBtn.cloneNode(true) as HTMLElement;
+      if (testModalBtn.parentNode) {
+        testModalBtn.parentNode.replaceChild(newTestBtn, testModalBtn);
+      }
       
-      // Exposer la fonction globalement pour compatibilité
-      (window as any).openTestimonialModalWithData = openTestimonialModal;
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || 
+                      ('ontouchstart' in window) || 
+                      (navigator.maxTouchPoints > 0);
       
-      console.log('🎉 Page témoignages: Initialization complete');
+      if (isMobile) {
+        let touchStartTime = 0;
+        
+        newTestBtn.addEventListener('touchstart', (e: TouchEvent) => {
+          touchStartTime = Date.now();
+        }, { passive: false });
+        
+        newTestBtn.addEventListener('touchend', (e: TouchEvent) => {
+          e.preventDefault();
+          e.stopPropagation();
+          
+          const touchDuration = Date.now() - touchStartTime;
+          if (touchDuration < 500) {
+            console.log('📱 Test button tapped - opening modal');
+            openTestimonialModal(testData);
+          }
+        }, { passive: false });
+        
+      } else {
+        newTestBtn.addEventListener('click', (e: Event) => {
+          e.preventDefault();
+          console.log('🖱️ Test button clicked - opening modal');
+          openTestimonialModal(testData);
+        });
+      }
     }
     
-    // Initialisation immédiate
+    console.log('✅ Test button setup complete');
+  }
+  
+  // === INITIALISATION PRINCIPALE ===
+  function initializePage() {
+    console.log('🚀 Initializing testimonials page...');
+    
+    setupTabs();
+    setupTestimonialTriggers();
+    setupTestButton();
+    
+    // Exposer la fonction globalement
+    (window as any).openTestimonialModalWithData = openTestimonialModal;
+    
+    console.log('🎉 Testimonials page initialized successfully');
+  }
+  
+  // === GESTION DES ÉVÉNEMENTS DE CHARGEMENT ===
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializePage);
+  } else {
     initializePage();
-    
-    // === ÉCOUTER LES CHANGEMENTS DE NAVIGATION ASTRO ===
-    // Astro utilise des événements personnalisés pour la navigation
-    document.addEventListener('astro:page-load', () => {
-      console.log('🔄 Astro page loaded - reinitializing testimonials...');
-      setTimeout(() => initializePage(), 100);
-    });
-    
-    // Fallback pour d'autres types de navigation
-    window.addEventListener('popstate', () => {
-      console.log('🔄 Popstate event - reinitializing testimonials...');
-      setTimeout(() => initializePage(), 100);
-    });
-    
-    // Observer les changements d'URL pour détecter la navigation
-    let currentUrl = window.location.href;
-    const urlObserver = setInterval(() => {
-      if (window.location.href !== currentUrl) {
-        currentUrl = window.location.href;
-        if (currentUrl.includes('/temoignages')) {
-          console.log('🔄 URL changed to testimonials - reinitializing...');
-          setTimeout(() => initializePage(), 200);
-        }
-      }
-    }, 500);
-    
-    // Nettoyer l'observer quand on quitte la page
-    window.addEventListener('beforeunload', () => {
-      clearInterval(urlObserver);
-    });
+  }
+  
+  // Réinitialiser après navigation Astro
+  document.addEventListener('astro:page-load', () => {
+    console.log('🔄 Astro page loaded - reinitializing...');
+    setTimeout(initializePage, 100);
+  });
+  
+  // Fallback pour autres types de navigation
+  window.addEventListener('popstate', () => {
+    if (window.location.pathname.includes('/temoignages')) {
+      console.log('🔄 Popstate to testimonials - reinitializing...');
+      setTimeout(initializePage, 100);
+    }
   });
 </script>
 
