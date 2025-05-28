@@ -246,6 +246,20 @@ const testimonialsByCategory = {
     ]}
   />
 
+  <!-- Test Modal Button for iPhone debugging -->
+  <div class="py-8 text-center bg-blue-50 dark:bg-slate-800">
+    <button 
+      id="test-modal-btn"
+      class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg shadow-lg transition-all duration-200 active:scale-95"
+      style="min-height: 44px; touch-action: manipulation; -webkit-tap-highlight-color: rgba(255,255,255,0.3);"
+    >
+      🧪 Test Modal iPhone
+    </button>
+    <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
+      Bouton de test pour diagnostiquer la modal sur iPhone
+    </p>
+  </div>
+
   <!-- Testimonials Widget - Réussites Académiques *************** -->
 
   <Testimonials
@@ -760,43 +774,94 @@ const testimonialsByCategory = {
     function setupModalTriggers() {
       console.log('🔧 Setting up modal triggers...');
       
+      // Détecter si on est sur mobile
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || 
+                      ('ontouchstart' in window) || 
+                      (navigator.maxTouchPoints > 0);
+      
+      console.log('📱 Mobile detected:', isMobile);
+      
       // 1. Gérer les cartes testimonial-card (widgets du haut)
       const testimonialCards = document.querySelectorAll('.testimonial-card');
       console.log('📋 Found testimonial cards:', testimonialCards.length);
       
       testimonialCards.forEach((card, index) => {
-        const clickHandler = (e: Event) => {
-          e.preventDefault();
-          e.stopPropagation();
-          console.log(`🖱️ Card ${index + 1} clicked`);
-          
-          const data = {
-            id: card.getAttribute('data-testimonial-id'),
-            name: card.getAttribute('data-testimonial-name'),
-            role: card.getAttribute('data-testimonial-role'),
-            result: card.getAttribute('data-testimonial-result'),
-            image: card.getAttribute('data-testimonial-image'),
-            testimonial: card.getAttribute('data-testimonial-text')
-          };
-          
-          console.log('📊 Card data:', data);
-          openTestimonialModal(data);
+        const data = {
+          id: card.getAttribute('data-testimonial-id'),
+          name: card.getAttribute('data-testimonial-name'),
+          role: card.getAttribute('data-testimonial-role'),
+          result: card.getAttribute('data-testimonial-result'),
+          image: card.getAttribute('data-testimonial-image'),
+          testimonial: card.getAttribute('data-testimonial-text')
         };
         
         // Supprimer les anciens handlers s'ils existent
         if ((card as any)._clickHandler) {
           card.removeEventListener('click', (card as any)._clickHandler);
-          card.removeEventListener('touchend', (card as any)._clickHandler);
+          card.removeEventListener('touchstart', (card as any)._touchStartHandler);
+          card.removeEventListener('touchend', (card as any)._touchEndHandler);
         }
         
-        // Ajouter les nouveaux handlers pour desktop et mobile
-        (card as any)._clickHandler = clickHandler;
-        card.addEventListener('click', clickHandler);
-        card.addEventListener('touchend', clickHandler); // Pour mobile
-        
-        // Améliorer l'accessibilité mobile
-        (card as HTMLElement).style.cursor = 'pointer';
-        (card as HTMLElement).style.setProperty('-webkit-tap-highlight-color', 'rgba(0,0,0,0.1)');
+        if (isMobile) {
+          // Gestion spéciale pour mobile avec touch events
+          let touchStartTime = 0;
+          let touchStartPos = { x: 0, y: 0 };
+          
+          const touchStartHandler = (e: TouchEvent) => {
+            touchStartTime = Date.now();
+            const touch = e.touches[0];
+            touchStartPos = { x: touch.clientX, y: touch.clientY };
+            console.log(`📱 Touch start on card ${index + 1}`);
+          };
+          
+          const touchEndHandler = (e: TouchEvent) => {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const touchEndTime = Date.now();
+            const touchDuration = touchEndTime - touchStartTime;
+            
+            // Vérifier que c'est un tap court (pas un scroll)
+            if (touchDuration < 500) {
+              const touch = e.changedTouches[0];
+              const touchEndPos = { x: touch.clientX, y: touch.clientY };
+              const distance = Math.sqrt(
+                Math.pow(touchEndPos.x - touchStartPos.x, 2) + 
+                Math.pow(touchEndPos.y - touchStartPos.y, 2)
+              );
+              
+              // Si le mouvement est minimal (< 10px), c'est un tap
+              if (distance < 10) {
+                console.log(`📱 Valid tap on card ${index + 1}`, data);
+                openTestimonialModal(data);
+              }
+            }
+          };
+          
+          (card as any)._touchStartHandler = touchStartHandler;
+          (card as any)._touchEndHandler = touchEndHandler;
+          
+          card.addEventListener('touchstart', touchStartHandler, { passive: false });
+          card.addEventListener('touchend', touchEndHandler, { passive: false });
+          
+          // Améliorer l'accessibilité mobile
+          (card as HTMLElement).style.cursor = 'pointer';
+          (card as HTMLElement).style.setProperty('-webkit-tap-highlight-color', 'rgba(59, 130, 246, 0.2)');
+          (card as HTMLElement).style.setProperty('touch-action', 'manipulation');
+          
+        } else {
+          // Gestion desktop classique
+          const clickHandler = (e: Event) => {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log(`🖱️ Card ${index + 1} clicked`, data);
+            openTestimonialModal(data);
+          };
+          
+          (card as any)._clickHandler = clickHandler;
+          card.addEventListener('click', clickHandler);
+          (card as HTMLElement).style.cursor = 'pointer';
+        }
       });
       
       // 2. Gérer les boutons testimonial-btn (TestimonialCard du bas)
@@ -804,38 +869,82 @@ const testimonialsByCategory = {
       console.log('🔘 Found testimonial buttons:', testimonialButtons.length);
       
       testimonialButtons.forEach((button, index) => {
-        const clickHandler = (e: Event) => {
-          e.preventDefault();
-          e.stopPropagation();
-          console.log(`🖱️ Button ${index + 1} clicked`);
-          
-          const data = {
-            id: button.getAttribute('data-testimonial-id'),
-            name: button.getAttribute('data-testimonial-name'),
-            role: button.getAttribute('data-testimonial-role'),
-            result: button.getAttribute('data-testimonial-result'),
-            image: button.getAttribute('data-testimonial-image'),
-            testimonial: button.getAttribute('data-testimonial-text')
-          };
-          
-          console.log('📊 Button data:', data);
-          openTestimonialModal(data);
+        const data = {
+          id: button.getAttribute('data-testimonial-id'),
+          name: button.getAttribute('data-testimonial-name'),
+          role: button.getAttribute('data-testimonial-role'),
+          result: button.getAttribute('data-testimonial-result'),
+          image: button.getAttribute('data-testimonial-image'),
+          testimonial: button.getAttribute('data-testimonial-text')
         };
         
         // Supprimer les anciens handlers s'ils existent
         if ((button as any)._clickHandler) {
           button.removeEventListener('click', (button as any)._clickHandler);
-          button.removeEventListener('touchend', (button as any)._clickHandler);
+          button.removeEventListener('touchstart', (button as any)._touchStartHandler);
+          button.removeEventListener('touchend', (button as any)._touchEndHandler);
         }
         
-        // Ajouter les nouveaux handlers pour desktop et mobile
-        (button as any)._clickHandler = clickHandler;
-        button.addEventListener('click', clickHandler);
-        button.addEventListener('touchend', clickHandler); // Pour mobile
-        
-        // Améliorer l'accessibilité mobile
-        (button as HTMLElement).style.cursor = 'pointer';
-        (button as HTMLElement).style.setProperty('-webkit-tap-highlight-color', 'rgba(0,0,0,0.1)');
+        if (isMobile) {
+          // Gestion spéciale pour mobile avec touch events
+          let touchStartTime = 0;
+          let touchStartPos = { x: 0, y: 0 };
+          
+          const touchStartHandler = (e: TouchEvent) => {
+            touchStartTime = Date.now();
+            const touch = e.touches[0];
+            touchStartPos = { x: touch.clientX, y: touch.clientY };
+            console.log(`📱 Touch start on button ${index + 1}`);
+          };
+          
+          const touchEndHandler = (e: TouchEvent) => {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const touchEndTime = Date.now();
+            const touchDuration = touchEndTime - touchStartTime;
+            
+            // Vérifier que c'est un tap court (pas un scroll)
+            if (touchDuration < 500) {
+              const touch = e.changedTouches[0];
+              const touchEndPos = { x: touch.clientX, y: touch.clientY };
+              const distance = Math.sqrt(
+                Math.pow(touchEndPos.x - touchStartPos.x, 2) + 
+                Math.pow(touchEndPos.y - touchStartPos.y, 2)
+              );
+              
+              // Si le mouvement est minimal (< 10px), c'est un tap
+              if (distance < 10) {
+                console.log(`📱 Valid tap on button ${index + 1}`, data);
+                openTestimonialModal(data);
+              }
+            }
+          };
+          
+          (button as any)._touchStartHandler = touchStartHandler;
+          (button as any)._touchEndHandler = touchEndHandler;
+          
+          button.addEventListener('touchstart', touchStartHandler, { passive: false });
+          button.addEventListener('touchend', touchEndHandler, { passive: false });
+          
+          // Améliorer l'accessibilité mobile
+          (button as HTMLElement).style.cursor = 'pointer';
+          (button as HTMLElement).style.setProperty('-webkit-tap-highlight-color', 'rgba(59, 130, 246, 0.2)');
+          (button as HTMLElement).style.setProperty('touch-action', 'manipulation');
+          
+        } else {
+          // Gestion desktop classique
+          const clickHandler = (e: Event) => {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log(`🖱️ Button ${index + 1} clicked`, data);
+            openTestimonialModal(data);
+          };
+          
+          (button as any)._clickHandler = clickHandler;
+          button.addEventListener('click', clickHandler);
+          (button as HTMLElement).style.cursor = 'pointer';
+        }
       });
       
       console.log('✅ Modal triggers setup complete');
@@ -843,6 +952,54 @@ const testimonialsByCategory = {
     
     // Configuration initiale
     setupModalTriggers();
+    
+    // === BOUTON DE TEST POUR IPHONE ===
+    const testModalBtn = document.getElementById('test-modal-btn');
+    if (testModalBtn) {
+      const testData = {
+        id: 'test',
+        name: 'Test iPhone',
+        role: 'Diagnostic Modal',
+        result: 'Test réussi',
+        image: 'tabatha_deray.jpg',
+        testimonial: 'Ceci est un test pour vérifier que la modal fonctionne correctement sur iPhone. Si vous voyez ce message, la modal s\'ouvre bien !'
+      };
+      
+      // Détecter si on est sur mobile
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || 
+                      ('ontouchstart' in window) || 
+                      (navigator.maxTouchPoints > 0);
+      
+      if (isMobile) {
+        console.log('📱 Setting up mobile test button');
+        
+        let touchStartTime = 0;
+        
+        testModalBtn.addEventListener('touchstart', (e) => {
+          touchStartTime = Date.now();
+          console.log('📱 Test button touch start');
+        }, { passive: false });
+        
+        testModalBtn.addEventListener('touchend', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          
+          const touchDuration = Date.now() - touchStartTime;
+          if (touchDuration < 500) {
+            console.log('📱 Test button touched - opening modal');
+            openTestimonialModal(testData);
+          }
+        }, { passive: false });
+        
+      } else {
+        console.log('🖥️ Setting up desktop test button');
+        testModalBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          console.log('🖱️ Test button clicked - opening modal');
+          openTestimonialModal(testData);
+        });
+      }
+    }
     
     // Reconfigurer après changement de contenu dynamique
     const observer = new MutationObserver(() => {
@@ -878,24 +1035,86 @@ const testimonialsByCategory = {
   /* Mobile touch optimizations */
   .testimonial-card,
   .testimonial-btn {
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+    -webkit-tap-highlight-color: rgba(59, 130, 246, 0.2);
     touch-action: manipulation;
     cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
   }
   
+  /* Améliorer la zone de touch sur mobile */
   @media (max-width: 768px) {
     .testimonial-card {
       min-height: 44px; /* Minimum touch target size */
+      padding: 1rem;
+      border-radius: 0.75rem;
+      transition: all 0.2s ease;
+    }
+    
+    .testimonial-card:active {
+      transform: scale(0.98);
+      background-color: rgba(59, 130, 246, 0.05);
     }
     
     .testimonial-btn {
       min-height: 44px;
       padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      transition: all 0.2s ease;
+    }
+    
+    .testimonial-btn:active {
+      transform: scale(0.95);
+      background-color: rgba(59, 130, 246, 0.1);
     }
     
     .tab-button {
       min-height: 44px;
       padding: 0.75rem 1rem;
+      transition: all 0.2s ease;
+    }
+    
+    .tab-button:active {
+      transform: scale(0.95);
+    }
+  }
+  
+  /* Feedback visuel pour les interactions tactiles */
+  @media (hover: none) and (pointer: coarse) {
+    /* Styles spécifiques pour les appareils tactiles */
+    .testimonial-card:active,
+    .testimonial-btn:active {
+      background-color: rgba(59, 130, 246, 0.1) !important;
+      transform: scale(0.98) !important;
+    }
+  }
+  
+  /* Améliorer la visibilité des éléments cliquables */
+  .testimonial-card {
+    position: relative;
+  }
+  
+  .testimonial-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    transition: box-shadow 0.2s ease;
+  }
+  
+  .testimonial-card:hover::after {
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+  }
+  
+  @media (max-width: 768px) {
+    .testimonial-card:active::after {
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
     }
   }
 </style> 
