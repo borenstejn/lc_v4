@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Logo Laure Cohen</title>
+    <style>
+        :root {
+            --aw-color-primary: rgb(232 180 160);
+            --aw-color-secondary: rgb(139 116 100);
+            --aw-color-accent: rgb(212 165 116);
+            --aw-color-text-heading: rgb(45 35 30);
+            --aw-color-text-default: rgb(60 50 45);
+            --aw-color-text-muted: rgb(60 50 45 / 70%);
+            --aw-color-bg-page: rgb(252 249 246);
+        }
+
+        .dark {
+            --aw-color-primary: rgb(180 130 110);
+            --aw-color-secondary: rgb(160 140 120);
+            --aw-color-accent: rgb(240 180 130);
+            --aw-color-text-heading: rgb(250 245 240);
+            --aw-color-text-default: rgb(230 220 210);
+            --aw-color-text-muted: rgb(230 220 210 / 70%);
+            --aw-color-bg-page: rgb(25 20 18);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--aw-color-bg-page);
+            color: var(--aw-color-text-default);
+            margin: 0;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .header-demo {
+            background-color: var(--aw-color-bg-page);
+            border-bottom: 1px solid var(--aw-color-secondary);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+
+        .logo {
+            height: 48px;
+            width: auto;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-demo {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--aw-color-text-default);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--aw-color-primary);
+        }
+
+        .cta-btn {
+            background-color: var(--aw-color-accent);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .toggle-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--aw-color-accent);
+            color: white;
+            border: none;
+            padding: 0.75rem 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: var(--aw-color-text-heading);
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .logo-sizes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .logo-demo {
+            text-align: center;
+            padding: 1rem;
+            border: 1px solid var(--aw-color-secondary);
+            border-radius: 8px;
+        }
+
+        /* Démonstration des différents arrière-plans */
+        .bg-demo {
+            margin: 1rem 0;
+            padding: 1rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bg-primary { background-color: var(--aw-color-primary); }
+        .bg-secondary { background-color: var(--aw-color-secondary); }
+        .bg-accent { background-color: var(--aw-color-accent); }
+    </style>
+</head>
+<body>
+    <button class="toggle-btn" onclick="toggleDarkMode()">🌙 Mode Sombre</button>
+    
+    <!-- Simulation du header -->
+    <div class="header-demo">
+        <a href="#" style="display: flex; align-items: center;">
+            <img src="public/images/lc_coaching_logo_transparent.png" alt="Laure Cohen Coaching" class="logo">
+        </a>
+        <nav class="nav-demo">
+            <a href="#" class="nav-link">Accueil</a>
+            <a href="#" class="nav-link">Mon parcours</a>
+            <a href="#" class="nav-link">Aux Particuliers</a>
+            <a href="#" class="nav-link">Aux Entreprises</a>
+            <a href="#" class="cta-btn">SOS COACHING</a>
+        </nav>
+    </div>
+
+    <div class="container">
+        <h1>Test d'Intégration du Logo Transparent</h1>
+        <p>Voici comment le logo transparent de Laure s'intègre avec la nouvelle palette de couleurs.</p>
+
+        <h2>Différentes Tailles du Logo</h2>
+        <div class="logo-sizes">
+            <div class="logo-demo">
+                <h3>Taille Header (48px)</h3>
+                <img src="public/images/lc_coaching_logo_transparent.png" alt="Logo" style="height: 48px; width: auto;">
+            </div>
+            <div class="logo-demo">
+                <h3>Taille Mobile (40px)</h3>
+                <img src="public/images/lc_coaching_logo_transparent.png" alt="Logo" style="height: 40px; width: auto;">
+            </div>
+            <div class="logo-demo">
+                <h3>Taille Grande (64px)</h3>
+                <img src="public/images/lc_coaching_logo_transparent.png" alt="Logo" style="height: 64px; width: auto;">
+            </div>
+        </div>
+
+        <h2>Test sur Différents Arrière-plans</h2>
+        <p>Le logo transparent s'adapte maintenant parfaitement à tous les arrière-plans :</p>
+        
+        <div class="bg-demo bg-primary">
+            <img src="public/images/lc_coaching_logo_transparent.png" alt="Logo sur fond primary" style="height: 40px; width: auto;">
+        </div>
+        
+        <div class="bg-demo bg-secondary">
+            <img src="public/images/lc_coaching_logo_transparent.png" alt="Logo sur fond secondary" style="height: 40px; width: auto;">
+        </div>
+        
+        <div class="bg-demo bg-accent">
+            <img src="public/images/lc_coaching_logo_transparent.png" alt="Logo sur fond accent" style="height: 40px; width: auto;">
+        </div>
+
+        <h2>Contraste et Lisibilité</h2>
+        <p>Le logo transparent de Laure s'harmonise parfaitement avec la palette de couleurs rose saumon et orange corail. Plus de problème de fond blanc !</p>
+        
+        <p style="color: var(--aw-color-text-muted);">Testez le basculement mode clair/sombre pour vérifier la lisibilité du logo transparent sur les deux arrière-plans.</p>
+    </div>
+
+    <script>
+        function toggleDarkMode() {
+            const body = document.body;
+            const btn = document.querySelector('.toggle-btn');
+            
+            if (body.classList.contains('dark')) {
+                body.classList.remove('dark');
+                btn.textContent = '🌙 Mode Sombre';
+            } else {
+                body.classList.add('dark');
+                btn.textContent = '☀️ Mode Clair';
+            }
+        }
+    </script>
+</body>
+</html> 

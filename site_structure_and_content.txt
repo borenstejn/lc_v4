@@ -1,0 +1,756 @@
+# SITE STRUCTURE AND ALL TEXTUAL CONTENT FOR LAURE COHEN COACHING
+
+## I. GENERAL SITE INFORMATION
+
+**Site Name:** Laure Cohen Coaching
+**Common Header Navigation Texts (from src/navigation.ts):**
+  - Logo/Link: Laure Cohen Coaching (implied, links to Home)
+  - Menu Items: Accueil, Particuliers, Entreprises, Témoignages, À Propos
+  - CTA Button: Contact
+
+**Common Footer Texts (from src/navigation.ts & PRD):**
+  - Column 1 (Services): Coaching Particuliers, Formation Entreprises, Méthode Cercle Vertueux, Témoignages
+  - Column 2 (À Propos): Mon Parcours, Ma Méthode, Mes Références, Presse & Médias
+  - Column 3 (Ressources): Blog, Workbook Gratuit, Conseils Prise de Parole, FAQ
+  - Column 4 (Contact): Réserver une séance, Demande Entreprise, Presse & Médias, Partenariats
+  - Secondary Links: Mentions Légales, Politique de Confidentialité
+  - Social Links Text (Aria Labels): LinkedIn, Instagram, YouTube, Facebook
+  - Copyright/Footnote: © [Current Year] Laure Cohen Coaching. Tous droits réservés. Coach certifiée en prise de parole - Paris
+
+---
+
+## II. PAGE BY PAGE TEXTUAL CONTENT
+
+### 1. PAGE: ACCUEIL (/)
+   **Path:** `src/pages/index.astro`
+   **Metadata Title:** Laure Cohen Coaching - Prenez la parole avec impact et sérénité
+   **Metadata Description:** Coach prise de parole - Méthode Cercle Vertueux - +200 clients transformés - Particuliers & Entreprises - Paris
+
+   **TEXTUAL CONTENT (Reconstructed from `index.astro` props & PRD):**
+
+   **(Header Navigation - See General Site Information)**
+
+   **Hero Section:**
+   Titre: "Prenez la parole avec impact et sérénité"
+   Sous-titre: "Méthode éprouvée • +200 clients transformés • 100% réussite aux oraux. Coach experte en prise de parole - Méthode "Cercle Vertueux" - Paris"
+   Bouton 1: "PARTICULIERS" (links to /particuliers)
+   Bouton 2: "ENTREPRISES" (links to /entreprises)
+   Image Alt: "Laure Cohen - Coach en prise de parole"
+
+   **Note Widget:**
+   Title: "🎯 Vous reconnaissez-vous dans ces situations ?"
+   Description: "Cette boule au ventre avant de parler, l'impression d'être 'nul à l'oral', ne pas arriver à convaincre... Vous n'êtes pas seul(e) !"
+
+   **Features Widget - "Ces situations qui vous paralysent":**
+   Tagline: "Vous reconnaissez-vous ?"
+   Title: "Ces situations qui vous paralysent"
+   Subtitle: "La peur de parler en public touche 75% de la population. Vous n'êtes pas seul(e), et surtout, ce n'est pas une fatalité."
+   Items:
+     - Item 1 Title: "Cette boule au ventre avant de parler"
+       Item 1 Description: "Stress intense, palpitations, peur du jugement... Votre corps vous trahit avant même d'ouvrir la bouche."
+       Item 1 Icon: "tabler:mood-nervous"
+     - Item 2 Title: "L'impression d'être "nul à l'oral""
+       Item 2 Description: "Voix qui tremble, idées qui se mélangent, blancs terrifiants... Vous perdez tous vos moyens."
+       Item 2 Icon: "tabler:mood-sad"
+     - Item 3 Title: "Ne pas arriver à convaincre"
+       Item 3 Description: "Votre message ne passe pas, l'audience décroche, vous n'obtenez pas ce que vous voulez."
+       Item 3 Icon: "tabler:mood-empty"
+     - Item 4 Title: "Éviter les prises de parole"
+       Item 4 Description: "Vous refusez les opportunités, vous vous effacez, votre carrière en pâtit."
+       Item 4 Icon: "tabler:eye-off"
+     - Item 5 Title: "Le syndrome de l'imposteur"
+       Item 5 Description: "Vous pensez ne pas être légitime, que les autres vont découvrir que vous "bluffez"."
+       Item 5 Icon: "tabler:mask-off"
+     - Item 6 Title: "La frustration de ne pas être entendu(e)"
+       Item 6 Description: "Vos idées sont bonnes mais vous n'arrivez pas à les faire passer avec impact."
+       Item 6 Icon: "tabler:volume-off"
+
+   **Steps Widget - "Ma Méthode 'Le Cercle Vertueux'":**
+   Title: "Ma Méthode 'Le Cercle Vertueux'"
+   Subtitle: "3 étapes pour transformer votre peur en force"
+   Items:
+     - Item 1 Title: "Étape 1: CONNAISSANCE DE SOI"
+       Item 1 Description: "Grâce à l'Ennéagramme, nous découvrons votre personnalité unique, vos forces naturelles et vos zones de vigilance. Vous comprenez POURQUOI vous réagissez ainsi."
+       Item 1 Icon: "tabler:user-search"
+     - Item 2 Title: "Étape 2: COMMUNICATION NON VIOLENTE"
+       Item 2 Description: "Les techniques de Marshall Rosenberg pour créer une connexion authentique avec votre audience. Vous apprenez à toucher les cœurs avant de convaincre les esprits."
+       Item 2 Icon: "tabler:heart-handshake"
+     - Item 3 Title: "Étape 3: PRISE DE PAROLE INCARNÉE"
+       Item 3 Description: "Structurer et incarner votre message avec impact. Votre corps, votre voix et vos mots s'alignent pour créer une présence magnétique."
+       Item 3 Icon: "tabler:microphone"
+     - Item 4 Title: "Résultat : Vous brillez !"
+       Item 4 Description: "Vous prenez la parole avec plaisir, vous captivez votre audience et vous obtenez ce que vous voulez."
+       Item 4 Icon: "tabler:star-filled"
+   Image Alt: "Méthode Cercle Vertueux"
+
+   **Content Widget - "Pourquoi me faire confiance ?":**
+   Tagline: "Votre Guide"
+   Title: "Pourquoi me faire confiance ?"
+   Subtitle: "Une coach qui est passée par tous les stades : de la peur paralysante au succès sur scène"
+   Content Slot Title: "De la paralysie au disque de platine"
+   Content Slot Paragraph: "J'ai vécu cette transformation de l'intérieur. Aujourd'hui, je vous transmets les clés qui m'ont permis de passer de la peur panique à la maîtrise totale de la scène."
+   Items:
+     - Item 1 Title: "EXPÉRIENCE SCÈNE"
+       Item 1 Description: "Artiste (Koxie) avec +5M de vues et un disque de platine. Je CONNAIS la peur ET le plaisir de captiver une audience."
+     - Item 2 Title: "EXPÉRIENCE MÉDIA"
+       Item 2 Description: "6 ans d'antenne sur Virgin Radio et NRJ avec Arthur et Camille Combal. J'ai appris l'art de la connexion instantanée."
+     - Item 3 Title: "EXPERTISE COACHING"
+       Item 3 Description: "8 ans de coaching, +200 clients accompagnés, certifiée CNV et Ennéagramme. Une méthode éprouvée qui fonctionne."
+   Image Alt: "Laure Cohen Coach experte"
+
+   **Testimonials Widget (Featured):**
+   Title: "Témoignages vedettes"
+   Subtitle: "Découvrez les transformations réelles de mes clients"
+   Testimonials:
+     - Testimonial 1: "Grâce à Laure, j'ai obtenu ma mention très bien ! En seulement 2 séances, elle m'a donné les clés pour réussir ma soutenance. Sa méthode fonctionne vraiment."
+       Name 1: "Tabatha Deray"
+       Job 1: "Étudiante audio-prothèse"
+       Image Alt 1: "Tabatha Deray"
+     - Testimonial 2: "Le coaching avec Laure a été déterminant pour ma levée de fonds KIDIWE. Elle m'a aidé à structurer mon pitch et à le présenter avec conviction. Résultat : financement obtenu !"
+       Name 2: "Mickaël Kissous"
+       Job 2: "Fondateur KIDIWE"
+       Image Alt 2: "Mickaël Kissous" (Note: PRD has specific image, Astro file has unsplash placeholder)
+     - Testimonial 3: (Content from PRD as `index.astro` Testimonials prop is partial)
+       Client: "Jesse Levy", Quote: "J'ai signé un beau contrat", Image: "Mes_heureux_clients_JESSE_LEVY_0ee8d8d9.jpg"
+
+   **Stats Widget:**
+   Title: "Des résultats concrets"
+   Subtitle: "L'impact de la méthode en chiffres"
+   Stats:
+     - Stat 1 Title: "Clients accompagnés"
+       Stat 1 Amount: "+200"
+     - Stat 2 Title: "Réussite aux oraux"
+       Stat 2 Amount: "100%"
+     - Stat 3 Title: "Transformation durable"
+       Stat 3 Amount: "95%" (Satisfaction)
+     - Stat 4 Title: "Années d'expérience"
+       Stat 4 Amount: "8+"
+
+   **CallToAction Widget:**
+   Title: "Prêt(e) à transformer votre prise de parole ?"
+   Subtitle: "Contactez-moi pour une séance découverte gratuite et sans engagement."
+   Button 1 Text: "Réserver ma séance gratuite" (links to /contact)
+   Button 2 Text: "Découvrir les offres" (links to /particuliers)
+
+   **(Footer - See General Site Information)**
+
+---
+
+### 2. PAGE: PARTICULIERS (/particuliers)
+   **Path:** `src/pages/particuliers.astro`
+   **Metadata Title:** Coaching Prise de Parole Particuliers - Étudiants & Professionnels | Laure Cohen
+   **Metadata Description:** Coaching individuel prise de parole pour étudiants, professionnels et entrepreneurs. Méthode Cercle Vertueux. Soutenances, entretiens, pitchs.
+
+   **TEXTUAL CONTENT (Reconstructed from `particuliers.astro` props & user example):**
+
+   **(Header Navigation - See General Site Information. May include "Astro v5.7 is now available! »" if that's a global banner)**
+
+   **Hero Section:**
+   Titre: "Transformez votre peur de parler en force de conviction"
+   Sous-titre: "Pour étudiants, professionnels et entrepreneurs. Accompagnement individuel sur-mesure • Méthode éprouvée • Résultats garantis"
+   Bouton 1: "Réserver ma séance gratuite" (links to /contact)
+   Bouton 2: "Voir les témoignages" (links to /temoignages)
+   Image Alt: "Coaching particuliers - Laure Cohen"
+
+   **Features Widget - "Vos Défis":**
+   Tagline: "Vos Défis"
+   Title: "Que vous soyez..."
+   Subtitle: "Des accompagnements sur-mesure pour chaque profil et chaque situation"
+   Items:
+     - Item 1 Title: "🎓 ÉTUDIANT(E)"
+       Item 1 Description: "Soutenance de mémoire, oral de concours, présentation de stage, entretien d'école... Décrochez la mention que vous méritez."
+       Item 1 Icon: "tabler:school"
+     - Item 2 Title: "💼 PROFESSIONNEL(LE)"
+       Item 2 Description: "Entretien d'embauche, présentation client, réunion d'équipe, prise de parole en public... Boostez votre carrière."
+       Item 2 Icon: "tabler:briefcase"
+     - Item 3 Title: "🚀 ENTREPRENEUR(SE)"
+       Item 3 Description: "Pitch investisseurs, présentation produit, interview média, levée de fonds... Développez votre business avec impact."
+       Item 3 Icon: "tabler:rocket"
+     - Item 4 Title: "🎭 ARTISTE/CRÉATEUR"
+       Item 4 Description: "Auditions, présentation de projets, interviews, défense artistique... Révélez votre talent au monde."
+       Item 4 Icon: "tabler:mask"
+     - Item 5 Title: "👔 CADRE/MANAGER"
+       Item 5 Description: "Management d'équipe, présentation stratégique, conférences... Incarnez le leadership avec authenticité."
+       Item 5 Icon: "tabler:crown"
+     - Item 6 Title: "🌟 RECONVERSION"
+       Item 6 Description: "Nouveau métier, nouvelle vie... Prenez la parole avec confiance dans votre nouvelle voie."
+       Item 6 Icon: "tabler:refresh"
+
+   **Content Widget - "Pourquoi choisir un coaching personnalisé ?":**
+   Tagline: "Accompagnement Individuel"
+   Title: "Pourquoi choisir un coaching personnalisé ?"
+   Subtitle: "Un accompagnement 100% adapté à votre personnalité et vos objectifs"
+   Content Slot Title: ""Chaque personne est unique""
+   Content Slot Paragraph: "C'est pourquoi je ne propose pas de méthode toute faite, mais un accompagnement entièrement personnalisé selon votre profil et vos besoins."
+   Items:
+     - Item 1 Title: "ANALYSE PERSONNALISÉE"
+       Item 1 Description: "Grâce à l'Ennéagramme, nous identifions votre profil unique et adaptons la méthode à votre personnalité."
+     - Item 2 Title: "OBJECTIFS SUR-MESURE"
+       Item 2 Description: "Chaque séance est construite autour de VOS défis spécifiques et de VOS échéances importantes."
+     - Item 3 Title: "PROGRESSION À VOTRE RYTHME"
+       Item 3 Description: "Pas de groupe, pas de jugement. Vous progressez dans un cadre sécurisé et bienveillant."
+   Image Alt: "Coaching individuel personnalisé"
+
+   **Steps Widget - "Ma Méthode 'Cercle Vertueux' adaptée à vous":**
+   Title: "Ma Méthode 'Cercle Vertueux' adaptée à vous"
+   Subtitle: "Un processus en 3 étapes pour une transformation durable"
+   Items:
+     - Item 1 Title: "Étape 1: DIAGNOSTIC PERSONNALISÉ"
+       Item 1 Description: "Test Ennéagramme + analyse de votre situation. Nous identifions vos forces naturelles et vos zones de vigilance pour construire VOTRE stratégie."
+       Item 1 Icon: "tabler:user-search"
+     - Item 2 Title: "Étape 2: TECHNIQUES ADAPTÉES"
+       Item 2 Description: "Communication Non Violente, gestion du stress, structuration du discours... Nous sélectionnons les outils qui VOUS correspondent."
+       Item 2 Icon: "tabler:tools"
+     - Item 3 Title: "Étape 3: ENTRAÎNEMENT CIBLÉ"
+       Item 3 Description: "Mise en situation sur VOS sujets réels. Répétition, ajustements, perfectionnement jusqu'à la maîtrise totale."
+       Item 3 Icon: "tabler:target"
+     - Item 4 Title: "Résultat : Vous brillez le jour J !"
+       Item 4 Description: "Confiance, impact, authenticité... Vous prenez la parole avec plaisir et obtenez les résultats que vous visez."
+       Item 4 Icon: "tabler:trophy"
+   Image Alt: "Méthode Cercle Vertueux pour particuliers"
+
+   **Pricing Widget - "Formules d'accompagnement":**
+   Title: "Formules d'accompagnement"
+   Subtitle: "Choisissez la formule qui correspond à vos besoins et votre budget"
+   Tiers:
+     - Tier 1 Title: "DÉCOUVERTE"
+       Tier 1 Subtitle: "Pour tester la méthode"
+       Tier 1 Price: "300" (Currency: €)
+       Tier 1 Items: ["1 séance théorie (1h30)", "1 séance pratique (1h30)", "Support Zoom ou présentiel", "Valable 3 mois", "Idéal pour un oral ponctuel"]
+       Tier 1 Button Text: "Réserver" (links to /contact)
+     - Tier 2 Title: "TRANSFORMATION" (Popular)
+       Tier 2 Subtitle: "Le plus populaire"
+       Tier 2 Price: "400" (Currency: €)
+       Tier 2 Items: ["1 séance théorie (1h30)", "2 séances pratiques (1h30 chacune)", "Support multi-plateforme", "Suivi personnalisé entre séances", "Workbook personnalisé", "Parfait pour une transformation durable"]
+       Tier 2 Button Text: "Réserver" (links to /contact)
+     - Tier 3 Title: "EXCELLENCE"
+       Tier 3 Subtitle: "Accompagnement premium"
+       Tier 3 Price: "700" (Currency: €)
+       Tier 3 Items: ["1 séance théorie (1h30)", "5 séances pratiques (1h30 chacune)", "Accompagnement premium", "Workbook personnalisé avancé", "Suivi illimité pendant 6 mois", "Enregistrements pour révision", "Pour les enjeux majeurs"]
+       Tier 3 Button Text: "Réserver" (links to /contact)
+
+   **Testimonials Widget - "Ils ont transformé leur peur en force":**
+   Title: "Ils ont transformé leur peur en force"
+   Subtitle: "Découvrez les réussites de mes clients particuliers"
+   Testimonials (from `particuliers.astro` props):
+     - Testimonial 1 Quote: "" Grâce à Laure, j'ai obtenu ma mention très bien ! En seulement 2 séances, elle m'a donné les clés pour réussir ma soutenance. Sa méthode fonctionne vraiment, je recommande à 100%. ""
+       Name 1: "Tabatha Deray"
+       Job 1: "Étudiante audio-prothèse"
+       Image Alt 1: "Tabatha Deray"
+     - Testimonial 2 Quote: "" J'avais une peur panique des entretiens d'embauche. Après 3 séances avec Laure, j'ai décroché le poste de mes rêves ! Elle m'a appris à transformer mon stress en énergie positive. ""
+       Name 2: "Clara Touboul"
+       Job 2: "Consultante en stratégie"
+       Image Alt 2: "Clara Touboul"
+     - Testimonial 3 Quote: "" Le coaching avec Laure a été un tournant dans ma carrière. J'ai appris à prendre la parole avec confiance en réunion et j'ai été promue 6 mois après ! ""
+       Name 3: "Justine Fraïoli"
+       Job 3: "Chef de projet digital"
+       Image Alt 3: "Justine Fraïoli"
+
+   **Stats Widget - "Résultats particuliers":**
+   Title: "Résultats particuliers"
+   Subtitle: "Des chiffres qui témoignent de l'efficacité pour les clients individuels"
+   Stats:
+     - Stat 1 Title: "Particuliers accompagnés"
+       Stat 1 Amount: "150+"
+     - Stat 2 Title: "Réussite aux oraux/entretiens"
+       Stat 2 Amount: "100%"
+     - Stat 3 Title: "Satisfaction client"
+       Stat 3 Amount: "98%"
+     - Stat 4 Title: "Séances moyennes pour réussir"
+       Stat 4 Amount: "3"
+
+   **Features Widget - "Situations Spécifiques":**
+   Tagline: "Mes Spécialités" (Assumed from context, or "Situations Spécifiques")
+   Title: "Mes spécialités d'accompagnement"
+   Subtitle: "Des expertises développées au fil de 8 ans de coaching individuel"
+   Items:
+     - Item 1 Title: "SOUTENANCES & ORAUX"
+       Item 1 Description: "Mémoire, thèse, concours... Structure, gestion du stress, interaction avec le jury. 100% de réussite depuis 8 ans."
+       Item 1 Icon: "tabler:star" (Assumed, or similar like "tabler:school")
+     - Item 2 Title: "ENTRETIENS D'EMBAUCHE"
+       Item 2 Description: "Se présenter, convaincre, gérer les questions pièges. Techniques pour révéler votre potentiel unique."
+       Item 2 Icon: "tabler:briefcase"
+     - Item 3 Title: "PITCHS ENTREPRENEURS"
+       Item 3 Description: "Convaincre des investisseurs, présenter son projet, lever des fonds. L'art de captiver en quelques minutes."
+       Item 3 Icon: "tabler:rocket"
+     - Item 4 Title: "PRISE DE PAROLE PROFESSIONNELLE"
+       Item 4 Description: "Réunions, présentations clients, management d'équipe. Développer son leadership par la communication."
+       Item 4 Icon: "tabler:presentation-analytics" (Assumed)
+     - Item 5 Title: "RECONVERSION PROFESSIONNELLE"
+       Item 5 Description: "Nouveau métier, nouvelle identité professionnelle. Apprendre à parler de soi avec confiance."
+       Item 5 Icon: "tabler:refresh"
+     - Item 6 Title: "PROJETS ARTISTIQUES"
+       Item 6 Description: "Auditions, défense de projets créatifs, interviews. Révéler son talent et sa singularité."
+       Item 6 Icon: "tabler:palette" (Assumed)
+
+
+   **CallToAction Widget:**
+   Title: "Prêt(e) à transformer votre appréhension en atout ?"
+   Subtitle: "Réservez votre séance découverte gratuite de 30 minutes. Ensemble, nous définirons la stratégie parfaite pour atteindre VOS objectifs."
+   Button 1 Text: "Réserver ma séance découverte gratuite" (links to /contact)
+   Button 2 Text: "Télécharger mon guide gratuit" (links to a guide, e.g. /workbook)
+
+   **(Footer - See General Site Information)**
+
+---
+
+### 3. PAGE: ENTREPRISES (/entreprises)
+   **Path:** `src/pages/entreprises.astro`
+   **Metadata Title:** Formation Communication Entreprise - Management & Leadership | Laure Cohen
+   **Metadata Description:** Formations sur-mesure en communication et prise de parole pour entreprises. Références prestigieuses : BPI France, Sciences Po, BNP, Accenture.
+
+   **TEXTUAL CONTENT (Reconstructed from `entreprises.astro` props & PRD):**
+
+   **(Header Navigation - See General Site Information)**
+
+   **Hero Section:**
+   Titre: "Boostez la performance de vos équipes par la communication"
+   Sous-titre: "Formations sur-mesure • Références prestigieuses. Développez le leadership et l'impact de vos collaborateurs avec la méthode Cercle Vertueux"
+   Bouton 1: "Demander un devis" (links to /contact)
+   Bouton 2: "Voir nos références" (links to #references)
+   Image Alt: "Formation entreprise - Laure Cohen"
+
+   **Features Widget - "Les enjeux de communication en entreprise":**
+   Tagline: "Défis Entreprises"
+   Title: "Les enjeux de communication en entreprise"
+   Subtitle: "Des problématiques que nous résolvons au quotidien avec nos clients"
+   Items:
+     - Item 1 Title: "MANAGEMENT D'ÉQUIPE"
+       Item 1 Description: "Managers qui peinent à fédérer, à motiver, à faire passer leurs messages avec impact auprès de leurs équipes."
+       Item 1 Icon: "tabler:users"
+     - Item 2 Title: "PRÉSENTATIONS STRATÉGIQUES"
+       Item 2 Description: "Dirigeants qui doivent convaincre en comité de direction, présenter des résultats, défendre des projets."
+       Item 2 Icon: "tabler:presentation"
+     - Item 3 Title: "COMMUNICATION INTERNE"
+       Item 3 Description: "Collaborateurs qui évitent les prises de parole, qui manquent de confiance en réunion, qui n'osent pas s'exprimer."
+       Item 3 Icon: "tabler:speakerphone"
+     - Item 4 Title: "RELATIONS CLIENT"
+       Item 4 Description: "Équipes commerciales qui doivent convaincre, négocier, présenter des solutions avec plus d'impact."
+       Item 4 Icon: "tabler:users-group"
+     - Item 5 Title: "CONDUITE DU CHANGEMENT"
+       Item 5 Description: "Accompagner les transformations, faire adhérer les équipes, communiquer sur les évolutions."
+       Item 5 Icon: "tabler:refresh"
+     - Item 6 Title: "LEADERSHIP AUTHENTIQUE"
+       Item 6 Description: "Développer un leadership basé sur l'authenticité, la connexion humaine et l'intelligence émotionnelle."
+       Item 6 Icon: "tabler:crown"
+
+   **Content Widget - "La méthode 'Cercle Vertueux' adaptée à l'entreprise":**
+   Tagline: "Notre Approche"
+   Title: "La méthode 'Cercle Vertueux' adaptée à l'entreprise"
+   Subtitle: "Une approche éprouvée qui transforme durablement la culture de communication"
+   Content Slot Title: ""Transformer la communication, c'est transformer la performance""
+   Content Slot Paragraph: "Nos formations ne se contentent pas de transmettre des techniques. Elles créent un véritable changement culturel qui impacte durablement la performance de vos équipes."
+   Items:
+     - Item 1 Title: "DIAGNOSTIC ORGANISATIONNEL"
+       Item 1 Description: "Analyse des enjeux spécifiques de votre entreprise, identification des besoins par métier et niveau hiérarchique."
+     - Item 2 Title: "FORMATION SUR-MESURE"
+       Item 2 Description: "Programmes adaptés à votre culture d'entreprise, vos objectifs business et vos contraintes opérationnelles."
+     - Item 3 Title: "ACCOMPAGNEMENT TERRAIN"
+       Item 3 Description: "Mise en pratique immédiate sur vos situations réelles, coaching individuel des managers clés."
+   Image Alt: "Formation équipe entreprise"
+
+   **Features Widget - "Programmes de formation":**
+   Tagline: "Nos Solutions"
+   Title: "Programmes de formation"
+   Subtitle: "Des formats adaptés à vos besoins et contraintes"
+   Items:
+     - Item 1 Title: "FORMATION "CERCLE VERTUEUX""
+       Item 1 Description: "Programme complet sur 2 jours : Connaissance de soi (Ennéagramme), Communication Non Violente, Prise de parole incarnée. Jusqu'à 12 participants."
+       Item 1 Icon: "tabler:circle"
+     - Item 2 Title: "COACHING DIRIGEANTS"
+       Item 2 Description: "Accompagnement individuel des dirigeants et managers clés. Sessions de 2h, programme sur-mesure selon les enjeux."
+       Item 2 Icon: "tabler:crown"
+     - Item 3 Title: "ATELIERS THÉMATIQUES"
+       Item 3 Description: "Modules courts (demi-journée) sur des sujets spécifiques : gestion du stress, structuration du discours, impact vocal."
+       Item 3 Icon: "tabler:tools"
+     - Item 4 Title: "ACCOMPAGNEMENT ÉVÉNEMENTS"
+       Item 4 Description: "Préparation spécifique pour conventions, assemblées générales, présentations stratégiques importantes."
+       Item 4 Icon: "tabler:calendar-event"
+     - Item 5 Title: "PROGRAMME LONG TERME"
+       Item 5 Description: "Transformation culturelle sur 6-12 mois avec suivi régulier, mesure d'impact, ajustements continus."
+       Item 5 Icon: "tabler:timeline"
+     - Item 6 Title: "FORMATION DE FORMATEURS"
+       Item 6 Description: "Développer vos formateurs internes pour démultiplier l'impact et créer une culture de communication durable."
+       Item 6 Icon: "tabler:school"
+
+   **Brands Widget - "Ils nous font confiance":** (Content from PRD, as `entreprises.astro` doesn't list them directly)
+   Title: "Ils nous font confiance"
+   Logos: BPI France, Sciences Po, BNP, Accenture, La Poste, EDF (image alts/tooltips would be these names)
+
+   **Pricing Widget - "Tarifs entreprises":**
+   Title: "Tarifs entreprises"
+   Subtitle: "Des formules adaptées à la taille et aux besoins de votre organisation"
+   Tiers:
+     - Tier 1 Title: "FORMATION ÉQUIPE"
+       Tier 1 Subtitle: "Le plus demandé"
+       Tier 1 Price: "1800" (Currency: "€ HT")
+       Tier 1 Items: ["Formation "Cercle Vertueux" 2 jours", "Jusqu'à 12 participants", "Support pédagogique inclus", "Suivi post-formation 1 mois"]
+       Tier 1 Button Text: "Demander un devis" (links to /contact)
+     - Tier 2 Title: "COACHING DIRIGEANT"
+       Tier 2 Subtitle: "Accompagnement individuel"
+       Tier 2 Price: "Sur Devis"
+       Tier 2 Items: ["Sessions de 2h", "Programme 100% personnalisé", "Ennéagramme & CNV", "Objectifs stratégiques"]
+       Tier 2 Button Text: "En savoir plus" (links to /contact)
+     - Tier 3 Title: "PROGRAMME SUR-MESURE"
+       Tier 3 Subtitle: "Pour une transformation durable"
+       Tier 3 Price: "Sur Devis"
+       Tier 3 Items: ["Diagnostic et co-construction", "Modules adaptés à vos enjeux", "Accompagnement terrain", "Mesure d'impact"]
+       Tier 3 Button Text: "Parlons-en" (links to /contact)
+
+   **Testimonials Widget - "Ce que disent nos clients Entreprises":**
+   Title: "Ce que disent nos clients Entreprises"
+   Subtitle: "Des partenariats basés sur la confiance et les résultats"
+   Testimonials:
+     - Testimonial 1 Quote: ""La formation de Laure a transformé la communication au sein de notre CODIR. Plus d'impact, plus de cohésion. Un investissement rentable.""
+       Name 1: "Philippe Jeanneau"
+       Job 1: "DG Informatique, CDC"
+       Image Alt 1: "Philippe Jeanneau"
+     - Testimonial 2 Quote: ""Les ateliers de Laure sont dynamiques, concrets et adaptés à nos problématiques. Nos managers en redemandent !""
+       Name 2: "Hélène T."
+       Job 2: "Responsable Formation, Sciences Po Exed"
+       Image Alt 2: "Hélène T."
+     - Testimonial 3 Quote: ""Grâce à Laure, nos équipes commerciales ont gagné en confiance et en performance. Les résultats sont visibles.""
+       Name 3: "Arnaud Varnier"
+       Job 3: "CEO, WINDOO"
+       Image Alt 3: "Arnaud Varnier"
+
+   **CallToAction Widget:**
+   Title: "Prêt à révéler le potentiel de vos équipes ?"
+   Subtitle: "Contactez-moi pour discuter de vos enjeux et co-construire un programme sur-mesure."
+   Button Text: "Demander un devis personnalisé" (links to /contact)
+
+   **(Footer - See General Site Information)**
+
+---
+
+### 4. PAGE: TÉMOIGNAGES (/temoignages)
+   **Path:** `src/pages/temoignages.astro`
+   **Metadata Title:** Témoignages Clients - Transformations Réelles | Laure Cohen Coaching
+   **Metadata Description:** Découvrez les témoignages authentiques de nos clients : étudiants, professionnels, entrepreneurs. +200 transformations réussies avec photos réelles.
+
+   **TEXTUAL CONTENT (Reconstructed from `temoignages.astro` props & data):**
+
+   **(Header Navigation - See General Site Information)**
+
+   **Hero Section:**
+   Titre: "+200 transformations authentiques avec photos réelles"
+   Sous-titre: "Découvrez les vraies histoires de nos clients. Étudiants, professionnels, entrepreneurs : ils ont tous transformé leur peur en force"
+   Bouton 1: "Réserver ma séance gratuite" (links to /contact)
+   Bouton 2: "Voir toutes les réussites" (links to #temoignages-complets)
+   Image Alt: "Jesse Levy - Témoignage client Laure Cohen"
+
+   **Stats Widget:**
+   Title: "Impact réel, résultats mesurables"
+   Subtitle: "Des chiffres qui parlent d'eux-mêmes"
+   Stats:
+     - Stat 1 Title: "Clients transformés"
+       Stat 1 Amount: "200+"
+     - Stat 2 Title: "Réussite aux oraux"
+       Stat 2 Amount: "100%"
+     - Stat 3 Title: "Satisfaction client"
+       Stat 3 Amount: "98%"
+     - Stat 4 Title: "Années d'expérience"
+       Stat 4 Amount: "8"
+
+   **Tabbed Testimonials Section (id='temoignages-complets'):**
+   Title: "Paroles de Clients"
+   Subtitle: "Explorez les témoignages par catégorie et découvrez comment Laure accompagne chacun vers le succès."
+   Tab Button 1: "Tous les témoignages"
+   Tab Button 2: "🎓 Académique"
+   Tab Button 3: "🏢 Professionnel"
+   Tab Button 4: "🚀 Entrepreneur"
+   Tab Button 5: "🎤 Éloquence" (Based on `getTestimonialCategory` function)
+
+   **(Full testimonial texts are listed in Section III below - this section would display cards for each, filterable by tabs)**
+   Each card would typically display: Name, Role, Image, Truncated Testimonial, and a "Lire la suite" (Read more) button opening a modal.
+
+   **Modal Content for each testimonial (example for Tabatha):**
+   Modal Title: "Témoignage de Tabatha Deray"
+   Modal Full Text: (Full text from Section III)
+   Modal Image: (Image of Tabatha Deray)
+   Modal Name & Role: "Tabatha Deray - Étudiante Audio-Prothèse - Mention Très Bien"
+
+   **CallToAction Widget:**
+   Title: "Vous aussi, partagez votre réussite !"
+   Subtitle: "Rejoignez les centaines de clients qui ont transformé leur prise de parole avec Laure."
+   Button Text: "Je veux prendre la parole avec impact" (links to /contact)
+
+   **(Footer - See General Site Information)**
+
+---
+
+### 5. PAGE: À PROPOS (/a-propos)
+   **Path:** `src/pages/a-propos.astro`
+   **Metadata Title:** À Propos - Laure Cohen | Mon histoire : de la paralysie au disque de platine
+   **Metadata Description:** Découvrez le parcours de Laure Cohen : de la peur panique à la maîtrise totale de la scène. Artiste, animatrice radio, coach experte.
+
+   **TEXTUAL CONTENT (Reconstructed from `a-propos.astro` props & PRD):**
+
+   **(Header Navigation - See General Site Information)**
+
+   **Hero Section - Storytelling:**
+   Titre: "Mon histoire : de la paralysie au disque de platine"
+   Sous-titre: "Comment j'ai transformé ma peur en force. Pour aider +200 personnes à révéler leur potentiel et prendre la parole avec impact"
+   Bouton 1: "Découvrir ma méthode" (links to /ma-methode)
+   Bouton 2: "Réserver une séance" (links to /contact)
+   Image Alt: "Laure Cohen - Coach en prise de parole" (PRD image: Coach_en_prise_4810a5e661b948988f94c95d9d4addf7jpg_324ab9dc.jpg, Astro file uses different one)
+
+   **Content Widget - "Tout a commencé par la peur...":**
+   Tagline: "Chapitre 1"
+   Title: "Tout a commencé par la peur..."
+   Subtitle: "Comme vous peut-être, j'ai longtemps été paralysée par la peur de parler en public"
+   Content Slot Title: ""Je me reconnaissais dans vos peurs""
+   Content Slot Paragraph: "Cette boule au ventre, cette voix qui tremble, ces idées qui se mélangent... J'ai vécu tout cela. Et c'est exactement pour ça que je peux vous aider aujourd'hui."
+   Items:
+     - Item 1 Title: "La petite fille timide"
+       Item 1 Description: "Enfant, j'étais cette petite fille qui se cachait derrière sa mère, incapable de dire bonjour aux invités."
+     - Item 2 Title: "L'adolescente complexée"
+       Item 2 Description: "À l'école, lever la main était un supplice. Mon cœur battait si fort que j'avais peur qu'on l'entende."
+     - Item 3 Title: "La jeune adulte qui évitait"
+       Item 3 Description: "J'ai longtemps refusé les opportunités professionnelles qui impliquaient de parler en public."
+   Image Alt: "Laure jeune - Les débuts" (PRD image: Mon_parcours_Laure_06BC312F2F7D4E58A16124ECC5B46BFB45005cjpeg_30f34910.jpg, Astro file uses different one)
+
+   **Steps Widget - "Mon parcours de transformation":**
+   Title: "Mon parcours de transformation"
+   Subtitle: "Les étapes clés qui m'ont menée de la peur à la maîtrise"
+   Items:
+     - Item 1 Title: "🎭 LA RÉVÉLATION ARTISTIQUE"
+       Item 1 Description: "Un jour, j'ai découvert la magie de la connexion sur scène. Malgré ma peur, j'ai ressenti cette émotion unique : toucher les cœurs. C'était plus fort que tout."
+       Item 1 Icon: "tabler:mask"
+     - Item 2 Title: "🎤 L'AVENTURE KOXIE"
+       Item 2 Description: "Devenue artiste sous le nom de Koxie, j'ai appris à dompter ma peur. +5M de vues, un disque de platine... La scène est devenue mon terrain de jeu." (PRD image: Mon_parcours_Laure_227575101501833989835095822281njpeg_c3a79fe8.jpg - Époque Koxie)
+       Item 2 Icon: "tabler:microphone-2"
+     - Item 3 Title: "📻 L'ÉCOLE DE LA RADIO"
+       Item 3 Description: "6 ans sur Virgin Radio et NRJ avec Arthur et Camille Combal. J'ai appris l'art de la connexion instantanée et de l'authenticité." (PRD image: Mon_parcours_Laure_blakjpg_c96d98b2.jpg - Radio)
+       Item 3 Icon: "tabler:radio"
+     - Item 4 Title: "🎯 LA MISSION COACHING"
+       Item 4 Description: "Aujourd'hui, je transmets cette transformation. 8 ans de coaching, +200 clients accompagnés, une méthode éprouvée qui fonctionne." (PRD image: Coach_en_prise_BB1BBB26E66C4105B55F8DC6E0E81EBF1201ajpeg_6c0e7ae0.jpg - Coach actuelle)
+       Item 4 Icon: "tabler:target-arrow"
+   Image Alt: "Laure à la radio"
+
+   **Content Widget - "Le Cercle Vertueux : né de mon expérience":**
+   Is Reversed: True
+   Tagline: "Ma Méthode"
+   Title: "Le Cercle Vertueux : né de mon expérience"
+   Subtitle: "Une approche unique qui combine mes apprentissages d'artiste, d'animatrice et de coach"
+   Content Slot Title: ""Ma peur est devenue ma force""
+   Content Slot Paragraph: "Parce que j'ai vécu cette transformation de l'intérieur, je sais exactement ce que vous ressentez. Et surtout, je connais le chemin pour en sortir."
+   Items:
+     - Item 1 Title: "CONNAISSANCE DE SOI (Ennéagramme)"
+       Item 1 Description: "Comprendre sa personnalité unique pour transformer ses "défauts" en forces. J'ai découvert que ma sensibilité était un atout, pas un handicap."
+     - Item 2 Title: "COMMUNICATION NON VIOLENTE"
+       Item 2 Description: "Les techniques de Marshall Rosenberg pour créer une connexion authentique. Sur scène comme à la radio, j'ai appris que l'émotion prime sur la technique."
+     - Item 3 Title: "PRISE DE PAROLE INCARNÉE"
+       Item 3 Description: "Aligner son corps, sa voix et son message. Mon expérience d'artiste m'a enseigné que la présence se travaille et se maîtrise."
+   Image Alt: "Laure Cohen Coach aujourd'hui"
+
+   **Features Widget - "Mes Valeurs":**
+   Tagline: "Mes Valeurs"
+   Title: "Ce qui guide mon accompagnement"
+   Subtitle: "Des valeurs forgées par mon parcours et qui nourrissent chaque séance de coaching"
+   Items:
+     - Item 1 Title: "AUTHENTICITÉ"
+       Item 1 Description: "Être soi-même, sans masque. C'est la clé de la connexion véritable avec son audience."
+       Item 1 Icon: "tabler:heart"
+     - Item 2 Title: "BIENVEILLANCE"
+       Item 2 Description: "Un espace sécurisé où l'erreur est permise et où chaque progrès est célébré."
+       Item 2 Icon: "tabler:shield-heart"
+     - Item 3 Title: "TRANSFORMATION"
+       Item 3 Description: "Croire en votre potentiel et vous accompagner vers la version la plus épanouie de vous-même."
+       Item 3 Icon: "tabler:butterfly"
+     - Item 4 Title: "EXCELLENCE"
+       Item 4 Description: "Viser l'excellence sans perfectionnisme. Progresser à votre rythme vers vos objectifs."
+       Item 4 Icon: "tabler:star"
+     - Item 5 Title: "CONNEXION"
+       Item 5 Description: "Créer du lien, toucher les cœurs, faire passer l'émotion avant la technique."
+       Item 5 Icon: "tabler:heart-handshake"
+     - Item 6 Title: "COURAGE"
+       Item 6 Description: "Oser sortir de sa zone de confort pour révéler sa vraie personnalité."
+       Item 6 Icon: "tabler:shield-bolt" (Assumed, or "tabler:run")
+
+   **CallToAction Widget:**
+   Title: "Écrivons ensemble le prochain chapitre de votre histoire"
+   Subtitle: "Contactez-moi pour échanger sur vos objectifs et découvrir comment je peux vous aider."
+   Button Text: "Je réserve ma séance gratuite" (links to /contact)
+
+   **(Footer - See General Site Information)**
+
+---
+
+## III. FULL TESTIMONIAL TEXTS (from `src/pages/temoignages.astro` - `testimonialData` object)
+
+[
+  {
+    "id": "tabatha",
+    "name": "Tabatha Deray",
+    "job": "Étudiante Audio-Prothèse - Mention Très Bien",
+    "image": "tabatha_deray.jpg",
+    "full_text": "Un immense merci à Laure qui grâce à 2 séances de coaching a réussi à donner une valeur inestimable à ma soutenance de mémoire. Je lui dois une grande partie de ma mention très bien.\n\nL'avis de sa maman : \"Chère Laure, vous êtes tout simplement formidable ! En 2 séances d'accompagnement vous avez transformé Tabatha en vraie « pitcheuse ». Et ça a été un incroyable succès… Mention très bien à son oral ! Nous vous remercions sincèrement pour votre aide, votre implication et un grand bravo pour votre capacité à transmettre votre art car c'est un art… je parle beaucoup de vous autour de moi… au plaisir de vous recroiser.\""
+  },
+  {
+    "id": "clara",
+    "name": "Clara Touboul",
+    "job": "Étudiante - Admise HEC",
+    "image": "clara_touboul.jpg",
+    "full_text": "Préparation des entretiens d'admissions à H.E.C. L'expérience m'a non seulement permis d'atteindre mon objectif, mais m'a aussi apporté des clefs essentielles pour l'avenir. J'ai appris à accepter mon stress, à m'exprimer de manière claire, concise et convaincante en utilisant mes propres mots et mes propres gestes. J'ai pris confiance en moi, en mes propos et en ma capacité à les communiquer. Mon retour sur cette expérience est excellent !"
+  },
+  {
+    "id": "emilie",
+    "name": "Émilie Fajnman",
+    "job": "Directrice Centre Beauté \"Metamorph'ose\"",
+    "image": "emilie_fajnman.jpg",
+    "full_text": "J'ai fait appel à Laure pour refaire mon pitch et avoir un pitch impactant, pour présenter mon centre à mes futurs clients. Laure a été très à l'écoute lorsque je lui ai présenté mon activité et ma problématique, elle m'a posé les bonnes questions, ce qui lui a permis, en quelques minutes seulement de comprendre parfaitement ce que je proposais et le résultat que je souhaitais obtenir. Force de proposition, créative, dynamique et surtout très douée en art oratoire, Laure m'a permis d'avoir LE pitch parfait !"
+  },
+  {
+    "id": "jesse",
+    "name": "Jesse Levy",
+    "job": "Comédienne - Contrat Signé",
+    "image": "jesse_levy.jpg",
+    "full_text": "À la veille d'un rendez-vous très important et hyper anxiogène, j'ai eu le besoin de me faire coacher. Laure a rebooté mon cerveau en une séance ! Elle a su me donner les clés pour reprendre le contrôle, me recentrer sur mes objectifs et mes atouts quelque peu oubliés. Cela m'a surtout permis d'aborder les choses plus sereinement, avec objectivité et confiance. Merci Laure, j'ai d'ailleurs signé un beau contrat !"
+  },
+  {
+    "id": "philippe",
+    "name": "Philippe Jeanneau",
+    "job": "Directeur Général Informatique CDC",
+    "image": "philippe_jeanneau.png",
+    "full_text": "Dans le cadre d'une mission avec Time to pitch, j'ai rencontré Laure. Le coaching de dirigeants est un exercice subtil qui demande de nombreuses qualités : l'écoute, la capacité de comprendre la personnalité de chacun, de son environnement, et bien sûr de la technique ! Laure, tout en décontraction, avec bonne humeur et dynamisme a compris tout cela. Elle sait vous faire sortir de votre zone de confort, vous provoquer parfois mais surtout vous permettre de donner le meilleur, d'être vous-même et par là, d'être le plus convaincant ! Merci sincèrement Laure pour la richesse de tes conseils et l'état d'esprit positif que tu sais propager autour de toi."
+  },
+  {
+    "id": "justine",
+    "name": "Justine Fraïoli",
+    "job": "Productrice - Confiance Retrouvée",
+    "image": "justine_fraoli.jpg",
+    "full_text": "Quand tout paraît compliqué et insurmontable, quelque soit le domaine, pro ou perso, une seule personne parvient à me faire avancer, Laure. Tout devient simple et tout se fait simplement, une discussion, de l'écoute, des échanges, une liste et une progression réaliste, aucune pression, des objectifs simples pour y voir plus clair. Être coachée par elle, c'est se révéler à soi, s'estimer, se faire confiance et enfin, avancer. Laure c'est la lumière, qui donne espoir."
+  },
+  {
+    "id": "mickael",
+    "name": "Mickaël Kissous",
+    "job": "Fondateur KIDIWE - Levée de Fonds Réussie",
+    "image": "mickael_kissous.jpg",
+    "full_text": "Le travail avec Laure a été un vrai tournant dans l'aventure KIDIWE, il nous a permis de convaincre des investisseurs et de lever des fonds. J'ai eu la chance de travailler avec elle pour un problème de pitch. Je me souviens très bien de notre première rencontre. Elle m'a demandé ce que je faisais dans la vie. Ma réponse a duré environ... 2 ans et demi... juste pour lui expliquer mon activité. Et Laure m'a dit : \"en fait, tu mets en relation 2 mondes : le Tourisme & le Scolaire à travers une plateforme web, c'est ça ? La mission de ta boîte : rendre accessible à tous les élèves, le monde qui les entoure ?\" Dossier réglé en moins d'une minute ! Son travail ne s'est pas arrêté là, elle m'a montré comment réussir à dire ce qu'on veut dire et à convaincre, grâce à ses techniques bien à elle et simples à reproduire. Elle m'a donné toutes les clés d'une bonne communication orale."
+  },
+  {
+    "id": "clement",
+    "name": "Clément Sornin",
+    "job": "Entrepreneur - Fondateur CEO \"Harmony\"",
+    "image": "clement_sornin.jpg",
+    "full_text": "Laure a une grande expérience dans la prise de parole et dans l'écriture, elle avait le profil que je recherchais pour travailler sur mon discours. L'objectif était de trouver les mots et la façon de parler de mon activité pour un public non initié. Nous avons eu deux sessions de travail. D'abord nous avons revu les bases d'un bon pitch, ce fut essentiel pour pouvoir ensuite construire le mien pour Harmony. Laure a de grandes qualités d'écoute et de synthèse, grâce à elles, nous avons rapidement trouvé la construction du discours et les formulations de phrase qui permettaient de transmettre des messages forts. Je recommande vivement son coaching."
+  },
+  {
+    "id": "alexi",
+    "name": "Alexi Perrino",
+    "job": "Entrepreneur - Fondateur CEO \"Jared\"",
+    "image": "alexi_perrino.jpg",
+    "full_text": "J'ai fait appel à Laure dans le but d'améliorer mes prises de paroles et de parfaire l'exercice difficile du \"pitch\" de start-up. L'objectif principal était de construire le pitch de ma start-up, permettant une présentation claire de notre problématique, notre produit, notre marché, notre équipe... Mais l'accompagnement de Laure est allé bien au delà de cet exercice. Nous avons à la fois travaillé sur la structure de la prise de parole, adaptée à différents formats (interview, présentation, pitch), mais aussi la gestion du stress, le vocabulaire, la posture, les gestes. Laure propose une approche holistique qui ne laisse rien au hasard, et utilise ses compétences acquises au travers de ses différentes expériences pour faire ressortir le meilleur de nous même. Sans aucun doute, la meilleure coach que j'ai rencontré."
+  },
+  {
+    "id": "diariata",
+    "name": "Diariata N'Diaye",
+    "job": "Présidente \"Résonantes\" - Concours Éloquence Remporté",
+    "image": "diariata_ndiaye.jpg",
+    "full_text": "Laure Cohen est la seule Coach en qui a su et qui sait m'accompagner dans mes prises de paroles importantes. Son écoute et sa capacité à mettre en confiance permet de travailler rapidement et de façon efficace. Elle a su me convaincre et me pousser dans mes retranchements en douceur pour un résultat extraordinaire en peu de temps. Depuis notre première collaboration, je ne fais appel qu'à elle et je la remercie de mettre à mon service son expertise pour me rendre convaincante et opérationnelle. Son accompagnement lors du concours d'éloquence de la Fondation des Femmes en est la preuve. Vous pouvez compter sur elle en toute confiance !"
+  },
+  {
+    "id": "sarah",
+    "name": "Sarah Ohayon",
+    "job": "Partner JAB - Interview Télé Réussie",
+    "image": "sarah_ohayon.jpg",
+    "full_text": "J'ai travaillé avec Laure sur \"comment bien délivrer mon message\" dans le cadre d'une interview télé. Le défi était d'avoir le plus d'impact possible en trois minutes, un temps réduit pour tout ce que j'avais à dire. Elle m'a challengée, aussi bien sur le fond que sur la forme, avec beaucoup de créativité et de professionnalisme. Le résultat a été un grand succès et j'ai hâte de retravailler avec elle."
+  },
+  {
+    "id": "eric",
+    "name": "Eric Salomon",
+    "job": "Fondateur et Président Time to Pitch",
+    "image": "eric_salomon.png",
+    "full_text": "Riche de ses multiples vies, Laure apporte toujours beaucoup plus que ce qui était prévu, à ceux et celles qu'elle accompagne. Cette expérience/expertise, boostée par un engagement et une bienveillance absolue, font d'elle une coach formidable."
+  },
+  {
+    "id": "laetitia",
+    "name": "Laetitia Mabed",
+    "job": "Directrice Comptable - Master 2 Validé",
+    "image": "laetitia_mabed.png",
+    "full_text": "Mon expérience avec Laure a été excellente ! Je l'ai contactée pour préparer mon passage devant un jury (soutenance pour l'obtention d'un Master 2). Dans un temps limité, mon objectif était de mettre en avant mon travail et surtout mon identité professionnelle et de valider mes acquis. Je ne parvenais pas à rendre fluide ma présentation d'un dossier que je maîtrisais pourtant parfaitement. Le stress et l'anxiété à l'idée de prendre la parole devant un jury m'empêchaient de me préparer correctement. Avec méthodologie, sincérité, beaucoup d'humour et une grande générosité, Laure m'a donné les outils qui m'ont permis de me recentrer sur l'essentiel, structurer ma prise de parole et lui donner un rythme. J'ai su embarquer mon auditoire jusqu'au bout sans les perdre et sans me perdre ! Est ce que je vous recommande cette coach ? Oui, c'est sûr !"
+  },
+  {
+    "id": "sylvie",
+    "name": "Sylvie Uzan",
+    "job": "Créatrice Bijoux \"Atelier JAGG\"",
+    "image": "sylvie_uzan.png",
+    "full_text": "Je suis créatrice de bijoux, j'ai contacté Laure après une conférence qu'elle donnait pour « Potentiel de Femmes ». Je voulais clarifier mon storytelling et refaire mon site internet. Nous avons largement atteint cet objectif. Une séance riche d'enseignements : Une vision sur ce que je veux faire, des objectifs clairs. Je recommande c'est sûr !"
+  },
+  {
+    "id": "arnaud",
+    "name": "Arnaud Varnier",
+    "job": "Fondateur et Président WINDOO",
+    "image": "arnaud_varnier.png",
+    "full_text": "Laure excelle dans le coaching grâce à un dynamisme incroyable et une capacité d'adaptation hors-pair. Nous travaillons avec elle depuis plusieurs années et elle continue de nous surprendre par son style unique, associé à un professionnalisme à toute épreuve!"
+  },
+  {
+    "id": "flora",
+    "name": "Flora Ghebali",
+    "job": "Fondatrice Coalitions",
+    "image": "flora_ghebali.jpg",
+    "full_text": "Laure a compris une clé essentielle en coaching : comprendre son interlocuteur et l'aider à faire ressortir le meilleur de sa personnalité. Sans jamais travestir, elle permet de s'émanciper et d'adopter une liberté de parole impactante et percutante. Elle donne du sens et de l'impact au discours. Elle m'a accompagné à toutes les étapes importantes : lancement de mon entreprise, sortie de mon livre, pour me permettre de prendre du recul sur mes projets, pour mieux les présenter et convaincre !"
+  },
+  {
+    "id": "hela",
+    "name": "Hela Daboussi",
+    "job": "Cadre du Secteur Public",
+    "image": "hela_daboussi.jpg",
+    "full_text": "Il y a un avant et un après ma rencontre et mon travail avec Laure. Précise, sensible et hyper pro, Laure m'a partagé des outils et une méthode, en lien avec mes besoins, qui ont radicalement et structurellement modifié ma manière d'appréhender la prise de parole en public, mais pas que !! Laure est une femme fabuleuse."
+  },
+  {
+    "id": "mickael_z",
+    "name": "Mickaël Zaluski",
+    "job": "Réalisateur - Producteur - Dentiste",
+    "image": "mickael_zaluski.jpg",
+    "full_text": "Je suis quelqu'un d'assez angoissé, often paralysé, ce qui m'a beaucoup empêché de m'engager dans des directions ou même de simplement lâcher prise. J'ai réalisé avec Laure un travail en profondeur où elle a su identifier avec justesse les verrous qui me bloquaient. Elle m'a activement soutenu dans les moments difficiles et m'a aidé, petit à petit, à dépasser certaines peurs et à les comprendre. Aujourd'hui la vie me semble largement plus simple. Un travail bien fait, à deux !"
+  },
+  {
+    "id": "diane",
+    "name": "Diane Bismuth",
+    "job": "Journaliste Gastronomique",
+    "image": "diane_bismuth.jpg",
+    "full_text": "Laure a été véritablement mon écoute et surtout sincèrement investie dans mon développement personnel, prenant des nouvelles de mon évolution régulièrement. Elle sait avoir les mots justes pour nous encourager et nous faire avancer sur tous les tableaux. Nos quelques séances m'ont fait beaucoup évoluer. Elle est d'une grande intelligence et très expérimentée, elle cerne le cœur du problème très vite et on fait des pas de géants. Elle a participé à me redonner confiance en ma singularité, à impulser le courage nécessaire pour m'investir dans un travail « hors des sentiers battus » dans lequel je m'épanouis totalement aujourd'hui. Merci à elle ! C'est une vraie chance de l'avoir croisée..."
+  },
+  {
+    "id": "helene",
+    "name": "Hélène Tinlot-Benichou",
+    "job": "Responsable Communication Sciences Po Executive Education",
+    "image": "helene_tinlot_benichou.jpg",
+    "full_text": "J'ai le plaisir de travailler avec Laure depuis plus d'un an dans le cadre des formations qu'elle anime pour TIME TO PITCH au sein de Sciences Po Executive Education : Pitch et éloquence. Laure est une professionnelle rigoureuse, enthousiaste, engagée et très à l'écoute des apprenants. Que ce soit en présentiel ou à distance, la satisfaction est toujours au top ! Merci Laure."
+  },
+  {
+    "id": "clemence",
+    "name": "Clémence M.",
+    "job": "Fondatrice Association Environnementale",
+    "image": "clemence_m.jpg",
+    "full_text": "J'ai eu la chance de découvrir qu'il existait une solution à mes angoisses… il n'a fallu que quelques séances avec Laure pour qu'elle m'offre l'espace de m'exprimer et de lui expliquer mes failles d'élocution. Je parle vite, je suis timide, j'ai peur de ne pas être pertinente… Elle a su me mettre en confiance et m'aider à assumer mes points de vue, pour la présentation d'une fondation que je devais exposer à une assemblée de plus de 150 personnes. Nous avons analysé ensemble mon projet, mon audience et le ton à prendre pour capter leur attention face au sujet qui me tient le plus à cœur, celui du réchauffement climatique ! J'étais tout de même stressée le jour de ma présentation, mais j'ai appris que le stress peut être géré et devenir un atout dans une préparation à un tel événement personnel :) Projet réussi ! Grâce au discours minutieusement préparé j'ai pu faire passer mon message et l'assemblée a adhéré au projet. Merci encore à Laure pour ses conseils."
+  }
+]
+
+---
+
+## IV. FORMS (from PRD)
+
+### Contact Principal:
+  - Fields: Prénom, Email (requis), Type (Particulier/Entreprise - select), Message (Décrivez votre défi)
+  - CTA: "Réserver ma séance gratuite"
+
+### Lead Magnet:
+  - Fields: Prénom, Email
+  - CTA: "Télécharger mon Workbook"
+
+---
+
+## V. REDIRECTIONS (from PRD)
+
+- /mon-parcours → /a-propos (301)
+- /mes-outils → /ma-methode (301)
+- /mesreferences → / (301)
+- /mesheureuxclients → /temoignages (301)
+
+---
+**Note:** This document aims to reconstruct all textual content as found in or inferred from the codebase (Astro files, PRD). Icon names are illustrative. Image paths/alt tags are based on available data and may vary from the final rendered site. The "Astro v5.7 is now available! »" banner from your example is assumed to be a dynamic global element if present on all pages.
+
+</rewritten_file> 

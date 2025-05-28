@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Palette Couleurs Laure Cohen</title>
+    <style>
+        :root {
+            --aw-color-primary: rgb(232 180 160);
+            --aw-color-secondary: rgb(139 116 100);
+            --aw-color-accent: rgb(212 165 116);
+            --aw-color-text-heading: rgb(45 35 30);
+            --aw-color-text-default: rgb(60 50 45);
+            --aw-color-text-muted: rgb(60 50 45 / 70%);
+            --aw-color-bg-page: rgb(252 249 246);
+        }
+
+        .dark {
+            --aw-color-primary: rgb(180 130 110);
+            --aw-color-secondary: rgb(160 140 120);
+            --aw-color-accent: rgb(240 180 130);
+            --aw-color-text-heading: rgb(250 245 240);
+            --aw-color-text-default: rgb(230 220 210);
+            --aw-color-text-muted: rgb(230 220 210 / 70%);
+            --aw-color-bg-page: rgb(25 20 18);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--aw-color-bg-page);
+            color: var(--aw-color-text-default);
+            margin: 0;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: var(--aw-color-text-heading);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            color: var(--aw-color-text-heading);
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem 0;
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .color-card {
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            color: white;
+            font-weight: 500;
+        }
+
+        .primary { background-color: var(--aw-color-primary); }
+        .secondary { background-color: var(--aw-color-secondary); }
+        .accent { background-color: var(--aw-color-accent); }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            margin: 0.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--aw-color-primary);
+            color: white;
+        }
+
+        .btn-accent {
+            background-color: var(--aw-color-accent);
+            color: white;
+        }
+
+        .btn-secondary {
+            background-color: var(--aw-color-secondary);
+            color: white;
+        }
+
+        .toggle-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--aw-color-accent);
+            color: white;
+            border: none;
+            padding: 0.75rem 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .text-muted {
+            color: var(--aw-color-text-muted);
+        }
+
+        .sample-content {
+            background-color: var(--aw-color-bg-page);
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            border: 1px solid var(--aw-color-secondary);
+        }
+    </style>
+</head>
+<body>
+    <button class="toggle-btn" onclick="toggleDarkMode()">🌙 Mode Sombre</button>
+    
+    <div class="container">
+        <h1>Palette Couleurs Laure Cohen</h1>
+        <p>Test des nouvelles couleurs inspirées du site actuel de Laure</p>
+
+        <h2>Couleurs Principales</h2>
+        <div class="color-grid">
+            <div class="color-card primary">
+                <h3>Primary</h3>
+                <p>Rose Saumon</p>
+                <small>rgb(232 180 160)</small>
+            </div>
+            <div class="color-card secondary">
+                <h3>Secondary</h3>
+                <p>Brun Taupe</p>
+                <small>rgb(139 116 100)</small>
+            </div>
+            <div class="color-card accent">
+                <h3>Accent</h3>
+                <p>Orange Corail</p>
+                <small>rgb(212 165 116)</small>
+            </div>
+        </div>
+
+        <h2>Boutons</h2>
+        <div>
+            <a href="#" class="btn btn-primary">Bouton Principal</a>
+            <a href="#" class="btn btn-accent">Call to Action</a>
+            <a href="#" class="btn btn-secondary">Bouton Secondaire</a>
+        </div>
+
+        <h2>Typographie</h2>
+        <div class="sample-content">
+            <h1>Titre Principal H1</h1>
+            <h2>Sous-titre H2</h2>
+            <p>Ceci est un paragraphe de texte principal avec la couleur par défaut. Il devrait être parfaitement lisible sur l'arrière-plan.</p>
+            <p class="text-muted">Ceci est du texte atténué, utilisé pour les descriptions secondaires et les métadonnées.</p>
+        </div>
+
+        <h2>Exemple de Contenu</h2>
+        <div class="sample-content">
+            <h2>Prenez la parole avec impact et sérénité</h2>
+            <p>Coach prise de parole - Méthode Cercle Vertueux - +200 clients transformés</p>
+            <p class="text-muted">Méthode éprouvée • 100% réussite aux oraux</p>
+            <a href="#" class="btn btn-accent">Réserver ma séance gratuite</a>
+        </div>
+    </div>
+
+    <script>
+        function toggleDarkMode() {
+            const body = document.body;
+            const btn = document.querySelector('.toggle-btn');
+            
+            if (body.classList.contains('dark')) {
+                body.classList.remove('dark');
+                btn.textContent = '🌙 Mode Sombre';
+            } else {
+                body.classList.add('dark');
+                btn.textContent = '☀️ Mode Clair';
+            }
+        }
+    </script>
+</body>
+</html> 
