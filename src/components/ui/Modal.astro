@@ -167,6 +167,9 @@ const { id, class: className = '' } = Astro.props;
     initializeModals();
   }
   
+  // Re-initialize modals after Astro's client-side navigation
+  document.addEventListener('astro:after-swap', initializeModals);
+  
   // Fallback initialization after a delay
   setTimeout(() => {
     if (typeof window !== 'undefined' && !(window as any).modalInstances) {
