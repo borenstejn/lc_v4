@@ -1,0 +1,72 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+
+// Les métadonnées de la page
+const metadata = {
+  title: 'Test Strapi',
+  description: 'Page de test pour l\'intégration de Strapi',
+};
+---
+
+<Layout metadata={metadata}>
+  <section class="px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+    <div class="max-w-3xl mx-auto">
+      <h1 class="text-4xl font-bold tracking-tight sm:text-5xl text-center mb-10">
+        Page de Test Strapi
+      </h1>
+      
+      <div id="strapi-content" class="prose prose-lg dark:prose-invert mx-auto">
+        <!-- Le contenu de Strapi sera chargé ici -->
+        <p>Chargement du contenu de Strapi...</p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Le script pour récupérer et afficher les données de Strapi ira ici
+    // Assurez-vous d'avoir les informations de votre API Strapi
+    // (URL, type de contenu, clé d'API si nécessaire)
+    
+    // Exemple de fonction (à adapter) :
+    /*
+    async function fetchStrapiData() {
+      const strapiUrl = 'VOTRE_URL_STRAPI'; // ex: http://localhost:1337
+      const contentType = 'VOTRE_TYPE_DE_CONTENU'; // ex: 'api/articles' ou 'api/page-accueil'
+      const apiKey = 'VOTRE_CLE_API'; // Laissez vide si non requis: ''
+
+      try {
+        const response = await fetch(`${strapiUrl}/${contentType}`, {
+          headers: apiKey ? { 'Authorization': `Bearer ${apiKey}` } : {},
+        });
+
+        if (!response.ok) {
+          throw new Error(`Erreur HTTP: ${response.status}`);
+        }
+
+        const data = await response.json();
+        const contentDiv = document.getElementById('strapi-content');
+        
+        // Adaptez cette partie pour afficher les données comme vous le souhaitez
+        if (data && data.data) {
+          if (Array.isArray(data.data)) {
+            // Pour les collections
+            contentDiv.innerHTML = data.data.map(item => `<article><h2>${item.attributes.title}</h2><div>${item.attributes.content || ''}</div></article>`).join('');
+          } else {
+            // Pour les single types
+            contentDiv.innerHTML = `<article><h2>${data.data.attributes.title}</h2><div>${data.data.attributes.content || ''}</div></article>`;
+          }
+        } else {
+          contentDiv.innerHTML = '<p>Aucun contenu trouvé.</p>';
+        }
+
+      } catch (error) {
+        console.error('Erreur lors de la récupération des données Strapi:', error);
+        const contentDiv = document.getElementById('strapi-content');
+        contentDiv.innerHTML = '<p>Impossible de charger le contenu de Strapi. Vérifiez la console pour les erreurs.</p>';
+      }
+    }
+
+    fetchStrapiData();
+    */
+  </script>
+</Layout> 

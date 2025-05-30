@@ -22,6 +22,10 @@ export const headerData = {
       text: 'À Propos',
       href: getPermalink('/a-propos'),
     },
+    {
+      text: 'Test Strapi',
+      href: getPermalink('/test-strapi'),
+    },
   ],
   actions: [{ 
     text: 'Contact', 
